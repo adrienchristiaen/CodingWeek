@@ -1,0 +1,36 @@
+[
+    {
+        "id": 1,
+        "identifiant": "JDoe",
+        "motDePasse": "1234",
+        "nom": "Doe",
+        "prenom": "John",
+        "email": "john.doe@email.com",
+        "Ville": "Paris",
+        "role": "user",
+        "Florains": 100,
+        "createdAt": "2020-01-01T00:00:00.000",
+        "image": "JohnDoe.jpg",
+        "description": "Je représente la société Doe",
+        "itemsOwn": [1 , 2, 3, 4],
+        "itemsSell": [{"id" : 1 , "timeSell" : "2020-01-01T00:00:00.0"}, {"id" : 2 , "timeSell" : "2020-01-01T00:00:00.0"}],
+        "itemsBuy": [{"id" : 4 , "timeBought" : "2020-01-01T00:00:00.0"}, {"id" : 5 , "timeSell" : "2020-01-01T00:00:00.0"}]
+    },
+    {
+        "id": 2,
+        "identifiant": "admin",
+        "motDePasse": "admin",
+        "nom": "admin",
+        "prenom": "admin",
+        "email": "admin@email.com",
+        "Ville": "Paris",
+        "role": "admin",
+        "Florains": 1000000,
+        "createdAt": "2020-01-01T00:00:00.000",
+        "image": "admin.jpg",
+        "description": "Je représente la société admin",
+        "itemsOwn": [],
+        "itemsSell": [],
+        "itemsBuy": []
+    }
+]
