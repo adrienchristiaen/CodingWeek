@@ -6,6 +6,7 @@
     "prenom": "John",
     "email": "john.doe@email.com",
     "Ville": "Paris",
+    "role": "admin",
     "Florains": 100,
     "createdAt": "2020-01-01",
     "image": "JohnDoe.jpg",
