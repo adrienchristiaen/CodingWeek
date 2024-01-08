@@ -45,10 +45,17 @@ javafx {
 dependencies {
     implementation('org.json:json:20231013')
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
-    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-
-    testImplementation(platform('org.junit:junit-bom:5.10.1'))
-	testImplementation('org.junit.jupiter:junit-jupiter')
+    implementation(group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1') {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
+//    implementation('com.googlecode.json-simple:json-simple:1.1.1')
+//    runtime('com.github.cliftonlabs:json-simple:4.0.1')
+    testImplementation(platform('org.junit:junit-bom:5.10.1')) {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
+    testImplementation('org.junit.jupiter:junit-jupiter') {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
 }
 
 test {
@@ -57,6 +64,10 @@ test {
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
     }
+}
+
+compileJava {
+    options.compilerArgs += ['--module-path', classpath.asPath]
 }
 
 testlogger {
