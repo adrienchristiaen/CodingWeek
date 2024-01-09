@@ -23,7 +23,7 @@ public class Main extends Application {
         primaryStage.setTitle("JavaFx Demo");
         UserController userController = UserController.getInstance();
         ArrayList<User> users = userController.getUsers();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/recherche.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, 1920, 1080);
         primaryStage.setScene(scene);
