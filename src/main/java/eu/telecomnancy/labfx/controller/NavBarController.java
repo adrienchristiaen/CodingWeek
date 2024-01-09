@@ -1,4 +1,4 @@
-package eu.telecomnancy.labfx;
+package eu.telecomnancy.labfx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

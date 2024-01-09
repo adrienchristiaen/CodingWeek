@@ -1,5 +1,6 @@
-package eu.telecomnancy.labfx;
+package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
@@ -53,40 +54,12 @@ public class ConnexionController {
 
     @FXML
     void redirectionInscription(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/inscription.fxml"));
-            AnchorPane page = loader.load();
-
-            Scene scene = new Scene(page);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'inscription.");
-        }
+        Redirection.inscription(event);
     }
 
     @FXML
     void redirectToAccueil(User user) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
-            AnchorPane page = loader.load();
-    
-            // Récupérez le contrôleur associé à l'onglet d'accueil
-            AccueilController accueilController = loader.getController();
-    
-            // Passez l'utilisateur connecté au contrôleur d'accueil
-            accueilController.initData(user);
-    
-            Scene scene = new Scene(page);
-            Stage primaryStage = (Stage) connexionButton.getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'accueil.");
-        }
+        Redirection.acceuil(user, connexionButton);
     }
 
     private void showErrorDialog(String title, String message) {
