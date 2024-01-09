@@ -3,14 +3,15 @@ package eu.telecomnancy.labfx.utils;
 import eu.telecomnancy.labfx.user.User;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class JsonUserWritter implements JsonWritter{
-    public static void write(String json, ArrayList<User> users) {
+    public static void write(String resourcePath, ArrayList<User> users) {
         //writes users in json file
-        System.out.println("Writing users in json: " + json);
+        System.out.println("Writing users in json: " + resourcePath);
 
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (User user : users) {
@@ -88,13 +89,19 @@ public class JsonUserWritter implements JsonWritter{
         }
         jsonBuilder.deleteCharAt(jsonBuilder.lastIndexOf(","));
         jsonBuilder.append("]");
+        String jsonString = jsonBuilder.toString();
+        System.out.println("Writing users in json: " + resourcePath);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(json))) {
-            writer.write(jsonBuilder.toString());
-            System.out.println("Content has been written to the file.");
+        String filePath = JsonUserWritter.class.getResource(resourcePath).getFile();
+        File file = new File(filePath);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(jsonString);
+            System.out.println("JSON data written successfully to file: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
 

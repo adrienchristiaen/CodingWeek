@@ -3,8 +3,7 @@ package eu.telecomnancy.labfx.utils;
 import eu.telecomnancy.labfx.user.AdminUser;
 import eu.telecomnancy.labfx.user.ClassicUser;
 import eu.telecomnancy.labfx.user.User;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class JsonUserReader implements JsonReader{
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
+                    stringBuilder.append(line).append("\n");
                 }
 
                 jsonString = stringBuilder.toString();
