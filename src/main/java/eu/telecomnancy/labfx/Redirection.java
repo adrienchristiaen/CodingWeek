@@ -1,5 +1,7 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.controller.AccueilController;
+import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
@@ -22,7 +24,7 @@ import java.io.IOException;
 
 public class Redirection {
 
-    public static void acceuil(User user, Button actionButton){
+    public static void accueil(User user, Button actionButton){
         try {
             //On crée un contenair root qui sera une vbox
             VBox root = new VBox();
@@ -30,17 +32,20 @@ public class Redirection {
 
             //On load la navbar et on la met en haut
             FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
-            root.getChildren().add(top.load());
+            Parent navBar = top.load();
+            NavBarController navBarController = top.getController();
+            navBarController.setUser(user);
+            navBarController.setFlorains();
+
+            root.getChildren().add(navBar);
 
             //On load le centre et on le met dans une anchorpane
             FXMLLoader center = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
-            root.getChildren().add(center.load());
+            Parent accueil = center.load();
+            AccueilController accueilController = center.getController();
+            accueilController.setUser(user);
 
-            // Récupérez le contrôleur associé à l'onglet d'accueil
-            //AccueilController accueilController = loader.getController();
-
-            // Passez l'utilisateur connecté au contrôleur d'accueil
-            //accueilController.initData(user);
+            root.getChildren().add(accueil);
 
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();
@@ -54,10 +59,10 @@ public class Redirection {
 
     public static void inscription(ActionEvent event) {
         try {
+            BorderPane root = new BorderPane();
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/inscription.fxml"));
-            AnchorPane page = loader.load();
-
-            Scene scene = new Scene(page);
+            root.setCenter(loader.load());
+            Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();

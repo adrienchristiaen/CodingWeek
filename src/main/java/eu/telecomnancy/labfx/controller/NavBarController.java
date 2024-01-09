@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,25 +11,33 @@ public class NavBarController {
 
     @FXML
     private Button balance;
-
     @FXML
     private Button home;
-
     @FXML
     private Button messagerie;
-
     @FXML
     private Button profil;
-
     @FXML
     private TextField searchBar;
-
     @FXML
     private ImageView searchImg;
 
+    private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public void setFlorains(){
+        balance.setText(String.valueOf(user.getFlorains()));
+    }
+    @FXML
+    public void initialize() {
+        if(user != null) {
+            balance.setText(String.valueOf(user.getFlorains()));
+        }
+    }
     @FXML
     void goBalance(ActionEvent event) {
-
     }
 
     @FXML
