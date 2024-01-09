@@ -2,12 +2,12 @@ package eu.telecomnancy.labfx.utils;
 
 import java.time.LocalDateTime;
 
-public class ReservationDelay {
+public class Reservation {
     private LocalDateTime startRes;
     private LocalDateTime endRes;
     private int userId;
 
-    public ReservationDelay(LocalDateTime startRes, LocalDateTime endRes, int userId) {
+    public Reservation(LocalDateTime startRes, LocalDateTime endRes, int userId) {
         this.startRes = startRes;
         this.endRes = endRes;
         this.userId = userId;

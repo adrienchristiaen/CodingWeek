@@ -1,8 +1,8 @@
 package eu.telecomnancy.labfx.user;
 
 import eu.telecomnancy.labfx.utils.ItemTuple;
-import eu.telecomnancy.labfx.utils.JsonUserReader;
-import eu.telecomnancy.labfx.utils.JsonUserWritter;
+import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserReader;
+import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserWritter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

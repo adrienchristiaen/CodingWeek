@@ -1,6 +1,7 @@
-package eu.telecomnancy.labfx.utils;
+package eu.telecomnancy.labfx.utils.JsonHandler;
 
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.utils.ItemTuple;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -91,12 +92,13 @@ public class JsonUserWritter implements JsonWritter{
         jsonBuilder.append("]");
         String jsonString = jsonBuilder.toString();
         System.out.println("Writing users in json: " + resourcePath);
-
         String filePath = JsonUserWritter.class.getResource(resourcePath).getFile();
+        System.out.println(filePath);
         File file = new File(filePath);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(jsonString);
+            System.out.println(jsonString.lastIndexOf("]"));
             System.out.println("JSON data written successfully to file: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();

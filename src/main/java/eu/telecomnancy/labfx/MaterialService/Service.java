@@ -1,7 +1,8 @@
 package eu.telecomnancy.labfx.MaterialService;
 
-import eu.telecomnancy.labfx.utils.ReservationDelay;
+import eu.telecomnancy.labfx.utils.Reservation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Service implements MaterialService{
@@ -9,17 +10,17 @@ public class Service implements MaterialService{
     private String name;
     private String type;
     private int owner;
-    private String cost;
+    private int cost;
     private String description;
-    private String createdAt;
-    private String updatedAt;
-    private String startTime;
-    private String endTime;
-    private ArrayList<ReservationDelay> reservationDelays;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private ArrayList<Reservation> reservations;
     private String image;
     private boolean isActive;
 
-    public Service(int id, String name, int owner, String cost, String description, String createdAt, String updatedAt, String startTime, String endTime, ArrayList<ReservationDelay> reservationDelays, String image, boolean isActive) {
+    public Service(int id, String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
         this.id = id;
         this.name = name;
         this.type = "service";
@@ -30,7 +31,7 @@ public class Service implements MaterialService{
         this.updatedAt = updatedAt;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.reservationDelays = reservationDelays;
+        this.reservations = reservations;
         this.image = image;
         this.isActive = isActive;
     }
@@ -67,11 +68,11 @@ public class Service implements MaterialService{
         this.owner = owner;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
@@ -83,44 +84,44 @@ public class Service implements MaterialService{
         this.description = description;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public String getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-    public ArrayList<ReservationDelay> getReservationDelays() {
-        return reservationDelays;
+    public ArrayList<Reservation> getReservationDelays() {
+        return reservations;
     }
 
-    public void setReservationDelays(ArrayList<ReservationDelay> reservationDelays) {
-        this.reservationDelays = reservationDelays;
+    public void setReservationDelays(ArrayList<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public String getImage() {
@@ -137,5 +138,25 @@ public class Service implements MaterialService{
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public void activate() {
+        isActive = true;
+    }
+
+    @Override
+    public void deactivate() {
+        isActive = false;
+    }
+
+    @Override
+    public void addReservation(Reservation reservation) {
+        reservations.add(reservation);
+    }
+
+    @Override
+    public void removeReservation(Reservation reservation) {
+        reservations.remove(reservation);
     }
 }
