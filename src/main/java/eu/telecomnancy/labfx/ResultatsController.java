@@ -15,8 +15,25 @@ public class ResultatsController {
     public void initializeResults(String searchTerm) {
         searchLabel.setText("Voici les résultats de la recherche pour : " + searchTerm);
         // separerMotRecherche(searchTerm);
+        int[][] idScoreService = {
+            {1, 75},
+            {2, 92},
+            {3, 80},
+            {4, 65},
+            {5, 88}
+        };
+        int[][] idScoreMateriel = {
+            {1, 75},
+            {2, 92},
+            {3, 80},
+            {4, 65},
+            {5, 88}
+        };
+        trierScore(idScoreMateriel);
+        trierScore(idScoreService);
+        afficherResultats(idScoreService, idScoreMateriel);
 
-        resultsListView.getItems().addAll("Résultat 1", "Résultat 2", "Résultat 3");
+
     }
 
     public void separerMotRecherche(String searchTerm) {
@@ -73,6 +90,20 @@ public class ResultatsController {
         for (int i = 0; i < idScore.length; i++) {
             idScore[i][0] = idScoreTrie[i][0];
             idScore[i][1] = idScoreTrie[i][1];
+        }
+    }
+
+    // creer une fonction qui prends en entré un tableau de couple (id, score) et qui affiche par ordre décroissant les id des services et materiels qui ont le plus de score et on retir ceux qui ont 0 de score
+    public void afficherResultats(int[][] idScoreService, int[][] idScoreMateriel) {
+        for (int i = 0; i < idScoreService.length; i++) {
+            if (idScoreService[i][1] != 0) {
+                resultsListView.getItems().add("Service : " + idScoreService[i][0]);
+            }
+        }
+        for (int i = 0; i < idScoreMateriel.length; i++) {
+            if (idScoreMateriel[i][1] != 0) {
+                resultsListView.getItems().add("Materiel : " + idScoreMateriel[i][0]);
+            }
         }
     }
 
