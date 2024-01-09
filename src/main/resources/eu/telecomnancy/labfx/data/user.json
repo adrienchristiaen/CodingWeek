@@ -563,5 +563,39 @@
 		"itemsOwn": [] ,
 		"itemsSell": [],
 		"itemsBuy": []
+	},
+	{
+		"id": 32,
+		"identifiant": "Adri2",
+		"password": "Adri2",
+		"firstName": "2",
+		"lastName": "Adri",
+		"email": "adri2@gmail.com",
+		"ville": "Paris",
+		"role": "user",
+		"florains": 0,
+		"createdAt": "2024-01-09 11:31:17",
+		"image": "",
+		"description": "",
+		"itemsOwn": [] ,
+		"itemsSell": [],
+		"itemsBuy": []
+	},
+	{
+		"id": 32,
+		"identifiant": "adri3",
+		"password": "adri3",
+		"firstName": "3",
+		"lastName": "Adri",
+		"email": "adri3@gmail.com",
+		"ville": "Paris",
+		"role": "user",
+		"florains": 0,
+		"createdAt": "2024-01-09 11:32:50",
+		"image": "",
+		"description": "",
+		"itemsOwn": [] ,
+		"itemsSell": [],
+		"itemsBuy": []
 	}
 ]
