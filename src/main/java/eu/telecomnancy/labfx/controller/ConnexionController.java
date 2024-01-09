@@ -59,7 +59,7 @@ public class ConnexionController {
 
     @FXML
     void redirectToAccueil(User user) {
-        Redirection.acceuil(user, connexionButton);
+        Redirection.accueil(user, connexionButton);
     }
 
     private void showErrorDialog(String title, String message) {

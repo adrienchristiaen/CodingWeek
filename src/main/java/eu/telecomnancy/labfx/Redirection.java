@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
@@ -23,7 +24,7 @@ import java.io.IOException;
 
 public class Redirection {
 
-    public static void acceuil(User user, Button actionButton){
+    public static void accueil(User user, Button actionButton){
         try {
             //On crée un contenair root qui sera une vbox
             VBox root = new VBox();
@@ -40,7 +41,11 @@ public class Redirection {
 
             //On load le centre et on le met dans une anchorpane
             FXMLLoader center = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
-            root.getChildren().add(center.load());
+            Parent accueil = center.load();
+            AccueilController accueilController = center.getController();
+            accueilController.setUser(user);
+
+            root.getChildren().add(accueil);
 
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();
@@ -54,10 +59,10 @@ public class Redirection {
 
     public static void inscription(ActionEvent event) {
         try {
+            BorderPane root = new BorderPane();
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/inscription.fxml"));
-            AnchorPane page = loader.load();
-
-            Scene scene = new Scene(page);
+            root.setCenter(loader.load());
+            Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
