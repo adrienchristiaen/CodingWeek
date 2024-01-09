@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -42,8 +43,10 @@ public class InscriptionController {
         } else {
             // Connexion réussie
             System.out.println("Inscription réussie");
+
+            // Utilisez le UserController pour créer un nouvel utilisateur
+            UserController userController = UserController.getInstance();
+            userController.createClassicUser(identifiant, motDePasse, prenom, nom, email, ville, 0, "", "");
         }
-
     }
-
 }
