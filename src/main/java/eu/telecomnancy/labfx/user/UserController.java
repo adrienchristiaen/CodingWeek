@@ -30,7 +30,7 @@ public class UserController {
     }
 
     public void saveUsers() {
-        JsonUserWritter.write("src/main/resources/eu/telecomnancy/labfx/data/user.json", this.users);
+        JsonUserWritter.write("/eu/telecomnancy/labfx/data/user.json", this.users);
     }
 
     public User getUserById(int id) {
