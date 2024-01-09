@@ -1,8 +1,9 @@
-package eu.telecomnancy.labfx.utils;
+package eu.telecomnancy.labfx.utils.JsonHandler;
 
 import eu.telecomnancy.labfx.user.AdminUser;
 import eu.telecomnancy.labfx.user.ClassicUser;
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.utils.ItemTuple;
 import org.json.*;
 
 import java.io.BufferedReader;
@@ -22,7 +23,6 @@ public class JsonUserReader implements JsonReader{
 
         String jsonString = null;
         try (InputStream inputStream = JsonUserReader.class.getResourceAsStream(resourcePath)) {
-            System.out.println(inputStream);
             assert inputStream != null;
             try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
                  BufferedReader reader = new BufferedReader(inputStreamReader)) {
