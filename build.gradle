@@ -6,7 +6,9 @@ plugins {
 }
 
 repositories {
+    google()
     mavenCentral()
+    flatDir(dirs: 'lib')
 }
 
 group 'eu.telecomnancy'
@@ -32,7 +34,7 @@ application {
 jar {
     manifest {
         attributes(
-            'Main-Class': application.mainClass
+            'Main-Class': application.mainClass,
         )
     }
 }
@@ -42,10 +44,23 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+
 dependencies {
-    implementation('org.json:json:20231013')
+    implementation files('lib/json-simple-1.1.1.jar')
+    implementation('org.json:json:20231013'){
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
-    implementation(group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1') {
+    implementation('com.googlecode.json-simple:json-simple:1.1.1') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
 //    implementation('com.googlecode.json-simple:json-simple:1.1.1')
@@ -58,6 +73,8 @@ dependencies {
     }
 }
 
+
+
 test {
     useJUnitPlatform()
 
@@ -67,7 +84,25 @@ test {
 }
 
 compileJava {
-    options.compilerArgs += ['--module-path', classpath.asPath]
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls',
+                '--add-modules', 'javafx.fxml',
+                '--add-modules', 'json.simple',
+        ]
+        classpath = files()
+    }
+}
+run{
+    doFirst {
+        jvmArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls',
+                '--add-modules', 'javafx.fxml',
+                '--add-modules', 'json.simple',
+        ]
+    }
 }
 
 testlogger {

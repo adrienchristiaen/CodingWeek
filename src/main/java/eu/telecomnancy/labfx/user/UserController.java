@@ -13,7 +13,7 @@ public class UserController {
     private ArrayList<User> users;
     //singleton pattern
     private UserController() {
-        this.users = JsonUserReader.read("src/main/resources/eu/telecomnancy/labfx/data/user.json");
+        this.users = JsonUserReader.read("/eu/telecomnancy/labfx/data/user.json");
     }
     public static UserController getInstance() {
         if (instance == null) {

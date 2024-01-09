@@ -3,13 +3,14 @@ package eu.telecomnancy.labfx.utils;
 import eu.telecomnancy.labfx.user.AdminUser;
 import eu.telecomnancy.labfx.user.ClassicUser;
 import eu.telecomnancy.labfx.user.User;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,62 +18,85 @@ import java.util.ArrayList;
 
 public class JsonUserReader implements JsonReader{
 
-    public static ArrayList<User> read(String json) {
+    public static ArrayList<User> read(String resourcePath) {
+        ArrayList<User> users = new ArrayList<>();
 
-        //reads json file and creates users
-        System.out.println("Reading users from json: " + json);
-        JSONParser parser = new JSONParser();
-        try {
-            org.json.simple.JSONArray jsonArrayUser = (org.json.simple.JSONArray) parser.parse(new FileReader(json));
-                        //create an array for each user
-            ArrayList<User> users = new ArrayList<User>();
-            for (Object jsonUser : jsonArrayUser) {
-                JSONObject user = (JSONObject) jsonUser;
-                users.add(createUserFromJson(user));
+        String jsonString = null;
+        try (InputStream inputStream = JsonUserReader.class.getResourceAsStream(resourcePath)) {
+            System.out.println(inputStream);
+            assert inputStream != null;
+            try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                 BufferedReader reader = new BufferedReader(inputStreamReader)) {
+
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+
+                jsonString = stringBuilder.toString();
+                // Now you have your JSON string, proceed with parsing
+
             }
-            return users;
-
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
+        //reads json file and creates users
+        System.out.println("Reading users from json: " + resourcePath);
+        if (jsonString == null) {
+            return users;
+        }
+        JSONArray array = new JSONArray(jsonString);
+        if (!jsonString.equals("[]")) {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonUser = array.getJSONObject(i);
+                User user = createUserFromJson(jsonUser);
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     public static User createUserFromJson(JSONObject jsonUser){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         //gets attributes from json
-        long idLong = (long)jsonUser.get("id");
-        int id = (int) idLong;
-        String identifiant = (String) jsonUser.get("identifiant");
-        String password = (String) jsonUser.get("password");
-        String firstName = (String) jsonUser.get("firstName");
-        String lastName = (String) jsonUser.get("lastName");
-        String email = (String) jsonUser.get("email");
-        String city = (String) jsonUser.get("city");
-        String role = (String) jsonUser.get("role");
-        long florainsLong = (long) jsonUser.get("florains");
-        int florains = (int) florainsLong;
-        LocalDateTime createdAt = LocalDateTime.parse((String) jsonUser.get("createdAt"), formatter);
-        String image = (String) jsonUser.get("image");
-        String description = (String) jsonUser.get("description");
+
+        int id = jsonUser.getInt("id");
+        String identifiant = jsonUser.getString("identifiant");
+        String password = jsonUser.getString("password");
+        String firstName = jsonUser.getString("firstName");
+        String lastName = jsonUser.getString("lastName");
+        String email = jsonUser.getString("email");
+        String city =  jsonUser.getString("Ville");
+        String role =  jsonUser.getString("role");
+        int florains = jsonUser.getInt("florains");
+        LocalDateTime createdAt = LocalDateTime.parse(jsonUser.getString("createdAt"), formatter);
+        String image = jsonUser.getString("image");
+        String description = jsonUser.getString("description");
+        JSONArray itemsOwnedJson = jsonUser.getJSONArray("itemsOwn");
+        JSONArray itemsSellJson = jsonUser.getJSONArray("itemsSell");
+        JSONArray itemsBuyJson = jsonUser.getJSONArray("itemsBuy");
         ArrayList<Integer> itemsOwned = new ArrayList<Integer>();
         ArrayList<ItemTuple> itemsSell = new ArrayList<ItemTuple>();
         ArrayList<ItemTuple> itemsBuy = new ArrayList<ItemTuple>();
-        for (Object itemOwned : (JSONArray) jsonUser.get("itemsOwn")) {
-            long itemOwnedLong = (long) itemOwned;
-            itemsOwned.add((int) itemOwnedLong);
-        }
-        for (Object itemSell : (JSONArray) jsonUser.get("itemsSell")) {
-            JSONObject itemSellJson = (JSONObject) itemSell;
-            long itemSellLong = (long) itemSellJson.get("id");
-            itemsSell.add(new ItemTuple((int) itemSellLong, LocalDateTime.parse((String) itemSellJson.get("transactionTime"), formatter)));
-        }
-        for (Object itemBuy : (JSONArray) jsonUser.get("itemsBuy")) {
-            JSONObject itemBuyJson = (JSONObject) itemBuy;
-            long itemBuyLong = (long) itemBuyJson.get("id");
-            itemsBuy.add(new ItemTuple((int) itemBuyLong, LocalDateTime.parse((String) itemBuyJson.get("transactionTime"), formatter)));
+        for (Object itemOwned : itemsOwnedJson) {
+            itemsOwned.add((int) itemOwned);
         }
 
+        for (Object itemSell : itemsSellJson) {
+            JSONObject jsonItemSell = (JSONObject) itemSell;
+            int idItem = jsonItemSell.getInt("id");
+            LocalDateTime transactionTime = LocalDateTime.parse(jsonItemSell.getString("transactionTime"), formatter);
+            ItemTuple itemTuple = new ItemTuple(idItem, transactionTime);
+            itemsSell.add(itemTuple);
+        }
+        for (Object itemBuy : itemsBuyJson) {
+            JSONObject jsonItemBuy = (JSONObject) itemBuy;
+            int idItem = jsonItemBuy.getInt("id");
+            LocalDateTime transactionTime = LocalDateTime.parse(jsonItemBuy.getString("transactionTime"), formatter);
+            ItemTuple itemTuple = new ItemTuple(idItem, transactionTime);
+            itemsBuy.add(itemTuple);
+        }
         //creates user
         User user;
         if (role.equals("admin")){
