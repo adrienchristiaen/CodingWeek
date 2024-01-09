@@ -21,7 +21,7 @@ public class JsonUserWritter implements JsonWritter{
                     .append("\t\t\"firstName\": \"").append(user.getFirstName()).append("\",\n")
                     .append("\t\t\"lastName\": \"").append(user.getLastName()).append("\",\n")
                     .append("\t\t\"email\": \"").append(user.getEmail()).append("\",\n")
-                    .append("\t\t\"Ville\": \"").append(user.getCity()).append("\",\n")
+                    .append("\t\t\"ville\": \"").append(user.getCity()).append("\",\n")
                     .append("\t\t\"role\": \"").append(user.getRole()).append("\",\n")
                     .append("\t\t\"florains\": ").append(user.getFlorains()).append(",\n");
             String createdAt = user.getCreatedAt().toString();

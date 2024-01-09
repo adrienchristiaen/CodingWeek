@@ -67,7 +67,7 @@ public class JsonUserReader implements JsonReader{
         String firstName = jsonUser.getString("firstName");
         String lastName = jsonUser.getString("lastName");
         String email = jsonUser.getString("email");
-        String city =  jsonUser.getString("Ville");
+        String city =  jsonUser.getString("ville");
         String role =  jsonUser.getString("role");
         int florains = jsonUser.getInt("florains");
         LocalDateTime createdAt = LocalDateTime.parse(jsonUser.getString("createdAt"), formatter);
