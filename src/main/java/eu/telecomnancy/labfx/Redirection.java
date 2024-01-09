@@ -57,6 +57,22 @@ public class Redirection {
         }
     }
 
+    public static void goProfil(User user, Button actionButton) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
+            Parent profilRoot = loader.load();
+
+            Scene profilScene = new Scene(profilRoot);
+            Stage currentStage = (Stage) actionButton.getScene().getWindow();
+            currentStage.setScene(profilScene);
+            currentStage.setTitle("Profil");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
+        }
+    }
+
     public static void inscription(ActionEvent event) {
         try {
             BorderPane root = new BorderPane();

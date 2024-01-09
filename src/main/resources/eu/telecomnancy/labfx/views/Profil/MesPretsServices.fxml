@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.MesPretsServicesController">
+   <!-- Contenu pour Mes Prêts/Services -->
+   <!-- Ajoutez ici les éléments de l'onglet Mes Prêts/Services -->
+</VBox>
