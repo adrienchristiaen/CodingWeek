@@ -597,5 +597,22 @@
 		"itemsOwn": [] ,
 		"itemsSell": [],
 		"itemsBuy": []
+	},
+	{
+		"id": 32,
+		"identifiant": "ouak",
+		"password": "ouak",
+		"firstName": "le fdp originel",
+		"lastName": "ouakrim",
+		"email": "ouak@gmail.com",
+		"ville": "Nancy",
+		"role": "user",
+		"florains": 0,
+		"createdAt": "2024-01-09 13:09:30",
+		"image": "",
+		"description": "",
+		"itemsOwn": [] ,
+		"itemsSell": [],
+		"itemsBuy": []
 	}
 ]
