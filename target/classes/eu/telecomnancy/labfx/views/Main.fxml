@@ -4,7 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<Button fx:id="clickme_button" mnemonicParsing="false" onAction="#somebodyClickOnMe" text="Click Me!" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.MainController">
+<Button fx:id="clickme_button" mnemonicParsing="false" onAction="#somebodyClickOnMe" text="Click Me!" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.MainController">
     <graphic>
         <ImageView>
             <Image url="@images/kawai.png"/>

@@ -1,5 +1,6 @@
-package eu.telecomnancy.labfx;
+package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
