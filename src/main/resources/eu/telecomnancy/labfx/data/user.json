@@ -597,5 +597,22 @@
 		"itemsOwn": [] ,
 		"itemsSell": [],
 		"itemsBuy": []
+	},
+	{
+		"id": 32,
+		"identifiant": " ",
+		"password": " ",
+		"firstName": " ",
+		"lastName": " ",
+		"email": " ",
+		"ville": " ",
+		"role": "user",
+		"florains": 0,
+		"createdAt": "2024-01-09 18:13:53",
+		"image": "",
+		"description": "",
+		"itemsOwn": [] ,
+		"itemsSell": [],
+		"itemsBuy": []
 	}
 ]

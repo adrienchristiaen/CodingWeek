@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
@@ -30,17 +31,16 @@ public class Redirection {
 
             //On load la navbar et on la met en haut
             FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
-            root.getChildren().add(top.load());
+            Parent navBar = top.load();
+            NavBarController navBarController = top.getController();
+            navBarController.setUser(user);
+            navBarController.setFlorains();
+
+            root.getChildren().add(navBar);
 
             //On load le centre et on le met dans une anchorpane
             FXMLLoader center = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
             root.getChildren().add(center.load());
-
-            // Récupérez le contrôleur associé à l'onglet d'accueil
-            //AccueilController accueilController = loader.getController();
-
-            // Passez l'utilisateur connecté au contrôleur d'accueil
-            //accueilController.initData(user);
 
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();
