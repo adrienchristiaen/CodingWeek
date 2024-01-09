@@ -62,18 +62,7 @@ public class InscriptionController {
     }
 
     private void redirectToConnexion(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
-            AnchorPane page = loader.load();
-
-            Scene scene = new Scene(page);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet de connexion.");
-        }
+        Redirection.connexion(event);
     }
 
     private void showErrorDialog(String title, String message) {
