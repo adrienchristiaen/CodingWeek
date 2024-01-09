@@ -5,8 +5,10 @@ import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,12 +22,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("JavaFx Demo");
+        primaryStage.setTitle("TelecomNancy DirectDealing");
         UserController userController = UserController.getInstance();
         ArrayList<User> users = userController.getUsers();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, 1920, 1080);
+        BorderPane root = new BorderPane();
+        FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
+        root.setCenter(loader.load());
+        Scene scene = new Scene(root,1920,1080);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

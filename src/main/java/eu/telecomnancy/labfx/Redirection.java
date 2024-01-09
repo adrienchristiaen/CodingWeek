@@ -1,16 +1,22 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.controller.AccueilController;
+import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -18,18 +24,30 @@ import java.io.IOException;
 
 public class Redirection {
 
-    public static void acceuil(User user, Button actionButton){
+    public static void accueil(User user, Button actionButton){
         try {
-            FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
-            AnchorPane page = loader.load();
+            //On crée un contenair root qui sera une vbox
+            VBox root = new VBox();
+            root.setAlignment(javafx.geometry.Pos.TOP_CENTER);
 
-            // Récupérez le contrôleur associé à l'onglet d'accueil
-            AccueilController accueilController = loader.getController();
+            //On load la navbar et on la met en haut
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            Parent navBar = top.load();
+            NavBarController navBarController = top.getController();
+            navBarController.setUser(user);
+            navBarController.setFlorains();
 
-            // Passez l'utilisateur connecté au contrôleur d'accueil
-            accueilController.initData(user);
+            root.getChildren().add(navBar);
 
-            Scene scene = new Scene(page);
+            //On load le centre et on le met dans une anchorpane
+            FXMLLoader center = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
+            Parent accueil = center.load();
+            AccueilController accueilController = center.getController();
+            accueilController.setUser(user);
+
+            root.getChildren().add(accueil);
+
+            Scene scene = new Scene(root);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -41,10 +59,10 @@ public class Redirection {
 
     public static void inscription(ActionEvent event) {
         try {
+            BorderPane root = new BorderPane();
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/inscription.fxml"));
-            AnchorPane page = loader.load();
-
-            Scene scene = new Scene(page);
+            root.setCenter(loader.load());
+            Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -56,10 +74,10 @@ public class Redirection {
 
     public static void connexion(ActionEvent event) {
         try {
+            BorderPane root = new BorderPane();
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
-            AnchorPane page = loader.load();
-
-            Scene scene = new Scene(page);
+            root.setCenter(loader.load());
+            Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
