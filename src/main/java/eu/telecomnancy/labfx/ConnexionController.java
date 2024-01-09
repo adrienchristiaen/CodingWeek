@@ -2,9 +2,6 @@ package eu.telecomnancy.labfx;
 
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
-
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ConnexionController {
 
@@ -55,7 +54,7 @@ public class ConnexionController {
     @FXML
     void redirectionInscription(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("inscription.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("@/../inscription.fxml"));
             AnchorPane page = loader.load();
 
             Scene scene = new Scene(page);
@@ -71,7 +70,7 @@ public class ConnexionController {
     @FXML
     void redirectToAccueil(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("acceuil.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("@accueil.fxml"));
             AnchorPane page = loader.load();
     
             // Récupérez le contrôleur associé à l'onglet d'accueil

@@ -11,6 +11,7 @@ public class JsonUserWritter implements JsonWritter{
     public static void write(String json, ArrayList<User> users) {
         //writes users in json file
         System.out.println("Writing users in json: " + json);
+
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (User user : users) {
             jsonBuilder.append("\t{\n")
@@ -28,7 +29,7 @@ public class JsonUserWritter implements JsonWritter{
             if (createdAt.contains(".")) {
                 createdAt = createdAt.substring(0, createdAt.lastIndexOf("."));
             }
-            else{
+            else if (createdAt.indexOf(":") == createdAt.lastIndexOf(":")){
                 createdAt = createdAt.concat(":00");
             }
                 jsonBuilder.append("\t\t\"createdAt\": \"").append(createdAt).append("\",\n")
@@ -62,8 +63,6 @@ public class JsonUserWritter implements JsonWritter{
                 jsonBuilder.append("\t\t] ,\n")
                         .append("\t\t\"itemsBuy\": [");
             }
-
-            System.out.println(user.getItemsBuy());
             if (user.getItemsBuy() == null) {
                 jsonBuilder.append("]\n\t},\n");
             } else if (user.getItemsBuy().isEmpty()) {
