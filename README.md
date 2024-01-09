@@ -2,6 +2,17 @@
 
 Groupe composé de MOY Kélian, THUILLIER Killian, CHRISTIEN Adrien, HOYAU Christophe
 
+## Créer un .jar
+exporter la variable d'environnement de javafx
+```sh
+export JAVAFX_HOME=/path/to/your/javafx/home
+```
+
+clean build gradle puis créé le jar, le lance (pour tester) puis le déplace en le nommant `App.jar` dans le dossier `dist/App.jar`
+```sh
+./gradlew clean build && ./gradlew shadowjar && java --module-path ${JAVAFX_HOME}/lib --add-modules=javafx.base,javafx.controls,javafx.fxml -jar build/libs/my-application-1.0.0.jar && cp build/libs/my-application-1.0.0.jar dist/App.jar
+
+```
 
 ## Planning
 
