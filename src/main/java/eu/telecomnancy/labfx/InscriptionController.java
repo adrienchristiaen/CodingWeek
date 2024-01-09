@@ -1,9 +1,18 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class InscriptionController {
 
@@ -42,8 +51,36 @@ public class InscriptionController {
         } else {
             // Connexion réussie
             System.out.println("Inscription réussie");
-        }
 
+            // Utilisez le UserController pour créer un nouvel utilisateur
+            UserController userController = UserController.getInstance();
+            userController.createClassicUser(identifiant, motDePasse, prenom, nom, email, ville, 0, "", "");
+
+            // Redirigez vers l'onglet de connexion après une inscription réussie
+            redirectToConnexion(event);
+        }
     }
 
+    private void redirectToConnexion(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
+            AnchorPane page = loader.load();
+
+            Scene scene = new Scene(page);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet de connexion.");
+        }
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

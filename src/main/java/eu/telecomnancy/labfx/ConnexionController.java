@@ -54,7 +54,7 @@ public class ConnexionController {
     @FXML
     void redirectionInscription(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("@/../inscription.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/inscription.fxml"));
             AnchorPane page = loader.load();
 
             Scene scene = new Scene(page);
@@ -70,7 +70,7 @@ public class ConnexionController {
     @FXML
     void redirectToAccueil(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("@accueil.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
             AnchorPane page = loader.load();
     
             // Récupérez le contrôleur associé à l'onglet d'accueil
