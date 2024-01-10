@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,7 +53,7 @@ public class NavBarController {
 
     @FXML
     void goProfil(ActionEvent event) {
-
+        Redirection.goProfil(user, profil);
     }
 
     @FXML

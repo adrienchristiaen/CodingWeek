@@ -4,6 +4,7 @@ import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
 import eu.telecomnancy.labfx.MaterialService.Service;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
+import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.controller.PreviewItemController;
@@ -27,7 +28,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Redirection {
 
@@ -90,6 +90,36 @@ public class Redirection {
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'accueil.");
         }
     }
+
+    public static void goProfil(User user, Button actionButton) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
+
+            loader.setControllerFactory(cl -> {
+                try {
+
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    } 
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent profilRoot = loader.load();
+            Scene profilScene = new Scene(profilRoot);
+            Stage currentStage = (Stage) actionButton.getScene().getWindow();
+            currentStage.setScene(profilScene);
+            currentStage.setTitle("Profil");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
+        }
+    }
+
 
     public static void inscription(ActionEvent event) {
         try {
