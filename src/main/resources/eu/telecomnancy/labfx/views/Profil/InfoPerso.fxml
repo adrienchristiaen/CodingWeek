@@ -11,14 +11,14 @@
    <Label text="Identifiant:" />
    <TextField fx:id="identifiantField" />
    <Label text="Mot de Passe:" />
-   <PasswordField fx:id="motDePasseField" />
+   <PasswordField fx:id="passwordField" />
    <Label text="Nom:" />
-   <TextField fx:id="nomField" />
+   <TextField fx:id="lastnameField" />
    <Label text="Prénom:" />
-   <TextField fx:id="prenomField" />
+   <TextField fx:id="firstnameField" />
    <Label text="Email:" />
    <TextField fx:id="emailField" />
    <Label text="Ville:" />
-   <TextField fx:id="villeField" />
+   <TextField fx:id="cityField" />
    <Button text="Sauvegarder" onAction="#sauvegarderInfoPerso" />
 </VBox>

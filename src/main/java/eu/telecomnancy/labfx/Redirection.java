@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.user.User;
@@ -21,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 
 public class Redirection {
 
@@ -60,8 +62,21 @@ public class Redirection {
     public static void goProfil(User user, Button actionButton) {
         try {
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
-            Parent profilRoot = loader.load();
 
+            loader.setControllerFactory(cl -> {
+                try {
+
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    } 
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent profilRoot = loader.load();
             Scene profilScene = new Scene(profilRoot);
             Stage currentStage = (Stage) actionButton.getScene().getWindow();
             currentStage.setScene(profilScene);
@@ -72,6 +87,7 @@ public class Redirection {
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
         }
     }
+
 
     public static void inscription(ActionEvent event) {
         try {

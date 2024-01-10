@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.Profil;
 
+import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -15,6 +16,13 @@ public class ModeEditionController {
 
     @FXML
     private ImageView nouvellePhotoProfil;
+
+    private User user;
+
+    public ModeEditionController(User user) {
+        this.user = user;
+    }
+
 
     // Méthode associée à l'action "Changer Mot de Passe"
     @FXML
