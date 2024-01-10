@@ -2,6 +2,7 @@ package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,15 +38,17 @@ public class PreviewItemController {
     }
 
     public void setItem(MaterialService item, User user){
+        User owner = UserController.getInstance().getUserById(item.getOwner());
         this.item = item;
-        this.name.setText(item.getName());
+        this.title.setText(item.getName());
         this.description.setText(item.getDescription());
+        this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
         this.cost.setText(String.valueOf(item.getCost()));
         //this.note.setText(item.getNote());
-        this.ville.setText(user.getCity());
+        this.ville.setText(owner.getCity());
         try {
             String filePath = PreviewItemController.class.getResource("/eu/telecomnancy/labfx/images/".concat(item.getImage())).getFile();
-            Image image = new Image("../images/".concat(user.getImage()));
+            Image image = new Image("../images/".concat(item.getImage()));
             this.imgItem.setImage(image);
         }catch (Exception e){
             System.out.println("Image not found");

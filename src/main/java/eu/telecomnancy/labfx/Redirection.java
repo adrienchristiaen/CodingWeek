@@ -62,12 +62,23 @@ public class Redirection {
             ArrayList<Service> services = new ArrayList(ServiceController.getInstance().sortByUpdateAt().subList(0, 2));
 
             //On ajoute les previewsItem dans la gridpane
+
             for (int i = 0; i < materials.size(); i++) {
+               FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
+               Parent previewItem = preview.load();
+               PreviewItemController previewItemController = preview.getController();
+               previewItemController.setItem(materials.get(i), user);
+               previews.add(previewItem, 0, i );
+            }
+            for (int i = 0; i < services.size(); i++) {
                 FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
                 Parent previewItem = preview.load();
                 PreviewItemController previewItemController = preview.getController();
-                previewItemController.setItem(materials.get(i), user);
+                previewItemController.setItem(services.get(i), user);
+                previews.add(previewItem, 1, i );
             }
+            root.getChildren().add(previews);
+
 
 
             Scene scene = new Scene(root);
