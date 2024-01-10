@@ -16,8 +16,12 @@ public class AccueilController {
     private TextField rechercheAcceuil;
     private User user;
 
-    public void setUser(User user) {
+    public AccueilController(User user) {
         this.user = user;
+    }
+
+    public void initalize(){
+
     }
     @FXML
     void goAddItem(ActionEvent event) {

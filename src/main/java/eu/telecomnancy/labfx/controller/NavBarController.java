@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,11 +25,8 @@ public class NavBarController {
 
     private User user;
 
-    public void setUser(User user) {
+    public NavBarController(User user) {
         this.user = user;
-    }
-    public void setFlorains(){
-        balance.setText(String.valueOf(user.getFlorains()));
     }
     @FXML
     public void initialize() {
@@ -42,7 +40,7 @@ public class NavBarController {
 
     @FXML
     void goHome(ActionEvent event) {
-
+        Redirection.accueil(user, home);
     }
 
     @FXML
@@ -52,7 +50,7 @@ public class NavBarController {
 
     @FXML
     void goProfil(ActionEvent event) {
-
+        Redirection.goProfil(user, profil);
     }
 
     @FXML
