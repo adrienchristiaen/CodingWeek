@@ -1,7 +1,12 @@
 package eu.telecomnancy.labfx;
 
+import eu.telecomnancy.labfx.MaterialService.Material;
+import eu.telecomnancy.labfx.MaterialService.MaterialController;
+import eu.telecomnancy.labfx.MaterialService.Service;
+import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
+import eu.telecomnancy.labfx.controller.PreviewItemController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import javafx.event.ActionEvent;
@@ -16,11 +21,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Redirection {
 
@@ -46,6 +53,33 @@ public class Redirection {
             accueilController.setUser(user);
 
             root.getChildren().add(accueil);
+
+            //Creation d'une gridpane pour contenir les previewItems
+            GridPane previews = new GridPane();
+            previews.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+            //On recupere les 3 derniers services et les 3 derniers materials
+            ArrayList<Material> materials = new ArrayList(MaterialController.getInstance().sortByUpdateAt().subList(0, 2));
+            ArrayList<Service> services = new ArrayList(ServiceController.getInstance().sortByUpdateAt().subList(0, 2));
+
+            //On ajoute les previewsItem dans la gridpane
+
+            for (int i = 0; i < materials.size(); i++) {
+               FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
+               Parent previewItem = preview.load();
+               PreviewItemController previewItemController = preview.getController();
+               previewItemController.setItem(materials.get(i), user);
+               previews.add(previewItem, 0, i );
+            }
+            for (int i = 0; i < services.size(); i++) {
+                FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
+                Parent previewItem = preview.load();
+                PreviewItemController previewItemController = preview.getController();
+                previewItemController.setItem(services.get(i), user);
+                previews.add(previewItem, 1, i );
+            }
+            root.getChildren().add(previews);
+
+
 
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();

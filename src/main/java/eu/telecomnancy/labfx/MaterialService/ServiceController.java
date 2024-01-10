@@ -69,4 +69,13 @@ public class ServiceController implements MaterialServiceController{
         }
         return maxId;
     }
+
+    public ArrayList<Service> sortByUpdateAt(){
+        ArrayList<Service> sortedServices = new ArrayList<Service>();
+        for (Service service : this.services) {
+            sortedServices.add(service);
+        }
+        sortedServices.sort((o1, o2) -> o2.getUpdatedAt().compareTo(o1.getUpdatedAt()));
+        return sortedServices;
+    }
 }
