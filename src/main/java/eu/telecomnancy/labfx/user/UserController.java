@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.user;
 
+import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.ItemTuple;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserReader;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserWritter;
@@ -74,7 +75,7 @@ public class UserController {
 
     public void createClassicUser(String identifiant, String password, String firstName, String lastName, String email, String city, int florains, String image, String description) {
         int id = getMaxId();
-        User user = new ClassicUser(id, identifiant, password, firstName, lastName, email, city, florains, LocalDateTime.now(), image, description, new ArrayList<Integer>(), new ArrayList<ItemTuple>(), new ArrayList<ItemTuple>());
+        User user = new ClassicUser(id, identifiant, password, firstName, lastName, email, city, florains, LocalDateTime.now(), image, description, new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<Evaluation>() ,new ArrayList<ItemTuple>(), new ArrayList<ItemTuple>());
         users.add(user);
         saveUsers();
     }

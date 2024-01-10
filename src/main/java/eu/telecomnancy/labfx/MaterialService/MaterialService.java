@@ -7,4 +7,6 @@ public interface MaterialService {
     public void deactivate();
     public void addReservation(Reservation reservation);
     public void removeReservation(Reservation reservation);
+
+
 }

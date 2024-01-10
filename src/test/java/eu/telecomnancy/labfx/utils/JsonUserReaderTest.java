@@ -21,7 +21,7 @@ public class JsonUserReaderTest {
             assert users.get(0).getId() == 1;
 
             //create a new user
-            ClassicUser user1 = new ClassicUser(maxId+1+i, "userTest".concat(String.valueOf(maxId+1+i)), "userTest".concat(String.valueOf(maxId+1+i)), "user1", "user1", "user@user.com", "Nancy", 0, LocalDateTime.of(2023,5,2,12,2,12), "user1.png", "user1", null, null, null);
+            ClassicUser user1 = new ClassicUser(maxId+1+i, "userTest".concat(String.valueOf(maxId+1+i)), "userTest".concat(String.valueOf(maxId+1+i)), "user1", "user1", "user@user.com", "Nancy", 0, LocalDateTime.of(2023,5,2,12,2,12), "user1.png", "user1", null,null, null, null, null);
             userController.addUser(user1);
             userController.saveUsers();
         }
