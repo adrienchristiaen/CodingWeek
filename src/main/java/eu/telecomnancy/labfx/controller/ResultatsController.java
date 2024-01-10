@@ -1,23 +1,37 @@
 package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
-import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.MaterialService.Material;
+import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.MaterialService.Service;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
+
+
 
 public class ResultatsController {
 
     @FXML
-    private ListView<String> resultsListView;
+    private ComboBox<String> displayModeComboBox;
+
+    @FXML
+    private TilePane resultsTilePane;
 
     @FXML
     private Label searchLabel;
 
     private MaterialController materialController = MaterialController.getInstance();
     private ServiceController serviceController = ServiceController.getInstance();
+    private Material material ;
+    private Service service ;
+    
     
     public void initializeResults(String searchTerm) {
         searchLabel.setText("Voici les résultats de la recherche pour : " + searchTerm);
@@ -32,18 +46,23 @@ public class ResultatsController {
         
       
         for (int i = 0; i < maxServiceId; i++) {
-            ListeIdScoreService[i][0] = i + 1; 
-            ListeIdScoreService[i][1] = 1;
+            if (serviceController.getServiceById(i + 1) != null) {
+                ListeIdScoreService[i][0] = i + 1;
+                ListeIdScoreService[i][1] = 1;
+            }
         }
         
         for (int i = 0; i < maxMaterialId; i++) {
-            ListeIdScoreMateriel[i][0] = i + 1;
-            ListeIdScoreMateriel[i][1] = 1;
+            if (materialController.getMaterialById(i + 1) != null) {
+                ListeIdScoreMateriel[i][0] = i + 1;
+                ListeIdScoreMateriel[i][1] = 1;
+            }
         }
        
        trierScore(ListeIdScoreService);
         trierScore(ListeIdScoreMateriel);
         afficherResultats(ListeIdScoreService, ListeIdScoreMateriel);
+
 
 
     }
@@ -109,19 +128,54 @@ public class ResultatsController {
     public void afficherResultats(int[][] idScoreService, int[][] idScoreMateriel) {
         for (int i = 0; i < idScoreService.length; i++) {
             if (idScoreService[i][1] != 0) {
-                resultsListView.getItems().add("Service : " + idScoreService[i][0]);
+                // Add a custom component with an image, name, and description to the TilePane
+                resultsTilePane.getChildren().add(createCustomComponentService(idScoreService[i][0], "Service"));
+                // Add space between components
+                resultsTilePane.getChildren().add(new Region()); // Spacer
             }
         }
         for (int i = 0; i < idScoreMateriel.length; i++) {
             if (idScoreMateriel[i][1] != 0) {
-                resultsListView.getItems().add("Materiel : " + idScoreMateriel[i][0]);
+                // Add a custom component with an image, name, and description to the TilePane
+                resultsTilePane.getChildren().add(createCustomComponentMateriel(idScoreMateriel[i][0], "Materiel"));
+                // Add space between components
+                resultsTilePane.getChildren().add(new Region()); // Spacer
             }
         }
+    }
+    
+
+    private VBox createCustomComponentMateriel(int itemId, String itemType) {
+        material = materialController.getMaterialById(itemId);
+        // Create a custom component with an image, name, and description
+        ImageView imageView = new ImageView(/* Set your image here */);
+        Label nameLabel = new Label(itemType + " : " + material.getName());
+        Label descriptionLabel = new Label(material.getDescription());
+
+        // Arrange the elements in a VBox
+        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel);
+        customComponent.setSpacing(5); // Adjust spacing as needed
+
+        return customComponent;
+    }
+     private VBox createCustomComponentService(int itemId, String itemType) {
+        service = serviceController.getServiceById(itemId);
+        // Create a custom component with an image, name, and description
+        ImageView imageView = new ImageView(/* Set your image here */);
+        Label nameLabel = new Label(itemType + " : " + service.getName());
+        Label descriptionLabel = new Label(service.getDescription());
+
+        // Arrange the elements in a VBox
+        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel);
+        customComponent.setSpacing(5); // Adjust spacing as needed
+
+        return customComponent;
     }
 
     
     public int max(int a, int b) {
         return a > b ? a : b;
     }
+    
     
 }

@@ -64,4 +64,12 @@ public class MaterialController implements MaterialServiceController{
         }
         return maxId;
     }
+    public Material getMaterialById(int id) {
+        for (Material material : this.materials) {
+            if (material.getId() == id) {
+                return material;
+            }
+        }
+        return null;
+    }
 }

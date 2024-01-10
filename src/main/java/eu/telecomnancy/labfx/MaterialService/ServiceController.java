@@ -69,4 +69,13 @@ public class ServiceController implements MaterialServiceController{
         }
         return maxId;
     }
+
+    public Service getServiceById(int id) {
+        for (Service service : this.services) {
+            if (service.getId() == id) {
+                return service;
+            }
+        }
+        return null;
+    }
 }
