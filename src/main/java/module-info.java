@@ -6,6 +6,9 @@ module eu.telecomnancy.labfx {
 
 
     opens eu.telecomnancy.labfx to javafx.fxml;
-    exports eu.telecomnancy.labfx to javafx.controls;
+    exports eu.telecomnancy.labfx to javafx.graphics;
+    exports eu.telecomnancy.labfx.controller to javafx.graphics;
+    opens eu.telecomnancy.labfx.controller to javafx.fxml;
+
 
 }
