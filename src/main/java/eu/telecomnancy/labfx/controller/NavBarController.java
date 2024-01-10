@@ -25,11 +25,8 @@ public class NavBarController {
 
     private User user;
 
-    public void setUser(User user) {
+    public NavBarController(User user) {
         this.user = user;
-    }
-    public void setFlorains(){
-        balance.setText(String.valueOf(user.getFlorains()));
     }
     @FXML
     public void initialize() {
@@ -43,7 +40,7 @@ public class NavBarController {
 
     @FXML
     void goHome(ActionEvent event) {
-
+        Redirection.accueil(user, home);
     }
 
     @FXML

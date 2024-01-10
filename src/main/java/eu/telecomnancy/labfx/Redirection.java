@@ -28,6 +28,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 
 public class Redirection {
 
@@ -39,20 +41,39 @@ public class Redirection {
 
             //On load la navbar et on la met en haut
             FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
-            Parent navBar = top.load();
-            NavBarController navBarController = top.getController();
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            /*NavBarController navBarController = top.getController();
             navBarController.setUser(user);
-            navBarController.setFlorains();
+            navBarController.setFlorains();*/
 
-            root.getChildren().add(navBar);
+            root.getChildren().add(top.load());
 
             //On load le centre et on le met dans une anchorpane
             FXMLLoader center = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/accueil.fxml"));
-            Parent accueil = center.load();
-            AccueilController accueilController = center.getController();
-            accueilController.setUser(user);
-
-            root.getChildren().add(accueil);
+            center.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            root.getChildren().add(center.load());
 
             //Creation d'une gridpane pour contenir les previewItems
             GridPane previews = new GridPane();
@@ -94,10 +115,8 @@ public class Redirection {
     public static void goProfil(User user, Button actionButton) {
         try {
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
-
             loader.setControllerFactory(cl -> {
                 try {
-
                     Constructor<?> cons = cl.getConstructor(User.class);
                     if (cons != null) {
                         return cons.newInstance(user);
