@@ -47,22 +47,27 @@ public class ResultatsController {
       
         for (int i = 0; i < maxServiceId; i++) {
             if (serviceController.getServiceById(i + 1) != null) {
-                ListeIdScoreService[i][0] = i + 1;
-                ListeIdScoreService[i][1] = 1;
+                service=serviceController.getServiceById(i + 1);
+                ListeIdScoreService[i][0] = service.getId();
+                ListeIdScoreService[i][1] = 0;
             }
         }
         
         for (int i = 0; i < maxMaterialId; i++) {
             if (materialController.getMaterialById(i + 1) != null) {
-                ListeIdScoreMateriel[i][0] = i + 1;
-                ListeIdScoreMateriel[i][1] = 1;
+                material=materialController.getMaterialById(i + 1);
+                ListeIdScoreMateriel[i][0] = material.getId();
+                ListeIdScoreMateriel[i][1] = 0;
             }
         }
-       
+        motEstDansClasseMateriel(searchTerm, ListeIdScoreMateriel);
+        motEstDansClasseService(searchTerm, ListeIdScoreService);
+      
        trierScore(ListeIdScoreService);
         trierScore(ListeIdScoreMateriel);
         afficherResultats(ListeIdScoreService, ListeIdScoreMateriel);
 
+        
 
 
     }
@@ -75,32 +80,7 @@ public class ResultatsController {
         }
     }
 
-    // creer une fonction qui prends en entré un tableau de couple (id, score) et un mot de recherche et qui renvoie un tableau de couple (id, score). 
-    // le score augmente de 1 si le mot de recherche est dans la classe du service ou materiel
-
-    public void calculScore(String[] mots, int[][] idScoreService, int[][] idScoreMateriel) {
-        for (int i = 0; i < mots.length; i++) {
-            for (int j = 0; j < idScoreService.length; j++) {
-                if (compareMotIdService(mots[i], idScoreService[j][0]) == 1) {
-                    idScoreService[j][1] += 1;
-                }
-            }
-            for (int j = 0; j < idScoreMateriel.length; j++) {
-                if (compareMotIdBien(mots[i], idScoreMateriel[j][0]) == 1) {
-                    idScoreMateriel[j][1] += 1;
-                }
-            }
-        }
-    }
-
-    // à faire quand j'aurais Killian
-    public int compareMotIdService(String mot, int id) {
-        return 0;
-    }
-    // à faire quand j'aurais Killian
-    public int compareMotIdBien(String mot, int id) {
-        return 0;
-    }
+  
 
     public void trierScore(int[][] idScore) {
         int[][] idScoreTrie = new int[idScore.length][2];
@@ -176,6 +156,74 @@ public class ResultatsController {
     public int max(int a, int b) {
         return a > b ? a : b;
     }
+    // mot est une chaine de caractere
+    public void motEstDansClasseService(String mot, int[][] idScoreService) {
+        String[] mots1 = mot.split(" ");
+        for (int i = 0; i < idScoreService.length; i++) {
+            int itemId = idScoreService[i][0];
+            service = serviceController.getServiceById(itemId);
     
+            if (service != null && service.getName() != null) {
+                for (int j = 0; j < mots1.length; j++) {
+                    if (estDedans(mots1[j], service.getName()) == 1) {
+                        idScoreService[i][1] += 1;
+                    }
+                }
+            }
+            if (service != null && service.getDescription() != null) {
+                for (int j = 0; j < mots1.length; j++) {
+                    if (estDedans(mots1[j], service.getDescription()) == 1) {
+                        idScoreService[i][1] += 1;
+                    }
+                }
+            }
+            if (service != null && service.getType()!=null){
+                for (int j = 0; j < mots1.length; j++) {
+                    if (estDedans(mots1[j], service.getType()) == 1) {
+                        idScoreService[i][1] += 1;
+                    }
+                }
+            }
+        }
+    }
     
+    public void motEstDansClasseMateriel(String mot, int[][] idScoreMateriel) {
+        String[] mots1 = mot.split(" ");
+        for (int i = 0; i < idScoreMateriel.length; i++) {
+            int itemId = idScoreMateriel[i][0];
+            material = materialController.getMaterialById(itemId);
+    
+            if (material != null && material.getName() != null) {
+                for (int j = 0; j < mots1.length; j++) {
+                    if (estDedans(mots1[j], material.getName()) == 1) {
+                        idScoreMateriel[i][1] += 1;
+                    }
+                }
+            }
+            if (material != null && material.getDescription() != null) {
+                for (int j = 0; j < mots1.length; j++) {
+                    if (estDedans(mots1[j], material.getDescription()) == 1) {
+                        idScoreMateriel[i][1] += 1;
+                    }
+                }
+            }
+            if (material != null && material.getType()!=null){
+                for (int j = 0; j < mots1.length; j++) {
+                    if (estDedans(mots1[j], material.getType()) == 1) {
+                        idScoreMateriel[i][1] += 1;
+                    }
+                }
+            }
+        }
+    }
+    // return 0 le mot n'est pas dans chainesDeCaracteres sinon return 1
+    public int estDedans (String mot, String chainesDeCaracteres)  {
+        String[] mots = chainesDeCaracteres.split(" ");
+        for (int i = 0; i < mots.length; i++) {
+            if (mots[i].equals(mot)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 }
