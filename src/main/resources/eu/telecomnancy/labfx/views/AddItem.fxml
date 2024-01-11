@@ -120,5 +120,10 @@
             <Insets top="30.0" />
          </VBox.margin>
       </Button>
+      <Label fx:id="errorText" textFill="RED">
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </Label>
    </children>
 </VBox>
