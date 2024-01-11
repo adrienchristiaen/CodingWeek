@@ -77,9 +77,10 @@ public class Redirection {
             GridPane previews = new GridPane();
             previews.setAlignment(javafx.geometry.Pos.TOP_CENTER);
             //On recupere les 3 derniers services et les 3 derniers materials
+            System.out.println("Size of materials: " + MaterialController.getInstance().getMaterials().size());
             ArrayList<Material> materials = new ArrayList(MaterialController.getInstance().sortByUpdateAt().subList(0, 2));
             ArrayList<Service> services = new ArrayList(ServiceController.getInstance().sortByUpdateAt().subList(0, 2));
-
+            System.out.println(services.size() + " " + materials.size());
             //On ajoute les previewsItem dans la gridpane
 
             for (int i = 0; i < materials.size(); i++) {

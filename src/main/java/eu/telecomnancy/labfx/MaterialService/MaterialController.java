@@ -19,6 +19,7 @@ public class MaterialController implements MaterialServiceController{
     public static MaterialController getInstance() {
         if (instance == null) {
             instance = new MaterialController();
+            System.out.println("Creating material controller");
         }
         return instance;
     }
@@ -32,9 +33,11 @@ public class MaterialController implements MaterialServiceController{
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
         ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-
-        Material material = new Material(title, userId, price ,description, createdAt, updatedAt,startTime, endTime, reservations, imagePath, true);
+        int id =Math.max(this.getMaxId()+1, ServiceController.getInstance().getMaxId()+1);
+        Material material = new Material(id, title, userId, price ,description, createdAt, updatedAt,startTime, endTime, reservations, imagePath, true);
+        DirectoryHandler.saveNewMaterialImage(material, imagePath);
         this.materials.add(material);
+        saveItems();
     }
     @Override
     public MaterialService get(int id) {
@@ -58,8 +61,9 @@ public class MaterialController implements MaterialServiceController{
         return materials1;
     }
 
-    public void saveItems(String resourcePath, ArrayList<Service> services) {
-        JsonItemWritter.write(resourcePath, services, this.materials);
+    public void saveItems() {
+        System.out.println("Writing items in json: " + DirectoryHandler.getPathResources("/data/item.json"));
+        JsonItemWritter.write(DirectoryHandler.getPathResources("/data/item.json"), ServiceController.getInstance().getServices(), this.materials);
     }
 
     public ArrayList<Material> getMaterials() {

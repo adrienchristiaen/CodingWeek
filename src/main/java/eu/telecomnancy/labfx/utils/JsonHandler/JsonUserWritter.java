@@ -12,11 +12,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class JsonUserWritter implements JsonWritter{
     public static void write(String resourcePath, ArrayList<User> users) {
         //writes users in json file
-
+        users.sort(Comparator.comparing(User::getId));
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (User user : users) {
             jsonBuilder.append("\t")

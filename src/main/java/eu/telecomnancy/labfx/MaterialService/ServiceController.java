@@ -19,6 +19,7 @@ public class ServiceController implements MaterialServiceController{
     public static ServiceController getInstance() {
         if (instance == null) {
             instance = new ServiceController();
+            System.out.println("Creating service controller");
         }
         return instance;
     }
@@ -28,17 +29,15 @@ public class ServiceController implements MaterialServiceController{
         this.services.add(service);
     }
 
-    public void remove(Service service) {
-        this.services.remove(service);
-    }
-
     public void addServiceFromAttr(String title, int userId , int price , String description, LocalDateTime startTime, LocalDateTime endTime, String imagePath) {
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
         ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-
-        Service service = new Service(title, userId, price ,description, createdAt, updatedAt,startTime, endTime, reservations, imagePath, true);
+        int id = Math.max(this.getMaxId()+1, MaterialController.getInstance().getMaxId()+1);
+        Service service = new Service(id, title, userId, price ,description, createdAt, updatedAt,startTime, endTime, reservations, imagePath, true);
+        DirectoryHandler.saveNewServiceImage(service, imagePath);
         this.services.add(service);
+        saveItems();
     }
 
     @Override
@@ -62,10 +61,9 @@ public class ServiceController implements MaterialServiceController{
         return services1;
     }
 
-
-    public void saveItems(ArrayList<Material> materials) {
-        JsonItemWritter.write(DirectoryHandler.getPathResources("/data/item.json"), this.services, materials);
-
+    public void saveItems() {
+        System.out.println("Writing items in json: " + DirectoryHandler.getPathResources("/data/item.json"));
+        JsonItemWritter.write(DirectoryHandler.getPathResources("/data/item.json"), this.services, MaterialController.getInstance().getMaterials());
     }
 
     public ArrayList<Service> getServices() {

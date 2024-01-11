@@ -16,6 +16,7 @@ public class UserController {
     private UserController() {
         System.out.println("Reading users from json: " + DirectoryHandler.getPathResources("/data/user.json"));
         this.users = JsonUserReader.read(DirectoryHandler.getPathResources("/data/user.json"));
+
     }
 
 /*    public void initialread(){
@@ -24,6 +25,7 @@ public class UserController {
     public static UserController getInstance() {
         if (instance == null) {
             instance = new UserController();
+            System.out.println("Creating user controller");
         }
         return instance;
     }
@@ -36,7 +38,6 @@ public class UserController {
     }
 
     public void saveUsers() {
-
         JsonUserWritter.write(DirectoryHandler.getPathResources("/data/user.json"), this.users);
     }
 
@@ -58,15 +59,15 @@ public class UserController {
     }
     public User testConnexion(String identifiant, String password) {
         User user = getUserByIdentifiant(identifiant);
-        if (user==null){
+        if (user == null) {
             return null;
-        }
-        else if (user.getPassword().equals(password)){
+        } else if (user.getPassword().equals(password)) {
             return user;
-        }
-        else{
+        } else {
             return null;
         }
+
+
     }
 
     public int getMaxId() {

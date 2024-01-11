@@ -2,11 +2,13 @@ package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,8 +80,8 @@ public class AddItemController {
             else{
                 MaterialController.getInstance().addMaterialFromAttr(title, userID, price, description, startDate, endDate, imagePath);
             }
-            Stage stage = (Stage) validate.getScene().getWindow();
-            stage.close();
+
+            Redirection.accueil(this.user, this.validate);
         }
     }
 
@@ -91,8 +93,9 @@ public class AddItemController {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             currentImage.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+            this.imagePath = file.getAbsolutePath();
         }
-        this.imagePath = file.getAbsolutePath();
+        ServiceController.getInstance().saveItems();
 
     }
 
