@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.MaterialService;
 
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonItemReader;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonItemWritter;
 
@@ -10,7 +11,7 @@ public class ServiceController implements MaterialServiceController{
     private static ServiceController instance = null;
 
     private ServiceController() {
-        this.services = read("/eu/telecomnancy/labfx/data/item.json");
+        this.services = read(DirectoryHandler.getPathResources("/data/item.json"));
     }
 
     public static ServiceController getInstance() {
@@ -52,7 +53,7 @@ public class ServiceController implements MaterialServiceController{
 
 
     public void saveItems(ArrayList<Material> materials) {
-        JsonItemWritter.write("/eu/telecomnancy/labfx/data/item.json", this.services, materials);
+        JsonItemWritter.write(DirectoryHandler.getPathResources("/data/item.json"), this.services, materials);
 
     }
 

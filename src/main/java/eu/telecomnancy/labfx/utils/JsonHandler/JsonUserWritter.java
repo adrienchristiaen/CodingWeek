@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.utils.JsonHandler;
 
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.ItemTuple;
 
@@ -8,12 +9,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class JsonUserWritter implements JsonWritter{
     public static void write(String resourcePath, ArrayList<User> users) {
         //writes users in json file
-        System.out.println("Writing users in json: " + resourcePath);
 
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (User user : users) {
@@ -25,17 +27,14 @@ public class JsonUserWritter implements JsonWritter{
         jsonBuilder.append("]");
         String jsonString = jsonBuilder.toString();
         System.out.println("Writing users in json: " + resourcePath);
-        String filePath = JsonUserWritter.class.getResource(resourcePath).getFile();
-        System.out.println(filePath);
-        File file = new File(filePath);
+        try {
+            Files.write(Paths.get(resourcePath), jsonString.getBytes());
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(jsonString);
-            System.out.println(jsonString.lastIndexOf("]"));
-            System.out.println("JSON data written successfully to file: " + filePath);
+            System.out.println("Content written to file successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 

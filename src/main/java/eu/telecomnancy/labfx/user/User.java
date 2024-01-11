@@ -58,4 +58,5 @@ public interface User {
     public void addFlorains(int florains);
     public void addEvaluation(int note, String comment, int idUserOfComment);
     public double getAverageNote();
+    public String getShortenDescription();
 }

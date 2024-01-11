@@ -288,4 +288,12 @@ public class AdminUser implements User{
         }
         return (double)Math.round((sum / (double) evaluations.size()) * 10) / 10;
     }
+
+    @Override
+    public String getShortenDescription() {
+        if (description.length() > 300) {
+            return description.substring(0, 300) + "...";
+        }
+        return description;
+    }
 }
