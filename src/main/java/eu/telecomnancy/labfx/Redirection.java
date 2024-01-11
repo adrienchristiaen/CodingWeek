@@ -5,12 +5,14 @@ import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.controller.PreviewItemController;
+import eu.telecomnancy.labfx.controller.PageAnnonceController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,10 +50,6 @@ public class Redirection {
                     throw new RuntimeException(exc);
                 }
             });
-            /*NavBarController navBarController = top.getController();
-            navBarController.setUser(user);
-            navBarController.setFlorains();*/
-
             root.getChildren().add(top.load());
 
             //On load le centre et on le met dans une anchorpane
@@ -163,6 +161,61 @@ public class Redirection {
             e.printStackTrace();
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet de connexion.");
         }
+    }
+
+    public static void pageAnnonce(User user, Button actionButton) {
+        try {
+            //On crée un contenair root qui sera une vbox
+            VBox root = new VBox();
+            root.setAlignment(Pos.TOP_CENTER);
+
+            //On load la navbar et on la met en haut
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            root.getChildren().add(top.load());
+
+            MaterialService item = MaterialController.getInstance().get(1);
+            FXMLLoader page = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/pageAnnonce.fxml"));
+            /*page.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user, item);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });*/
+            Parent annonce = page.load();
+            PageAnnonceController annonceController = page.getController();
+            annonceController.setItem(user, item);
+
+            root.getChildren().add(annonce);
+
+            Scene scene = new Scene(root, 1920, 1080);
+            Stage primaryStage = (Stage) actionButton.getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'annonce.");
+        }
+
+
     }
 
 

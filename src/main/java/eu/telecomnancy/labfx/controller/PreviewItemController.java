@@ -45,7 +45,7 @@ public class PreviewItemController {
         this.description.setText(item.getDescription());
         this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
         this.cost.setText(String.valueOf(item.getCost()));
-        //this.note.setText(item.getNote());
+        this.note.setText(String.valueOf(owner.getAverageNote()));
         this.ville.setText(owner.getCity());
         try {
             String filePath = PreviewItemController.class.getResource(DirectoryHandler.getPathResources("/images/".concat(item.getImage()))).getFile();

@@ -68,6 +68,7 @@ public class JsonItemWritter implements JsonWritter{
                 .append("\t\t\"id\": ").append(item.getId()).append(",\n")
                 .append("\t\t\"nom\": \"").append(item.getName()).append("\",\n")
                 .append("\t\t\"type\": \"").append(item.getType()).append("\",\n")
+                .append("\t\t\"owner\": ").append(item.getOwner()).append(",\n")
                 .append("\t\t\"prix\": \"").append(item.getCost()).append("\",\n")
                 .append("\t\t\"description\": \"").append(item.getDescription()).append("\",\n");
 
