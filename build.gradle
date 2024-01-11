@@ -77,11 +77,12 @@ dependencies {
 
 
 test {
-    useJUnitPlatform()
+    enabled = true
+    /*useJUnitPlatform()
 
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
+    }*/
 }
 
 compileJava {

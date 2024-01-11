@@ -6,7 +6,7 @@ Groupe composé de MOY Kélian, THUILLIER Killian, CHRISTIEN Adrien, HOYAU Chris
 ### Créer le jar
 exporter la variable d'environnement de javafx
 ```sh
-export JAVAFX_HOME=/path/to/your/javafx/home
+export JAVAFX_HOME=/usr/share/openjfx
 ```
 
 clean build gradle puis créé le jar, le lance (pour tester) puis le déplace en le nommant `App.jar` dans le dossier `dist/App.jar`
@@ -17,7 +17,7 @@ clean build gradle puis créé le jar, le lance (pour tester) puis le déplace e
 
 ### lancer le dernier `.jar` créé
 ```sh
-./gradlew clean build && ./gradlew shadowjar && java --module-path ${JAVAFX_HOME}/lib --add-modules=javafx.base,javafx.controls,javafx.fxml -jar App.jar
+java --module-path ${JAVAFX_HOME}/lib --add-modules=javafx.base,javafx.controls,javafx.fxml -jar dist/App.jar
 ```
 
 ## Planning
@@ -36,5 +36,8 @@ Livrable prévu: page d'acceuil, création des objets bien et service ainsi que 
 
 ### Pour Mercredi 10/01
 
-
 Livrable prévu : accueil + profil + css + chat
+
+### Pour Jeudi 11/01
+
+Livrable prévu : page addItem + recherche + calendrier + css
