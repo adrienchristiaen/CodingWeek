@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ public class AccueilController {
     private Button favoris;
     @FXML
     private TextField rechercheAcceuil;
+    @FXML
+    private Button buy;
     private User user;
 
     public AccueilController(User user) {
@@ -38,4 +41,7 @@ public class AccueilController {
 
     }
 
+    public void goBuy(ActionEvent event) {
+        Redirection.pageAnnonce(user ,buy);
+    }
 }
