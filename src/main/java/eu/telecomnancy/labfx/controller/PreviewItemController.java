@@ -3,6 +3,7 @@ package eu.telecomnancy.labfx.controller;
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,7 +48,7 @@ public class PreviewItemController {
         //this.note.setText(item.getNote());
         this.ville.setText(owner.getCity());
         try {
-            String filePath = PreviewItemController.class.getResource("/eu/telecomnancy/labfx/images/".concat(item.getImage())).getFile();
+            String filePath = PreviewItemController.class.getResource(DirectoryHandler.getPathResources("/images/".concat(item.getImage()))).getFile();
             Image image = new Image("../images/".concat(item.getImage()));
             this.imgItem.setImage(image);
         }catch (Exception e){

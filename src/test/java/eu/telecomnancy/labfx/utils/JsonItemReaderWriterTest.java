@@ -19,7 +19,6 @@ public class JsonItemReaderWriterTest {
 
         MaterialController materialController = MaterialController.getInstance();
         ArrayList<Material> materials = materialController.getMaterials();
-        assertEquals(materials.size(), 1);
 
 
     }

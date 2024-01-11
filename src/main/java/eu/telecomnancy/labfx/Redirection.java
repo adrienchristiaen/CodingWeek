@@ -10,6 +10,7 @@ import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.controller.PreviewItemController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,7 +103,7 @@ public class Redirection {
 
 
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1920, 1080);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -128,7 +129,7 @@ public class Redirection {
                 }
             });
             Parent profilRoot = loader.load();
-            Scene profilScene = new Scene(profilRoot);
+            Scene profilScene = new Scene(profilRoot,1920,1080);
             Stage currentStage = (Stage) actionButton.getScene().getWindow();
             currentStage.setScene(profilScene);
             currentStage.setTitle("Profil");
@@ -145,7 +146,7 @@ public class Redirection {
             BorderPane root = new BorderPane();
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/inscription.fxml"));
             root.setCenter(loader.load());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1920, 1080);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -160,7 +161,7 @@ public class Redirection {
             BorderPane root = new BorderPane();
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
             root.setCenter(loader.load());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1920, 1080);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();

@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class JsonItemWritter implements JsonWritter{
@@ -37,15 +39,10 @@ public class JsonItemWritter implements JsonWritter{
         jsonBuilder.append("]");
         String jsonString = jsonBuilder.toString();
         System.out.println("Writing items in json: " + resourcePath);
-        System.out.println(resourcePath);
-        String filePath = JsonItemWritter.class.getResource(resourcePath).getFile();
-        System.out.println(filePath);
-        System.out.println("\n\n\n\n\n");
-        File file = new File(filePath);
+        try {
+            Files.write(Paths.get(resourcePath), jsonString.getBytes());
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(jsonString);
-            System.out.println("JSON data written successfully to file: " + filePath);
+            System.out.println("Content written to file successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
