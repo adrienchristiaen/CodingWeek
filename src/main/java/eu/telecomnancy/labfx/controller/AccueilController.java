@@ -15,8 +15,6 @@ public class AccueilController {
     private Button favoris;
     @FXML
     private TextField rechercheAcceuil;
-    @FXML
-    private Button buy;
     private User user;
 
     public AccueilController(User user) {
@@ -39,9 +37,5 @@ public class AccueilController {
     @FXML
     void searchFor(ActionEvent event) {
 
-    }
-
-    public void goBuy(ActionEvent event) {
-        Redirection.pageAnnonce(user ,buy);
     }
 }

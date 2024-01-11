@@ -44,6 +44,5 @@
             <Insets />
          </VBox.margin>
       </Button>
-      <Button fx:id="buy" mnemonicParsing="false" onAction="#goBuy" text="Page achat pour les test" />
    </children>
 </VBox>

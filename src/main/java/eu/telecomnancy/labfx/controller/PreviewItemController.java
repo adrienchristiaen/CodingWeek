@@ -1,9 +1,11 @@
 package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.DirectoryHandler;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,11 +36,14 @@ public class PreviewItemController {
     @FXML
     private Label ville;
     @FXML
+    private Button buy;
+
+    @FXML
     void addFavori(ActionEvent event) {
 
     }
 
-    public void setItem(MaterialService item, User user){
+    public void setItem(MaterialService item, User user) {
         User owner = UserController.getInstance().getUserById(item.getOwner());
         this.item = item;
         this.title.setText(item.getName());
@@ -51,8 +56,13 @@ public class PreviewItemController {
             String filePath = PreviewItemController.class.getResource(DirectoryHandler.getPathResources("/images/".concat(item.getImage()))).getFile();
             Image image = new Image("../images/".concat(item.getImage()));
             this.imgItem.setImage(image);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Image not found");
         }
+    }
+
+    @FXML
+    void goPageAnnonce(ActionEvent event) {
+        Redirection.pageAnnonce(this.user, this.item,  this.buy);
     }
 }
