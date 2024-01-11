@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.ModeEditionController">
+<VBox spacing="20" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.ModeEditionController">
    <!-- Contenu pour ModeEdition -->
    <Label text="Nouveau Mot de Passe:" />
    <PasswordField fx:id="nouveauMotDePasseField" />

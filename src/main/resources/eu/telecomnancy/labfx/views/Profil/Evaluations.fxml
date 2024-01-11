@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.EvaluationsController">
+<VBox spacing="20" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.EvaluationsController">
    <!-- Contenu pour Evaluations -->
    <Label text="Moyenne des évaluations:" />
    <Label fx:id="moyenneEvaluationsLabel" />
