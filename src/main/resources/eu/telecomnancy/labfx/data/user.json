@@ -22,12 +22,12 @@
 			{"id": 5, "rating": 1, "comment": "Super vendeur", "createdAt": "2020-01-01 00:00:00", "user": 2}
 		],
 		"itemsSell": [
-			{"id": 1, "transactionTime": "2020-01-01 00:00:00"},
-			{"id": 2, "transactionTime": "2020-01-01 00:00:00"}
+			{"id": 1, "transactionTime": "2021-01-01 00:00:00"},
+			{"id": 2, "transactionTime": "2020-02-01 00:00:00"}
 		],
 		"itemsBuy": [
-			{"id": 4, "transactionTime": "2020-01-01 00:00:00"},
-			{"id": 5, "transactionTime": "2020-01-01 00:00:00"}
+			{"id": 4, "transactionTime": "2022-01-01 00:00:00"},
+			{"id": 5, "transactionTime": "2022-01-09 00:00:00"}
 		]
 	},
 	{

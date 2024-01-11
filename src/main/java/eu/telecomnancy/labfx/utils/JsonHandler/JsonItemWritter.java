@@ -22,7 +22,20 @@ public class JsonItemWritter implements JsonWritter{
         ArrayList<MaterialService> items = new ArrayList<MaterialService>();
         items.addAll(services);
         items.addAll(materials);
-        System.out.println(items.size());
+
+        ArrayList<MaterialService> itemsSorted = new ArrayList<MaterialService>(items);
+        //must use itemsSorted.forEach(p->) method to sort the items
+        itemsSorted.sort((p1, p2) -> {
+            if (p1.getId() > p2.getId()) {
+                return 1;
+            } else if (p1.getId() < p2.getId()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (MaterialService item1 : items) {
 
