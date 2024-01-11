@@ -77,10 +77,7 @@ public class MaterialController implements MaterialServiceController{
     }
 
     public ArrayList<Material> sortByUpdateAt(){
-        ArrayList<Material> sortedMaterials = new ArrayList<Material>();
-        for (Material material : this.materials) {
-            sortedMaterials.add(material);
-        }
+        ArrayList<Material> sortedMaterials = new ArrayList<Material>(this.materials);
         sortedMaterials.sort((o1, o2) -> o2.getUpdatedAt().compareTo(o1.getUpdatedAt()));
         return sortedMaterials;
     }

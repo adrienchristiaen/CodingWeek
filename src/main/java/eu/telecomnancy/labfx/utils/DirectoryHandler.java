@@ -39,8 +39,7 @@ public class DirectoryHandler {
         new File(pathHead).mkdir();
         new File(pathHead+"/data").mkdir();
         new File(pathHead+"/images").mkdir();
-        new File(pathHead+"/images/materials").mkdir();
-        new File(pathHead+"/images/services").mkdir();
+        new File(pathHead+"/images/item").mkdir();
         new File(pathHead+"/images/users").mkdir();
         importInitialData(pathHead);
     }
@@ -127,11 +126,12 @@ public class DirectoryHandler {
 
 
     public static void saveNewUserImage(User user,String source){
+        String extention = "." + source.substring(source.lastIndexOf("."));
         //save image to path
-        String destination = pathHead + "/images/users/" + user.getId() + ".png";
+        String destination = pathHead + "/images/users/" + user.getId() + extention;
         try {
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-            user.setImage(user.getId() + ".png");
+            user.setImage(user.getId() + extention);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -139,10 +139,11 @@ public class DirectoryHandler {
 
     public static void saveNewMaterialImage(MaterialService material,String source){
         //save image to path
-        String destination = pathHead + "/images/materials/" + material.getId() + ".png";
+        String extention = "." + source.substring(source.lastIndexOf("."));
+        String destination = pathHead + "/images/item/" + material.getId() + extention;
         try {
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-            material.setImage(material.getId() + ".png");
+            material.setImage(material.getId() + extention);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -150,26 +151,26 @@ public class DirectoryHandler {
 
     public static void saveNewServiceImage(MaterialService service,String source){
         //save image to path
-        String destination = pathHead + "/images/services/" + service.getId() + ".png";
+        String extention = "." + source.substring(source.lastIndexOf("."));
+        String destination = pathHead + "/images/items/" + service.getId() + extention;
         try {
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-            service.setImage(service.getId() + ".png");
+            service.setImage(service.getId() + extention);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static String getUserImagePathStored(User user){
-
-        return pathHead + "/images/users/" + user.getId() + ".png";
+        return pathHead + "/images/users/" + user.getImage();
     }
 
     public static String getMaterialImagePathStored(MaterialService material){
-        return pathHead + "/images/materials/" + material.getId() + ".png";
+        return pathHead + "/images/item/" + material.getImage();
     }
 
     public static String getServiceImagePathStored(MaterialService service){
-        return pathHead + "/images/services/" + service.getId() + ".png";
+        return pathHead + "/images/item/" + service.getImage();
     }
 
 

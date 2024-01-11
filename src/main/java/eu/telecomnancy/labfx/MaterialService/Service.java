@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.MaterialService;
 
 import eu.telecomnancy.labfx.utils.Reservation;
+import eu.telecomnancy.labfx.utils.SubObjectController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Service implements MaterialService{
     private boolean isActive;
 
     public Service(String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
+        this.id = SubObjectController.getInstance().getNewServiceId();
         this.name = name;
         this.type = "service";
         this.owner = owner;
