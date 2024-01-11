@@ -3,7 +3,9 @@ package eu.telecomnancy.labfx.MaterialService;
 import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonItemReader;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonItemWritter;
+import eu.telecomnancy.labfx.utils.Reservation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MaterialController implements MaterialServiceController{
@@ -26,6 +28,14 @@ public class MaterialController implements MaterialServiceController{
         this.materials.add(material);
     }
 
+    public void addMaterialFromAttr(String title, int userId , int price , String description, LocalDateTime startTime, LocalDateTime endTime, String imagePath) {
+        LocalDateTime createdAt = LocalDateTime.now();
+        LocalDateTime updatedAt = LocalDateTime.now();
+        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+
+        Material material = new Material(title, userId, price ,description, createdAt, updatedAt,startTime, endTime, reservations, imagePath, true);
+        this.materials.add(material);
+    }
     @Override
     public MaterialService get(int id) {
         for (Material material : this.materials) {

@@ -1,10 +1,12 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.MaterialService.MaterialController;
+import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.user.User;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,14 +62,24 @@ public class AddItemController {
     void validateOffer(ActionEvent event) {
         String type = selectType.getValue();
         String title = this.title.getText();
+        int userID = this.user.getId();
         int price = Integer.parseInt(this.price.getText());
         String description = this.description.getText();
-        String startDate = toLocalDateTime(this.startDate.getValue(), this.startHour.getText(), this.startMinute.getText());
-        String endDate = toLocalDateTime(this.endDate.getValue(), this.endHour.getText(), this.endMinute.getText());
+        LocalDateTime startDate = toLocalDateTime(this.startDate.getValue(), this.startHour.getText(), this.startMinute.getText());
+        LocalDateTime endDate = toLocalDateTime(this.endDate.getValue(), this.endHour.getText(), this.endMinute.getText());
         String imagePath = this.imagePath;
-
-        if(type == null || title == null || price == 0 ||startDate == null || endDate == null){
+        if(type == null || title == null ||startDate == null || endDate == null){
             errorText.setText("Veuillez remplir tous les champs");
+        }
+        else{
+            if(type.equals("Service")){
+                ServiceController.getInstance().addServiceFromAttr(title, userID, price, description, startDate, endDate, imagePath);
+            }
+            else{
+                MaterialController.getInstance().addMaterialFromAttr(title, userID, price, description, startDate, endDate, imagePath);
+            }
+            Stage stage = (Stage) validate.getScene().getWindow();
+            stage.close();
         }
     }
 
@@ -97,7 +109,7 @@ public class AddItemController {
 
     }
 
-    private String toLocalDateTime(LocalDate date, String hour, String minute) {
+    private LocalDateTime toLocalDateTime(LocalDate date, String hour, String minute) {
         if(date == null){
             errorText.setText("La date ne peut pas être nulle");
             return null;
@@ -114,13 +126,7 @@ public class AddItemController {
             errorText.setText("Les minutes doivent être comprises entre 0 et 60");
             return null;
         }
-        if(hour.length() == 1){
-            hour = "0" + hour;
-        }
-        if(minute.length() == 1){
-            minute = "0" + minute;
-        }
-        return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth() + "T" + hour + ":" + minute + ":00";
+        return LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), Integer.parseInt(hour), Integer.parseInt(minute));
     }
 
 }

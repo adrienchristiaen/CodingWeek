@@ -20,8 +20,7 @@ public class Material implements MaterialService{
     private String image;
     private boolean isActive;
 
-    public Material(int id, String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
-        this.id = id;
+    public Material(String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
         this.name = name;
         this.type = "materiel";
         this.owner = owner;
