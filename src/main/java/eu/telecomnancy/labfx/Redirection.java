@@ -179,4 +179,19 @@ public class Redirection {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public static void recherche(ActionEvent event) {
+        try {
+            BorderPane root = new BorderPane();
+            FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/resultats.fxml"));
+            root.setCenter(loader.load());
+            Scene scene = new Scene(root, 1920, 1080);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet de connexion.");
+        }
+    }
 }

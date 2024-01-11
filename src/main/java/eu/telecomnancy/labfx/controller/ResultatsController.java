@@ -59,12 +59,12 @@ public class ResultatsController {
         int nbrServices = 0;
         int nbrMateriels = 0;
         for (int i=1; i<1+maxServiceId; i++){
-            if (serviceController.getServiceById(i) != null) {
+            if (serviceController.get(i) != null) {
                 nbrServices++;
             }
         }
         for (int i=1; i<1+maxMaterialId; i++){
-            if (materialController.getMaterialById(i) != null) {
+            if (materialController.get(i) != null) {
                 nbrMateriels++;
             }
         }
@@ -76,9 +76,9 @@ public class ResultatsController {
            
         int a=0;
         for (int i = 0; i <= maxServiceId; i++) {
-            if (serviceController.getServiceById(i+1) != null) {
-                service = serviceController.getServiceById(i+1);
-                if(service!=null || service.isActive()==true || service.getId()!=0){
+            if (serviceController.get(i+1) != null) {
+                service = (Service)serviceController.get(i+1);
+                if(service!=null || service.isActive() || service.getId()!=0){
                
                 ListeIdScoreService[a][0] = service.getId();
                 ListeIdScoreService[a][1] = 0;
@@ -90,9 +90,9 @@ public class ResultatsController {
        
         int b=0;
         for (int i = 0; i < maxMaterialId; i++) {
-            if (materialController.getMaterialById(i + 1) != null) {
-                material=materialController.getMaterialById(i + 1);
-                if(material!=null || material.isActive()==true || material.getId()!=0){
+            if (materialController.get(i + 1) != null) {
+                material= (Material) materialController.get(i + 1);
+                if(material!=null || material.isActive() || material.getId()!=0){
                 ListeIdScoreMateriel[b][0] = material.getId();
                 ListeIdScoreMateriel[b][1] = 0;
                 b++;
@@ -200,7 +200,7 @@ public class ResultatsController {
     
 
     private VBox createCustomComponentMateriel(int itemId, String itemType) {
-        material = materialController.getMaterialById(itemId);
+        material = (Material)materialController.get(itemId);
     
         ImageView imageView = new ImageView(/* phtoto */);
         Label nameLabel = new Label(itemType + " : " + material.getName());
@@ -214,7 +214,7 @@ public class ResultatsController {
         return customComponent;
     }
      private VBox createCustomComponentService(int itemId, String itemType) {
-        service = serviceController.getServiceById(itemId);
+        service = (Service) serviceController.get(itemId);
 
         ImageView imageView = new ImageView(/* phtoto */);
         Label nameLabel = new Label(itemType + " : " + service.getName());
@@ -236,7 +236,7 @@ public class ResultatsController {
         String[] mots1 = mot.split(" ");
         for (int i = 0; i < idScoreService.length; i++) {
             int itemId = idScoreService[i][0];
-            service = serviceController.getServiceById(itemId);
+            service =(Service) serviceController.get(itemId);
     
             if (service != null && service.getName() != null) {
                 for (int j = 0; j < mots1.length; j++) {
@@ -259,7 +259,7 @@ public class ResultatsController {
                     }
                 }
             }
-            if (service != null && service.isActive()==false){
+            if (service != null && !service.isActive()){
                 idScoreService[i][1] = 0;
             }
         }
@@ -269,7 +269,7 @@ public class ResultatsController {
         String[] mots1 = mot.split(" ");
         for (int i = 0; i < idScoreMateriel.length; i++) {
             int itemId = idScoreMateriel[i][0];
-            material = materialController.getMaterialById(itemId);
+            material =(Material) materialController.get(itemId);
     
             if (material != null && material.getName() != null) {
                 for (int j = 0; j < mots1.length; j++) {

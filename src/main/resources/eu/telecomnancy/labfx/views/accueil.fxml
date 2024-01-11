@@ -32,7 +32,8 @@
                   <Insets bottom="10.0" top="10.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="favoris" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#goFavoris" prefHeight="24.0" prefWidth="66.0" text="Favoris" textAlignment="CENTER">
+            <Button fx:id="SearchButton" mnemonicParsing="false" onAction="#searchFor" prefHeight="30.0" prefWidth="88.0" text="Rechercher" />
+            <Button fx:id="favoris" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#goFavoris" prefHeight="30.0" prefWidth="66.0" text="Favoris" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
