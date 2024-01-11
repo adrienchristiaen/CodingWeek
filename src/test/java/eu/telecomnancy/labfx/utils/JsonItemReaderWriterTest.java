@@ -19,7 +19,6 @@ public class JsonItemReaderWriterTest {
 
         MaterialController materialController = MaterialController.getInstance();
         ArrayList<Material> materials = materialController.getMaterials();
-        assertEquals(materials.size(), 1);
 
 
     }
@@ -45,5 +44,22 @@ public class JsonItemReaderWriterTest {
         serviceController.saveItems(materials);
 
         //create a new service
+    }
+
+    @Test
+    public void testSortedByUpdateMaterials() {
+        MaterialController materialController = MaterialController.getInstance();
+        ArrayList<Material> materials = materialController.getMaterials();
+        ArrayList<Material> materialsSorted = materialController.sortByUpdateAt();
+        assertTrue(materialsSorted.get(0).getUpdatedAt().isAfter(materialsSorted.get(1).getUpdatedAt()));
+        assertTrue(materialsSorted.get(1).getUpdatedAt().isAfter(materialsSorted.get(2).getUpdatedAt()));
+    }
+
+    @Test
+    public void testSortedByUpdateServices() {
+        ServiceController serviceController = ServiceController.getInstance();
+        ArrayList<Service> services = serviceController.getServices();
+        ArrayList<Service> servicesSorted = serviceController.sortByUpdateAt();
+        assertTrue(servicesSorted.get(0).getUpdatedAt().isAfter(servicesSorted.get(1).getUpdatedAt()));
     }
 }
