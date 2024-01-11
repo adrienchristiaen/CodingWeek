@@ -29,6 +29,7 @@ public class Main extends Application {
             DirectoryHandler.generateFolder();
             System.out.println("Resources copied successfully to: " + DirectoryHandler.getPathHead());
         }
+
         UserController.getInstance();
         primaryStage.setTitle("TelecomNancy DirectDealing");
         UserController userController = UserController.getInstance();
