@@ -163,7 +163,7 @@ public class Redirection {
         }
     }
 
-    public static void pageAnnonce(User user, /*MaterialService item, */Button actionButton) {
+    public static void pageAnnonce(User user, MaterialService item, Button actionButton) {
         try {
             MaterialService itemtest = MaterialController.getInstance().get(1);
 
