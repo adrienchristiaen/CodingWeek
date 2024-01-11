@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.MaterialService.MaterialController;
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
 import eu.telecomnancy.labfx.MaterialService.MaterialServiceController;
 import eu.telecomnancy.labfx.Redirection;
@@ -49,6 +50,7 @@ public class PopUpController {
         System.out.println(this.user.getIdentifiant());
         Reservation reservation = new Reservation(startDate, endDate, this.user.getId());
         item.addReservation(reservation);
+        //MaterialController.saveItems();
 
         Redirection.accueil(this.user, reserve);
     }
