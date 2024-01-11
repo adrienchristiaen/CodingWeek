@@ -7,6 +7,8 @@ import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserWritter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Collections;
 
 public class UserController {
     //use singleton pattern to create only one instance of the controller whitch contains the user list ArrayList<User>
@@ -86,33 +88,34 @@ public class UserController {
         saveUsers();
     }
 
-    public ArrayList<History> getRecentHistory(User user){
+    public ArrayList<History> getRecentHistory(User user) {
         ArrayList<ItemTuple> itemsSell = user.getItemsSell();
         ArrayList<ItemTuple> itemsBuy = user.getItemsBuy();
+        HashSet<Integer> addedItems = new HashSet<>(); // Utiliser un ensemble pour éviter les doublons
         ArrayList<History> history = new ArrayList<>();
-
+    
         for (ItemTuple itemTuple : itemsSell) {
+            System.out.println(2);
             MaterialService materialService = itemTuple.getMaterialService();
-            if (materialService != null) {
+            if (materialService != null && addedItems.add(materialService.getId())) {
                 history.add(new History(materialService, materialService.getCost(), itemTuple.getTansactionTime()));
-            }
         }
+        }
+    
         for (ItemTuple itemTuple : itemsBuy) {
+            System.out.println(3);
             MaterialService materialService = itemTuple.getMaterialService();
-            if (materialService != null) {
+            if (materialService != null && addedItems.add(materialService.getId())) {
                 history.add(new History(materialService, -materialService.getCost(), itemTuple.getTansactionTime()));
             }
         }
-
         return sortHistory(history);
-
-
-
+    
     }
 
     public ArrayList<History> sortHistory(ArrayList<History> historyToSort){
         ArrayList<History> sortedHistory = new ArrayList<>(historyToSort);
-        sortedHistory.sort((o1, o2) -> o2.getTansactionTime().compareTo(o1.getTansactionTime()));
+        sortedHistory.sort((h1, h2) -> h2.getTansactionTime().compareTo(h1.getTansactionTime()));
         return sortedHistory;
     }
 

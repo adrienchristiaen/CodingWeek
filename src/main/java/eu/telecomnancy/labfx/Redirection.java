@@ -4,6 +4,7 @@ import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
 import eu.telecomnancy.labfx.MaterialService.Service;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
+import eu.telecomnancy.labfx.Profil.HistoriqueRecentController;
 import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
@@ -132,7 +133,7 @@ public class Redirection {
                 }
             });
             Parent navbar = top.load();
-    
+
             // On charge la vue du profil
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
             loader.setControllerFactory(cl -> {
@@ -148,25 +149,42 @@ public class Redirection {
                 }
             });
             Parent profilRoot = loader.load();
-    
+
+            // On charge la vue de l'historique récent
+            FXMLLoader historyLoader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/HistoriqueRecent.fxml"));
+            historyLoader.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent historyRoot = historyLoader.load();
+
             // On crée une VBox pour organiser les éléments verticalement
             VBox root = new VBox();
-            root.getChildren().addAll(navbar, profilRoot);
-            root.setVgrow(profilRoot, Priority.ALWAYS); // Ajuste la taille de la vue du profil
-    
-            Scene profilScene = new Scene(root, 20000, 20000);
+            root.getChildren().addAll(navbar, profilRoot, historyRoot);
+
+            // Récupérer le contrôleur de l'historique récent et appeler initialize
+            HistoriqueRecentController historyController = historyLoader.getController();
+            historyController.initialize();
+
+            Scene profilScene = new Scene(root, 1920, 1080);
             Stage currentStage = (Stage) actionButton.getScene().getWindow();
             currentStage.setScene(profilScene);
             currentStage.setTitle("Profil");
             currentStage.show();
-    
-            // Forcer une mise à jour de la scène
-            currentStage.sizeToScene();
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
         }
     }
+
     
 
 
