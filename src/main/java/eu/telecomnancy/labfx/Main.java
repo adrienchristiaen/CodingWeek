@@ -3,6 +3,7 @@ package eu.telecomnancy.labfx;
 
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,6 +24,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        DirectoryHandler.setPathHead();
+        if (!new File(DirectoryHandler.getPathHead()).exists()) {
+            DirectoryHandler.generateFolder();
+            System.out.println("Resources copied successfully to: " + DirectoryHandler.getPathHead());
+        }
+        UserController.getInstance();
         primaryStage.setTitle("TelecomNancy DirectDealing");
         UserController userController = UserController.getInstance();
         ArrayList<User> users = userController.getUsers();
@@ -33,3 +41,4 @@ public class Main extends Application {
         primaryStage.show();
     }
 }
+

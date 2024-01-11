@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.user;
 
+import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.ItemTuple;
 
 import java.time.LocalDateTime;
@@ -39,5 +40,23 @@ public interface User {
     public void setItemsOwned(ArrayList<Integer> itemsOwned);
     public void setItemsSell(ArrayList<ItemTuple> itemsSell);
     public void setItemsBuy(ArrayList<ItemTuple> itemsBuy);
-
+    public ArrayList<Evaluation> getEvaluations();
+    public ArrayList<Integer> getFavouriteItems();
+    public void setFavouriteItems(ArrayList<Integer> favouriteItems);
+    public void setEvaluations(ArrayList<Evaluation> evaluations);
+    public void addItemOwned(int id);
+    public void addItemSell(ItemTuple itemTuple);
+    public void addItemBuy(ItemTuple itemTuple);
+    public void addEvaluation(Evaluation evaluation);
+    public void addFavouriteItem(int id);
+    public void removeItemOwned(int id);
+    public void removeItemSell(int id);
+    public void removeItemBuy(int id);
+    public void removeEvaluation(int id);
+    public void removeFavouriteItem(int id);
+    public void removeFlorains(int florains);
+    public void addFlorains(int florains);
+    public void addEvaluation(int note, String comment, int idUserOfComment);
+    public double getAverageNote();
+    public String getShortenDescription();
 }

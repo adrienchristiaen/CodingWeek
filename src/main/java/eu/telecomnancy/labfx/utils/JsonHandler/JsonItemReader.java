@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,31 +29,17 @@ public class JsonItemReader implements JsonReader{
         ArrayList<MaterialService> items = new ArrayList<>();
 
         String jsonString = null;
-        try (InputStream inputStream = JsonItemReader.class.getResourceAsStream(resourcePath)) {
-            System.out.println(inputStream);
-            assert inputStream != null;
-            try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-                 BufferedReader reader = new BufferedReader(inputStreamReader)) {
 
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
-                }
-
-                jsonString = stringBuilder.toString();
-                // Now you have your JSON string, proceed with parsing
-
-            }
+        try {
+            jsonString = Files.readString(Paths.get(resourcePath));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         //reads json file and creates users
         System.out.println("Reading items from json: " + resourcePath);
         if (jsonString == null) {
             return items;
         }
-        System.out.println(jsonString);
         JSONArray array = new JSONArray(jsonString);
         if (!jsonString.equals("[]")) {
             for (int i = 0; i < array.length(); i++) {
