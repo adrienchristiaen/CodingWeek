@@ -45,12 +45,12 @@ public class SubObjectController {
 
     public Integer getNewMaterialId() {
         NbOfMaterial++;
-        return NbOfMaterial;
+        return NbOfMaterial+NbOfService;
     }
 
     public Integer getNewServiceId() {
         NbOfService++;
-        return NbOfService;
+        return NbOfService+NbOfMaterial;
     }
 
     public Integer getNewEvaluationId() {
