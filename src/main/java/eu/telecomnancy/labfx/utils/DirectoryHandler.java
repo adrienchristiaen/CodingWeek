@@ -1,6 +1,8 @@
 package eu.telecomnancy.labfx.utils;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
+import eu.telecomnancy.labfx.MaterialService.Service;
+import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 
@@ -137,7 +139,7 @@ public class DirectoryHandler {
         }
     }
 
-    public static void saveNewMaterialImage(MaterialService material,String source){
+    public static void saveNewMaterialImage(Material material,String source){
         //save image to path
         String extention = "." + source.substring(source.lastIndexOf("."));
         String destination = pathHead + "/images/item/" + material.getId() + extention;
@@ -149,7 +151,7 @@ public class DirectoryHandler {
         }
     }
 
-    public static void saveNewServiceImage(MaterialService service,String source){
+    public static void saveNewServiceImage(Service service, String source){
         //save image to path
         String extention = "." + source.substring(source.lastIndexOf("."));
         String destination = pathHead + "/images/items/" + service.getId() + extention;

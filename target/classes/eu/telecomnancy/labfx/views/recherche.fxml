@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER" fx:controller="eu.telecomnancy.labfx.ResultatsController">
+    <Label text="Bienvenue dans l'application de recherche !" />
+    <TextField fx:id="barreRecherche" promptText="Entrez votre recherche..." />
+    <Button text="Rechercher" onAction="#handleRechercherButtonClick" />
+</VBox>
