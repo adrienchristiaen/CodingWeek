@@ -7,12 +7,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.AddItemController">
    <children>
@@ -41,17 +41,17 @@
             <Label text="Titre :" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="22.0" prefWidth="126.0" text="Prix (en entier) :" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Description :" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="title" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <TextField fx:id="title" promptText="Nom de l'offre" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="price" maxWidth="60.0" prefHeight="24.0" prefWidth="95.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <TextField fx:id="price" maxWidth="60.0" prefHeight="24.0" prefWidth="95.0" promptText="Prix" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextArea fx:id="description" prefHeight="58.0" prefWidth="386.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <TextArea fx:id="description" prefHeight="60.0" prefWidth="386.0" promptText="Ecriver ici la description de votre offre" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -109,6 +109,12 @@
             <Insets top="10.0" />
          </padding>
       </GridPane>
+      <Button fx:id="addImage" mnemonicParsing="false" onAction="#addImage" text="Ajouter une image">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <ImageView fx:id="currentImage" fitHeight="118.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="validate" mnemonicParsing="false" onAction="#validateOffer" text="Valider l'offre">
          <VBox.margin>
             <Insets top="30.0" />
