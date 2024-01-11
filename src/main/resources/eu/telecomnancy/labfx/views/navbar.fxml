@@ -24,7 +24,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Button fx:id="home" alignment="CENTER" mnemonicParsing="false" onAction="#goHome" prefHeight="30.0" prefWidth="90.0" text="Acceuil" GridPane.valignment="TOP" />
+      <Button fx:id="home" alignment="CENTER" mnemonicParsing="false" onAction="#goHome" prefHeight="30.0" prefWidth="90.0" text="Accueil" GridPane.valignment="TOP" />
       <Button fx:id="messagerie" mnemonicParsing="false" onAction="#goMessagerie" prefHeight="30.0" prefWidth="110.0" text="Messagerie" GridPane.columnIndex="1" GridPane.valignment="TOP" />
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>

@@ -1,8 +1,7 @@
 package eu.telecomnancy.labfx.user;
 
-import eu.telecomnancy.labfx.utils.DirectoryHandler;
-import eu.telecomnancy.labfx.utils.Evaluation;
-import eu.telecomnancy.labfx.utils.ItemTuple;
+import eu.telecomnancy.labfx.MaterialService.MaterialService;
+import eu.telecomnancy.labfx.utils.*;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserReader;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserWritter;
 
@@ -85,6 +84,36 @@ public class UserController {
         User user = new ClassicUser(id, identifiant, password, firstName, lastName, email, city, florains, LocalDateTime.now(), image, description, new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<Evaluation>() ,new ArrayList<ItemTuple>(), new ArrayList<ItemTuple>());
         users.add(user);
         saveUsers();
+    }
+
+    public ArrayList<History> getRecentHistory(User user){
+        ArrayList<ItemTuple> itemsSell = user.getItemsSell();
+        ArrayList<ItemTuple> itemsBuy = user.getItemsBuy();
+        ArrayList<History> history = new ArrayList<>();
+
+        for (ItemTuple itemTuple : itemsSell) {
+            MaterialService materialService = itemTuple.getMaterialService();
+            if (materialService != null) {
+                history.add(new History(materialService, materialService.getCost(), itemTuple.getTansactionTime()));
+            }
+        }
+        for (ItemTuple itemTuple : itemsBuy) {
+            MaterialService materialService = itemTuple.getMaterialService();
+            if (materialService != null) {
+                history.add(new History(materialService, -materialService.getCost(), itemTuple.getTansactionTime()));
+            }
+        }
+
+        return sortHistory(history);
+
+
+
+    }
+
+    public ArrayList<History> sortHistory(ArrayList<History> historyToSort){
+        ArrayList<History> sortedHistory = new ArrayList<>(historyToSort);
+        sortedHistory.sort((o1, o2) -> o2.getTansactionTime().compareTo(o1.getTansactionTime()));
+        return sortedHistory;
     }
 
 }

@@ -73,10 +73,10 @@ public class JsonItemReader implements JsonReader{
         Service service;
         Material material;
         if (type.equals("service")){
-            service = new Service(id, name, owner, price, description, createdAt, updateAt, startTime, endTime, reserve, image, isActive);
+            service = new Service(name, owner, price, description, createdAt, updateAt, startTime, endTime, reserve, image, isActive);
             return service;
         }else if (type.equals("materiel")){
-            material = new Material(id, name, owner, price, description, createdAt, updateAt, startTime, endTime, reserve, image, isActive);
+            material = new Material(name, owner, price, description, createdAt, updateAt, startTime, endTime, reserve, image, isActive);
             return material;
         }else{
             return null;
