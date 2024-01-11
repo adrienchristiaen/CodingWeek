@@ -57,9 +57,6 @@ public class Redirection {
                     throw new RuntimeException(exc);
                 }
             });
-            /*NavBarController navBarController = top.getController();
-            navBarController.setUser(user);
-            navBarController.setFlorains();*/
 
             root.getChildren().add(top.load());
 
@@ -83,9 +80,10 @@ public class Redirection {
             GridPane previews = new GridPane();
             previews.setAlignment(javafx.geometry.Pos.TOP_CENTER);
             //On recupere les 3 derniers services et les 3 derniers materials
+            System.out.println("Size of materials: " + MaterialController.getInstance().getMaterials().size());
             ArrayList<Material> materials = new ArrayList(MaterialController.getInstance().sortByUpdateAt().subList(0, 2));
             ArrayList<Service> services = new ArrayList(ServiceController.getInstance().sortByUpdateAt().subList(0, 2));
-
+            System.out.println(services.size() + " " + materials.size());
             //On ajoute les previewsItem dans la gridpane
 
             for (int i = 0; i < materials.size(); i++) {
@@ -217,6 +215,54 @@ public class Redirection {
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet de connexion.");
+        }
+    }
+
+    public static void goAddItem (User user, Button actionButton) {
+        try {
+            VBox addItemRoot = new VBox();
+            addItemRoot.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+            //On load la navbar et on la met en haut
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            addItemRoot.getChildren().add(top.load());
+
+            //On load le formulaire
+            FXMLLoader form = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/AddItem.fxml"));
+            form.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            addItemRoot.getChildren().add(form.load());
+
+            Scene scene = new Scene(addItemRoot, 1920, 1080);
+            Stage primaryStage = (Stage) actionButton.getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'ajout d'item.");
         }
     }
 

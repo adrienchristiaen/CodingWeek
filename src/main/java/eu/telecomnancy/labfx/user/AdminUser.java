@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.user;
 
 import eu.telecomnancy.labfx.utils.Evaluation;
+import eu.telecomnancy.labfx.utils.EvaluationController;
 import eu.telecomnancy.labfx.utils.ItemTuple;
 
 import java.time.LocalDateTime;
@@ -277,7 +278,9 @@ public class AdminUser implements User{
 
     @Override
     public void addEvaluation(int note, String comment, int idUserOfComment) {
-        evaluations.add(new Evaluation(idUserOfComment, note, comment, LocalDateTime.now()));
+        Evaluation eval = new Evaluation(idUserOfComment, note, comment, LocalDateTime.now());
+        evaluations.add(eval);
+        EvaluationController.getInstance().addEvaluation(eval);
     }
 
     @Override

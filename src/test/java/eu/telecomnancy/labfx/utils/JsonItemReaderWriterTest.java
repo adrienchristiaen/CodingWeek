@@ -41,7 +41,7 @@ public class JsonItemReaderWriterTest {
         }
         int size  = serviceController.getServices().size();
         System.out.println(size);
-        serviceController.saveItems(materials);
+        serviceController.saveItems();
 
         //create a new service
     }
