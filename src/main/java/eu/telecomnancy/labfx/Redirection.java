@@ -14,6 +14,7 @@ import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -115,6 +117,23 @@ public class Redirection {
 
     public static void goProfil(User user, Button actionButton) {
         try {
+            // On charge la navbar
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent navbar = top.load();
+    
+            // On charge la vue du profil
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
             loader.setControllerFactory(cl -> {
                 try {
@@ -129,17 +148,28 @@ public class Redirection {
                 }
             });
             Parent profilRoot = loader.load();
-            Scene profilScene = new Scene(profilRoot,1920,1080);
+    
+            // On crée une VBox pour organiser les éléments verticalement
+            VBox root = new VBox();
+            root.getChildren().addAll(navbar, profilRoot);
+            root.setVgrow(profilRoot, Priority.ALWAYS); // Ajuste la taille de la vue du profil
+    
+            Scene profilScene = new Scene(root, 20000, 20000);
             Stage currentStage = (Stage) actionButton.getScene().getWindow();
             currentStage.setScene(profilScene);
             currentStage.setTitle("Profil");
             currentStage.show();
-
+    
+            // Forcer une mise à jour de la scène
+            currentStage.sizeToScene();
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
         }
     }
+    
+
+
 
 
     public static void inscription(ActionEvent event) {
