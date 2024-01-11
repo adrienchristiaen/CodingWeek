@@ -151,12 +151,18 @@ public class ClassicUser implements User{
     }
 
     @Override
-    public void setImage(String image) {
-        this.image = image;
-    }
+    public void setImage(String imageName) { this.image = imageName; }
 
     @Override
     public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String getShortenDescription() {
+        if (description.length() > 300) {
+            return description.substring(0, 300) + "...";
+        }
         return description;
     }
 
@@ -288,4 +294,5 @@ public class ClassicUser implements User{
         }
         return (double)Math.round((sum / (double) evaluations.size()) * 10) / 10;
     }
+
 }

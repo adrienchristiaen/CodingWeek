@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.user;
 
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.ItemTuple;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserReader;
@@ -14,8 +15,13 @@ public class UserController {
     private ArrayList<User> users;
     //singleton pattern
     private UserController() {
-        this.users = JsonUserReader.read("/eu/telecomnancy/labfx/data/user.json");
+        System.out.println("Reading users from json: " + DirectoryHandler.getPathResources("/data/user.json"));
+        this.users = JsonUserReader.read(DirectoryHandler.getPathResources("/data/user.json"));
     }
+
+/*    public void initialread(){
+        this.users = JsonUserReader.read(UserController.class.getResource("/eu/telecomnancy/labfx/data/user.json").getPath());
+    }*/
     public static UserController getInstance() {
         if (instance == null) {
             instance = new UserController();
@@ -31,7 +37,8 @@ public class UserController {
     }
 
     public void saveUsers() {
-        JsonUserWritter.write("/eu/telecomnancy/labfx/data/user.json", this.users);
+
+        JsonUserWritter.write(DirectoryHandler.getPathResources("/data/user.json"), this.users);
     }
 
     public User getUserById(int id) {
@@ -74,7 +81,7 @@ public class UserController {
     }
 
     public void createClassicUser(String identifiant, String password, String firstName, String lastName, String email, String city, int florains, String image, String description) {
-        int id = getMaxId();
+        int id = getMaxId()+1;
         User user = new ClassicUser(id, identifiant, password, firstName, lastName, email, city, florains, LocalDateTime.now(), image, description, new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<Evaluation>() ,new ArrayList<ItemTuple>(), new ArrayList<ItemTuple>());
         users.add(user);
         saveUsers();
