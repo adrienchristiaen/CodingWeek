@@ -42,6 +42,6 @@ public class AccueilController {
     }
 
     public void goBuy(ActionEvent event) {
-        Redirection.pageAnnonce(user, buy);
+        Redirection.pageAnnonce(user ,buy);
     }
 }

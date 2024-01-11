@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.DirectoryHandler;
@@ -39,7 +40,7 @@ public class PageAnnonceController {
     private Label titre;
 
     public void setItem(User user, MaterialService item){
-        this.user = this.user;
+        this.user = user;
         this.item = item;
         User owner = UserController.getInstance().getUserById(item.getOwner());
         titre.setText(item.getName());
@@ -66,7 +67,7 @@ public class PageAnnonceController {
 
     @FXML
     void reserve(ActionEvent event) {
-        //Redirection.popUpReserve(user, item);
+        Redirection.popUpAnnonce(this.user, this.item, this.reserve);
     }
 
 }

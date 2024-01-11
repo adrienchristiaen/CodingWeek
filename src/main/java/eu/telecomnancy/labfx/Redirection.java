@@ -163,8 +163,10 @@ public class Redirection {
         }
     }
 
-    public static void pageAnnonce(User user, Button actionButton) {
+    public static void pageAnnonce(User user, /*MaterialService item, */Button actionButton) {
         try {
+            MaterialService itemtest = MaterialController.getInstance().get(1);
+
             //On crée un contenair root qui sera une vbox
             VBox root = new VBox();
             root.setAlignment(Pos.TOP_CENTER);
@@ -185,23 +187,10 @@ public class Redirection {
             });
             root.getChildren().add(top.load());
 
-            MaterialService item = MaterialController.getInstance().get(1);
             FXMLLoader page = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/pageAnnonce.fxml"));
-            /*page.setControllerFactory(cl -> {
-                try {
-                    Constructor<?> cons = cl.getConstructor(User.class);
-                    if (cons != null) {
-                        return cons.newInstance(user, item);
-                    } else {
-                        return cl.newInstance();
-                    }
-                } catch (Exception exc) {
-                    throw new RuntimeException(exc);
-                }
-            });*/
             Parent annonce = page.load();
             PageAnnonceController annonceController = page.getController();
-            annonceController.setItem(user, item);
+            annonceController.setItem(user, itemtest);
 
             root.getChildren().add(annonce);
 
@@ -214,9 +203,54 @@ public class Redirection {
             e.printStackTrace();
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'annonce.");
         }
-
-
     }
+    public static void popUpAnnonce(User user, MaterialService item, Button actionButton) {
+        try {
+            VBox root = new VBox();
+            root.setAlignment(Pos.TOP_CENTER);
+
+            //On load la navbar et on la met en haut
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            root.getChildren().add(top.load());
+            //On load la page de validation qui prend en parametre l'utilisateur et l'item dans son constructor
+            FXMLLoader popUp = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/popUpReservation.fxml"));
+            popUp.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class, MaterialService.class);
+                    if (cons != null) {
+                        return cons.newInstance(user,item);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            root.getChildren().add(popUp.load());
+
+            Scene scene = new Scene(root, 1920, 1080);
+            Stage primaryStage = (Stage) actionButton.getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'annonce.");
+        }
+    }
+
 
 
     private static void showErrorDialog(String title, String message) {
