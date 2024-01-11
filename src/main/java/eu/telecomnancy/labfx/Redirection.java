@@ -1,13 +1,8 @@
 package eu.telecomnancy.labfx;
 
-import eu.telecomnancy.labfx.MaterialService.Material;
-import eu.telecomnancy.labfx.MaterialService.MaterialController;
-import eu.telecomnancy.labfx.MaterialService.Service;
-import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
-import eu.telecomnancy.labfx.controller.PreviewItemController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.DirectoryHandler;
@@ -23,7 +18,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
