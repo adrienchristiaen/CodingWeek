@@ -36,7 +36,7 @@ public class JsonItemReaderWriterTest {
         int id = Math.max(materialController.getMaxId(), serviceController.getMaxId());
         for (int i = 0; i < 10; i++) {
             //create a new service
-            Service service1 = new Service("serviceTest".concat(String.valueOf(id+1+i)), 1, 0, "s", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), null, "service1.png", true);
+            Service service1 = new Service(id+1+i,"serviceTest".concat(String.valueOf(id+1+i)), 1, 0, "s", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), null, "service1.png", true);
             serviceController.add(service1);
         }
         int size  = serviceController.getServices().size();
