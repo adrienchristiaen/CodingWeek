@@ -1,22 +1,29 @@
 package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
+
+import java.util.Arrays;
+
 import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.MaterialService.Service;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+
 
 
 
 public class ResultatsController {
+    @FXML
+    private TextField searchBar;
 
     @FXML
     private ComboBox<String> displayModeComboBox;
@@ -25,52 +32,88 @@ public class ResultatsController {
     private TilePane resultsTilePane;
 
     @FXML
+    private ListView<VBox> resultsListView;
+    @FXML
     private Label searchLabel;
+    @FXML
+    private Button switchResultsButton;
 
     private MaterialController materialController = MaterialController.getInstance();
     private ServiceController serviceController = ServiceController.getInstance();
     private Material material ;
     private Service service ;
-    
+    private int[][] ListeIdScoreService;
+    private int[][] ListeIdScoreMateriel;
+    @FXML
+    protected void handleRechercheButtonClick() {
+        String searchTerm = searchBar.getText();
+        initializeResults(searchTerm);
+    }
     
     public void initializeResults(String searchTerm) {
         searchLabel.setText("Voici les résultats de la recherche pour : " + searchTerm);
-        // separerMotRecherche(searchTerm);
       
         int maxServiceId = serviceController.getMaxId();
         int maxMaterialId = materialController.getMaxId();
-        
+        // on calcule le nombre de services et de materiels
+        int nbrServices = 0;
+        int nbrMateriels = 0;
+        for (int i=1; i<1+maxServiceId; i++){
+            if (serviceController.getServiceById(i) != null) {
+                nbrServices++;
+            }
+        }
+        for (int i=1; i<1+maxMaterialId; i++){
+            if (materialController.getMaterialById(i) != null) {
+                nbrMateriels++;
+            }
+        }
  
-        int[][] ListeIdScoreService = new int[maxServiceId][2];
-        int[][] ListeIdScoreMateriel = new int[maxMaterialId][2];
+        ListeIdScoreService = new int[nbrServices][2];
+        ListeIdScoreMateriel = new int[nbrMateriels][2];
         
-      
-        for (int i = 0; i < maxServiceId; i++) {
-            if (serviceController.getServiceById(i + 1) != null) {
-                service=serviceController.getServiceById(i + 1);
-                ListeIdScoreService[i][0] = service.getId();
-                ListeIdScoreService[i][1] = 0;
+        
+           
+        int a=0;
+        for (int i = 0; i <= maxServiceId; i++) {
+            if (serviceController.getServiceById(i+1) != null) {
+                service = serviceController.getServiceById(i+1);
+                if(service!=null || service.isActive()==true || service.getId()!=0){
+               
+                ListeIdScoreService[a][0] = service.getId();
+                ListeIdScoreService[a][1] = 0;
+                a++;
+                }
             }
         }
         
+       
+        int b=0;
         for (int i = 0; i < maxMaterialId; i++) {
             if (materialController.getMaterialById(i + 1) != null) {
                 material=materialController.getMaterialById(i + 1);
-                ListeIdScoreMateriel[i][0] = material.getId();
-                ListeIdScoreMateriel[i][1] = 0;
+                if(material!=null || material.isActive()==true || material.getId()!=0){
+                ListeIdScoreMateriel[b][0] = material.getId();
+                ListeIdScoreMateriel[b][1] = 0;
+                b++;
+                }
             }
         }
+
         motEstDansClasseMateriel(searchTerm, ListeIdScoreMateriel);
         motEstDansClasseService(searchTerm, ListeIdScoreService);
-      
-       trierScore(ListeIdScoreService);
-        trierScore(ListeIdScoreMateriel);
-        afficherResultats(ListeIdScoreService, ListeIdScoreMateriel);
-
+        int[][] sortedIdScoreService=trierScore(ListeIdScoreService);
+       
+        int[][] sortedIdScoreMateriel=trierScore(ListeIdScoreMateriel);
+        
+        afficherResultats(sortedIdScoreService, sortedIdScoreMateriel, resultsListView);
+}
+        
+        
         
 
 
-    }
+    
 
     public void separerMotRecherche(String searchTerm) {
         String[] mots = searchTerm.split(" ");
@@ -80,74 +123,106 @@ public class ResultatsController {
         }
     }
 
-  
+    public static int[][] trierScore(int[][] idScore) {
+        Arrays.sort(idScore, (a, b) -> Integer.compare(b[1], a[1]));
 
-    public void trierScore(int[][] idScore) {
-        int[][] idScoreTrie = new int[idScore.length][2];
-        int max = 0;
-        int indice = 0;
+        int countNonZero = 0;
         for (int i = 0; i < idScore.length; i++) {
-            for (int j = 0; j < idScore.length; j++) {
-                if (idScore[j][1] > max) {
-                    max = idScore[j][1];
-                    indice = j;
-                }
+            if (idScore[i][1] != 0) {
+                countNonZero++;
             }
-            idScoreTrie[i][0] = idScore[indice][0];
-            idScoreTrie[i][1] = idScore[indice][1];
-            idScore[indice][1] = 0;
-            max = 0;
         }
-        for (int i = 0; i < idScore.length; i++) {
-            idScore[i][0] = idScoreTrie[i][0];
-            idScore[i][1] = idScoreTrie[i][1];
-        }
+
+        int[][] sortedIdScore = new int[countNonZero][2];
+        System.arraycopy(idScore, 0, sortedIdScore, 0, countNonZero);
+
+        return sortedIdScore;
     }
 
-    // creer une fonction qui prends en entré un tableau de couple (id, score) et qui affiche par ordre décroissant les id des services et materiels qui ont le plus de score et on retir ceux qui ont 0 de score
-    public void afficherResultats(int[][] idScoreService, int[][] idScoreMateriel) {
+    public void afficherResultatsServiceFirst(int[][] idScoreService, int[][] idScoreMateriel, ListView<VBox> listView) {
         for (int i = 0; i < idScoreService.length; i++) {
             if (idScoreService[i][1] != 0) {
-                // Add a custom component with an image, name, and description to the TilePane
-                resultsTilePane.getChildren().add(createCustomComponentService(idScoreService[i][0], "Service"));
-                // Add space between components
-                resultsTilePane.getChildren().add(new Region()); // Spacer
+                listView.getItems().add(createCustomComponentService(idScoreService[i][0], "Service"));
             }
         }
         for (int i = 0; i < idScoreMateriel.length; i++) {
             if (idScoreMateriel[i][1] != 0) {
-                // Add a custom component with an image, name, and description to the TilePane
-                resultsTilePane.getChildren().add(createCustomComponentMateriel(idScoreMateriel[i][0], "Materiel"));
-                // Add space between components
-                resultsTilePane.getChildren().add(new Region()); // Spacer
+                listView.getItems().add(createCustomComponentMateriel(idScoreMateriel[i][0], "Materiel"));
             }
         }
+    }
+    public void afficherResultatsMaterielFirst(int[][] idScoreService, int[][] idScoreMateriel,ListView<VBox> listView) {
+        for (int i = 0; i < idScoreMateriel.length; i++) {
+            if (idScoreMateriel[i][1] != 0) {
+                listView.getItems().add(createCustomComponentMateriel(idScoreMateriel[i][0], "Materiel"));
+
+            }
+        }
+        for (int i = 0; i < idScoreService.length; i++) {
+            if (idScoreService[i][1] != 0) {
+                listView.getItems().add(createCustomComponentService(idScoreService[i][0], "Service"));
+               
+            }
+        }
+    }
+    public void afficherResultats(int[][] idScoreService, int[][] idScoreMateriel,ListView<VBox> listView) {
+        int a = 0;
+        int b = 0;
+        while (a < idScoreMateriel.length || b < idScoreService.length){
+            if(a>=idScoreMateriel.length){
+                listView.getItems().add(createCustomComponentService(idScoreService[b][0], "Service"));
+                if (b < idScoreService.length ) {
+                    b++;
+                }
+            }
+            else if(b>=idScoreService.length){
+                listView.getItems().add(createCustomComponentMateriel(idScoreMateriel[a][0], "Materiel"));
+                if (a < idScoreMateriel.length ) {
+                    a++;
+                }
+            }
+            else if(idScoreMateriel[a][1]>idScoreService[b][1]){
+                listView.getItems().add(createCustomComponentMateriel(idScoreMateriel[a][0], "Materiel"));
+                a++;
+                
+                
+            }
+            else{
+                listView.getItems().add(createCustomComponentService(idScoreService[b][0], "Service"));
+                b++;
+                
+            }
+            
+            
+        }
+  
     }
     
 
     private VBox createCustomComponentMateriel(int itemId, String itemType) {
         material = materialController.getMaterialById(itemId);
-        // Create a custom component with an image, name, and description
-        ImageView imageView = new ImageView(/* Set your image here */);
+    
+        ImageView imageView = new ImageView(/* phtoto */);
         Label nameLabel = new Label(itemType + " : " + material.getName());
-        Label descriptionLabel = new Label(material.getDescription());
+        Label descriptionLabel = new Label("Description :" +material.getDescription());
+        Label costLabel = new Label("Coût : " + material.getCost() + "€");
 
-        // Arrange the elements in a VBox
-        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel);
-        customComponent.setSpacing(5); // Adjust spacing as needed
+
+        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel, costLabel);
+        customComponent.setSpacing(5); 
 
         return customComponent;
     }
      private VBox createCustomComponentService(int itemId, String itemType) {
         service = serviceController.getServiceById(itemId);
-        // Create a custom component with an image, name, and description
-        ImageView imageView = new ImageView(/* Set your image here */);
+
+        ImageView imageView = new ImageView(/* phtoto */);
         Label nameLabel = new Label(itemType + " : " + service.getName());
         Label descriptionLabel = new Label(service.getDescription());
+        Label costLabel = new Label("Coût : " + service.getCost() + "€");
 
-        // Arrange the elements in a VBox
-        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel);
-        customComponent.setSpacing(5); // Adjust spacing as needed
+        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel, costLabel);
+        customComponent.setSpacing(5); 
 
         return customComponent;
     }
@@ -184,6 +259,9 @@ public class ResultatsController {
                     }
                 }
             }
+            if (service != null && service.isActive()==false){
+                idScoreService[i][1] = 0;
+            }
         }
     }
     
@@ -214,16 +292,24 @@ public class ResultatsController {
                     }
                 }
             }
+            if (material != null && material.isActive()==false){
+                idScoreMateriel[i][1] = 0;
+            }
         }
     }
-    // return 0 le mot n'est pas dans chainesDeCaracteres sinon return 1
-    public int estDedans (String mot, String chainesDeCaracteres)  {
-        String[] mots = chainesDeCaracteres.split(" ");
-        for (int i = 0; i < mots.length; i++) {
-            if (mots[i].equals(mot)) {
+    
+   public int estDedans(String mot, String chainesDeCaracteres) {
+        String[] mots = chainesDeCaracteres.toLowerCase().split(" ");
+        mot = mot.toLowerCase();
+        
+        for (String m : mots) {
+            if (m.equals(mot)) {
                 return 1;
             }
         }
+        
         return 0;
     }
+
+
 }
