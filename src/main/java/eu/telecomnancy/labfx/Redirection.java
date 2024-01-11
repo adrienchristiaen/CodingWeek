@@ -1,9 +1,6 @@
 package eu.telecomnancy.labfx;
 
-import eu.telecomnancy.labfx.MaterialService.Material;
-import eu.telecomnancy.labfx.MaterialService.MaterialController;
-import eu.telecomnancy.labfx.MaterialService.Service;
-import eu.telecomnancy.labfx.MaterialService.ServiceController;
+import eu.telecomnancy.labfx.MaterialService.*;
 import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
@@ -17,10 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
