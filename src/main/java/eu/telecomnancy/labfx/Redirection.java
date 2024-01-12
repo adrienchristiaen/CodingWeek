@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx;
 
 import eu.telecomnancy.labfx.MaterialService.*;
+import eu.telecomnancy.labfx.Profil.EvaluationsController;
 import eu.telecomnancy.labfx.Profil.HistoriqueRecentController;
 import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
