@@ -3,8 +3,13 @@ package eu.telecomnancy.labfx.Profil;
 import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class ModeEditionController {
 
@@ -17,22 +22,41 @@ public class ModeEditionController {
     @FXML
     private ImageView nouvellePhotoProfil;
 
+
     private User user;
 
     public ModeEditionController(User user) {
         this.user = user;
     }
 
+    // Méthode associée à l'action "Charger Nouvelle Photo"
+    // @FXML
+    public void chargerNouvellePhoto(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une nouvelle photo de profil");
+        File selectedFile = fileChooser.showOpenDialog(null);
 
-    // Méthode associée à l'action "Changer Mot de Passe"
-    @FXML
-    private void changerMotDePasse(ActionEvent event) {
-        // Logique pour changer le mot de passe
+        if (selectedFile != null) {
+            // Mettez à jour l'image de profil avec la nouvelle image sélectionnée
+            user.setImage(selectedFile.getAbsolutePath());
+            afficherPhotoProfil();
+
+            // Affichez le message à l'utilisateur
+            afficherMessage("Nouvelle photo de profil ajoutée");
+        }
     }
 
-    // Méthode associée à l'action "Charger Nouvelle Photo"
-    @FXML
-    private void chargerNouvellePhoto(ActionEvent event) {
-        // Logique pour charger une nouvelle photo
+    private void afficherPhotoProfil() {
+        // Chargez l'image depuis le chemin stocké dans l'utilisateur
+        Image image = new Image("file:" + user.getImage());
+        nouvellePhotoProfil.setImage(image);
+    }
+
+    private void afficherMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
