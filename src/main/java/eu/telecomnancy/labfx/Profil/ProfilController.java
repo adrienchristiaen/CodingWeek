@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.Profil;
 
 import eu.telecomnancy.labfx.user.User;
+import javafx.stage.Stage;
 
 public class ProfilController {
 
@@ -10,3 +11,4 @@ public class ProfilController {
         this.user = user;
     }
 }
+

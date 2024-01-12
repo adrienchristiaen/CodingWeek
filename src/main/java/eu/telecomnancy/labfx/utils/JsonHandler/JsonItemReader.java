@@ -38,6 +38,7 @@ public class JsonItemReader implements JsonReader{
         //reads json file and creates users
         System.out.println("Reading items from json: " + resourcePath);
         if (jsonString == null) {
+            System.out.println("jsonString is null");
             return items;
         }
         JSONArray array = new JSONArray(jsonString);
@@ -45,7 +46,10 @@ public class JsonItemReader implements JsonReader{
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonItem = array.getJSONObject(i);
                 MaterialService item = createItemFromJson(jsonItem);
+                assert item != null;
+                System.out.println(item.getName());
                 items.add(item);
+                System.out.println(item.getName());
             }
         }
         return items;

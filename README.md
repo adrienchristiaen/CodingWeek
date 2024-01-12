@@ -36,5 +36,8 @@ Livrable prévu: page d'acceuil, création des objets bien et service ainsi que 
 
 ### Pour Mercredi 10/01
 
-
 Livrable prévu : accueil + profil + css + chat
+
+### Pour Jeudi 11/01
+
+Livrable prévu : page addItem + recherche + calendrier + css

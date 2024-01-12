@@ -12,6 +12,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
+
 public class PreviewItemController {
 
     private MaterialService item;
@@ -45,14 +47,28 @@ public class PreviewItemController {
         this.description.setText(item.getDescription());
         this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
         this.cost.setText(String.valueOf(item.getCost()));
-        //this.note.setText(item.getNote());
+        this.note.setText(String.valueOf(owner.getAverageNote()));
         this.ville.setText(owner.getCity());
         try {
-            String filePath = PreviewItemController.class.getResource(DirectoryHandler.getPathResources("/images/".concat(item.getImage()))).getFile();
-            Image image = new Image("../images/".concat(item.getImage()));
+            String filePath = DirectoryHandler.getPathResources("/images/item/" + item.getImage());
+            System.out.println("\t\t\t\t"+filePath);
+            File file = new File(filePath);
+            Image image = new Image(file.toURI().toString());
+
             this.imgItem.setImage(image);
+
         }catch (Exception e){
-            System.out.println("Image not found");
+            try{
+                System.out.println("image not found, loading base image");
+                String filePath = PreviewItemController.class.getClass().getResource("/eu/telecomnancy/labfx/images/jaimeBien.png").getPath();
+                System.out.println("\t\t\t\t\t\t\t"+filePath);
+                File file = new File(filePath);
+                Image image = new Image(file.toURI().toString());
+                this.imgItem.setImage(image);
+            }catch (Exception e2){
+                System.out.println("Error while loading image");
+            }
+
         }
     }
 }

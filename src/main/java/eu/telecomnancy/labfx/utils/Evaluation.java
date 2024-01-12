@@ -10,7 +10,7 @@ public class Evaluation {
     private LocalDateTime createdAt;
 
     public Evaluation(int idUser, int rating, String comment, LocalDateTime createdAt) {
-        this.id = SubObjectController.getInstance().getNewEvaluationId();
+        this.id = EvaluationController.getInstance().getMaxId()+1;
         this.idUser = idUser;
         this.rating = rating;
         this.comment = comment;
