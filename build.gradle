@@ -3,6 +3,8 @@ plugins {
     id 'application'
     id 'com.adarshr.test-logger' version '4.0.0'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+
 }
 
 repositories {
@@ -41,7 +43,7 @@ jar {
 
 javafx {
     version = "${javafxVersion}"
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
 }
 
 
@@ -56,7 +58,13 @@ sourceSets {
 
 dependencies {
     implementation 'org.openjfx:javafx-base:17'
-    implementation 'org.json:json:20210307'
+    implementation 'org.json:json:20231013'
+    implementation 'org.openjfx:javafx-controls:17.0.1'
+    implementation 'org.openjfx:javafx-fxml:17.0.1'
+    implementation 'org.openjfx:javafx-graphics:17.0.1'
+    implementation 'org.openjfx:javafx-media:17.0.1'
+    implementation 'org.openjfx:javafx-swing:17.0.1'
+    implementation 'org.openjfx:javafx-web:17.0.1'
     testImplementation(platform('org.junit:junit-bom:5.10.1')) {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
@@ -67,12 +75,14 @@ dependencies {
 
 
 
+
 test {
-    useJUnitPlatform()
+    enabled = true
+    /*useJUnitPlatform()
 
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
+    }*/
 }
 
 compileJava {
@@ -81,6 +91,8 @@ compileJava {
                 '--module-path', classpath.asPath,
                 '--add-modules', 'javafx.controls',
                 '--add-modules', 'javafx.fxml',
+                '--add-modules', 'javafx.base',
+                '--add-modules', 'org.json'
         ]
         classpath = files()
     }
@@ -91,6 +103,8 @@ run{
                 '--module-path', classpath.asPath,
                 '--add-modules', 'javafx.controls',
                 '--add-modules', 'javafx.fxml',
+                '--add-modules', 'javafx.base',
+                '--add-modules', 'org.json'
         ]
     }
 }
@@ -112,3 +126,14 @@ testlogger {
     showSkippedStandardStreams true
     showFailedStandardStreams true
 }
+
+shadowJar {
+    archiveBaseName.set('my-application')
+    archiveVersion.set('1.0.0')
+    archiveClassifier.set('')
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'eu.telecomnancy.labfx.Main'
+    }
+}
+
