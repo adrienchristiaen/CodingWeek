@@ -1,38 +1,19 @@
-/*
-.heart-shape {position: relative; largeur: 200px; hauteur: 200px; -webkit-transform: rotation (45deg); -moz-transform: faire pivoter (45deg); -ms-transform: rotation (45deg); -o-transform: rotation (45deg); transformer: tourner (45deg); couleur de fond: rgba (250, 184, 66, 1); } .heart-shape: avant, .heart-shape: après {position: absolute; largeur: 200px; hauteur: 200px; contenu: ''; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; border-radius: 50%; couleur de fond: rgba (250, 184, 66, 1); } .heart-shape: avant {bas: 0px; gauche: -100px; } .heart-shape: après {top: -100px; droite: 0px; }
-*/
+#root{
+    -fx-border-color: black;
+    -fx-border-radius: 2% ;
 
-/*
-.toggle-button {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background: #e54a27;
-    transform: rotate(45deg) translate(10px,10px);
-    animation: animationHeart 1s ease-in-out infinite;
-    left:20%;
-    z-index: 3;
 }
 
-.toggle-button:before{
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: #e54a27;
-    position: absolute;
-    top: -50%;
-    left: 0;
-    border-radius: 50%;
-    z-index: -1;
+#like {
+    -fx-background-color: #dedfdcfb;
+    -border-radius: 5%;
 }
-.toggle-button:after{
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: #e54a27;
-    position: absolute;
-    bottom: 0%;
-    right: 50%;
-    border-radius: 50%;
-    z-index: -1;
-}*/
+
+#like.liked {
+    -fx-background-color: #ff0000c4;
+}
+
+#imgItem{
+    -fx-border-color: black;
+    -fx-border-radius: 2% ;
+}

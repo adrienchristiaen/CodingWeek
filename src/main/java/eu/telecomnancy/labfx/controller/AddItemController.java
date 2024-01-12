@@ -66,7 +66,7 @@ public class AddItemController {
         String title = this.title.getText();
         int userID = this.user.getId();
         int price = Integer.parseInt(this.price.getText());
-        String description = this.description.getText();
+        String description = this.description.getText().replace("\n", "\\n");
         LocalDateTime startDate = toLocalDateTime(this.startDate.getValue(), this.startHour.getText(), this.startMinute.getText());
         LocalDateTime endDate = toLocalDateTime(this.endDate.getValue(), this.endHour.getText(), this.endMinute.getText());
         String imagePath = this.imagePath;
