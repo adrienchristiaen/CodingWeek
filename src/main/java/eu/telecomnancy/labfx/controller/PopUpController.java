@@ -47,11 +47,9 @@ public class PopUpController {
         LocalDateTime startDate = toLocalDateTime(this.startDate.getValue(), this.startHour.getText(), this.startMinute.getText());
         LocalDateTime endDate = toLocalDateTime(this.endDate.getValue(), this.endHour.getText(), this.endMinute.getText());
 
-        System.out.println(this.user.getIdentifiant());
         Reservation reservation = new Reservation(startDate, endDate, this.user.getId());
         item.addReservation(reservation);
-        //MaterialController.saveItems();
-
+        MaterialController.getInstance().saveItems();
         Redirection.accueil(this.user, reserve);
     }
 

@@ -66,6 +66,7 @@ public class PageAnnonceController {
 
     @FXML
     void reserve(ActionEvent event) {
+        System.out.println("Dans l'appel apres le bouton " + this.user.getIdentifiant());
         Redirection.popUpAnnonce(this.user, this.item, this.reserve);
     }
 
