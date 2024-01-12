@@ -1,7 +1,7 @@
 package eu.telecomnancy.labfx.MaterialService;
 
+import eu.telecomnancy.labfx.Counter;
 import eu.telecomnancy.labfx.utils.Reservation;
-import eu.telecomnancy.labfx.utils.SubObjectController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ public class Material implements MaterialService{
     private String image;
     private boolean isActive;
 
-    public Material(String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
-        this.id = SubObjectController.getInstance().getNewMaterialId();
+    public Material(int id, String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
+        this.id = id;
         this.name = name;
         this.type = "materiel";
         this.owner = owner;
@@ -36,6 +36,8 @@ public class Material implements MaterialService{
         this.image = image;
         this.isActive = isActive;
     }
+
+
     @Override
     public int getId() {
         return id;
