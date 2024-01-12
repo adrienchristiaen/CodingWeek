@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 
-<VBox spacing="40" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.HistoriqueRecentController">
-    <VBox fx:id="recentHistoryContainer" spacing="10">
-        <!-- Les éléments de l'historique récent seront ajoutés ici dynamiquement -->
-    </VBox>
-</VBox>
+<ListView xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.HistoriqueRecentController" fx:id="recentHistoryListView" />
