@@ -4,6 +4,7 @@ import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
 import eu.telecomnancy.labfx.MaterialService.Service;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
+import eu.telecomnancy.labfx.Profil.EvaluationsController;
 import eu.telecomnancy.labfx.Profil.HistoriqueRecentController;
 import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
@@ -164,13 +165,33 @@ public class Redirection {
             });
             Parent historyRoot = historyLoader.load();
 
+            // On charge la vue des évaluations
+            FXMLLoader evaluationsLoader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/Evaluations.fxml"));
+            evaluationsLoader.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent evaluationsRoot = evaluationsLoader.load();
+
             // On crée une VBox pour organiser les éléments verticalement
             VBox root = new VBox();
-            root.getChildren().addAll(navbar, profilRoot, historyRoot);
+            root.getChildren().addAll(navbar, profilRoot, historyRoot, evaluationsRoot);
 
             // Récupérer le contrôleur de l'historique récent et appeler initialize
             HistoriqueRecentController historyController = historyLoader.getController();
             historyController.initialize();
+
+            // Récupérer le contrôleur des évaluations et appeler initialize
+            EvaluationsController evaluationsController = evaluationsLoader.getController();
+            evaluationsController.initialize();
 
             Scene profilScene = new Scene(root, 1920, 1080);
             Stage currentStage = (Stage) actionButton.getScene().getWindow();
@@ -182,10 +203,6 @@ public class Redirection {
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
         }
     }
-
-    
-
-
 
 
     public static void inscription(ActionEvent event) {
