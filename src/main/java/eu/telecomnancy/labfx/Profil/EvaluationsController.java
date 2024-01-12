@@ -3,7 +3,9 @@ package eu.telecomnancy.labfx.Profil;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.EvaluationController;
-
+import eu.telecomnancy.labfx.utils.History;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -16,7 +18,7 @@ public class EvaluationsController {
     private Label moyenneEvaluationsLabel;
 
     @FXML
-    private ListView<Evaluation> evaluationsListView;
+    private ListView<String> evaluationsListView;
 
     private User user;
     private ArrayList<Evaluation> receivedEvaluations;
@@ -27,24 +29,21 @@ public class EvaluationsController {
     }
 
     public void initialize() {
-        // Récupérez les évaluations récentes de l'utilisateur
+        // Récupérez l'historique récent de l'utilisateur
         ArrayList<Evaluation> recentEvaluations = EvaluationController.getInstance().getEvaluations();
 
-        // Affichez chaque évaluation récente dans la ListView
-        evaluationsListView.getItems().setAll(recentEvaluations);
+        // Créez une liste observable pour stocker les éléments de l'historique récent
+        ObservableList<String> evaluationItems = FXCollections.observableArrayList();
+        System.out.println("EvaluationController");
+        // Ajoutez chaque élément de l'historique récent dans la liste observable
+        for (Evaluation evaluationItem : recentEvaluations) {
+            System.out.println(evaluationItem.getRating() + " - " + evaluationItem.getComment() + " - " + evaluationItem.getCreatedAt().toString().replace("T", " "));
+            StringBuilder evaluationItemString = new StringBuilder();
+            evaluationItemString.append(evaluationItem.getRating()).append(" - ").append(evaluationItem.getComment()).append(" - ").append(evaluationItem.getCreatedAt().toString().replace("T", " "));
+            evaluationItems.add(evaluationItemString.toString());
+        }
 
-        // Vous pouvez personnaliser la façon dont les évaluations sont affichées en utilisant une cell factory, si nécessaire
-        evaluationsListView.setCellFactory(param -> new javafx.scene.control.ListCell<Evaluation>() {
-            @Override
-            protected void updateItem(Evaluation item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText("Note: " + item.getRating() + ", Commentaire: " + item.getComment());
-                }
-            }
-        });
+        // Configurez la ListView avec la liste observable
+        evaluationsListView.setItems(evaluationItems);
     }
 }

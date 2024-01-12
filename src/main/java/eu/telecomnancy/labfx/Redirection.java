@@ -177,7 +177,7 @@ public class Redirection {
 
             // On crée une VBox pour organiser les éléments verticalement
             VBox root = new VBox();
-            root.getChildren().addAll(navbar, profilRoot, historyRoot, evaluationsRoot);
+            root.getChildren().addAll(navbar, profilRoot);
 
             // Récupérer le contrôleur de l'historique récent et appeler initialize
             HistoriqueRecentController historyController = historyLoader.getController();
