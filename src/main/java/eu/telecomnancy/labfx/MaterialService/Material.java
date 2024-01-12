@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.MaterialService;
 
 import eu.telecomnancy.labfx.utils.Reservation;
+import eu.telecomnancy.labfx.utils.SubObjectController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ public class Material implements MaterialService{
     private String image;
     private boolean isActive;
 
-    public Material(int id, String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
-        this.id = id;
+    public Material(String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
+        this.id = SubObjectController.getInstance().getNewMaterialId();
         this.name = name;
         this.type = "materiel";
         this.owner = owner;
@@ -35,107 +36,108 @@ public class Material implements MaterialService{
         this.image = image;
         this.isActive = isActive;
     }
-
+    @Override
     public int getId() {
         return id;
     }
-
+    @Override
     public void setId(int id) {
         this.id = id;
     }
-
+    @Override
     public String getName() {
         return name;
     }
-
+    @Override
     public void setName(String name) {
         this.name = name;
     }
-
+    @Override
     public String getType() {
         return type;
     }
-
+    @Override
     public void setType(String type) {
         this.type = type;
     }
-
+    @Override
     public int getOwner() {
         return owner;
     }
-
+    @Override
     public void setOwner(int owner) {
         this.owner = owner;
     }
-
+    @Override
     public int getCost() {
         return cost;
     }
-
+    @Override
     public void setCost(int cost) {
         this.cost = cost;
     }
-
+    @Override
     public String getDescription() {
         return description;
     }
-
+    @Override
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @Override
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-
+    @Override
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
+    @Override
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-
+    @Override
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
+    @Override
     public LocalDateTime getStartTime() {
         return startTime;
     }
-
+    @Override
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-
+    @Override
     public LocalDateTime getEndTime() {
         return endTime;
     }
-
+    @Override
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-
+    @Override
     public ArrayList<Reservation> getReservationDelays() {
         return reservations;
     }
-
+    @Override
     public void setReservationDelays(ArrayList<Reservation> reservations) {
         this.reservations = reservations;
     }
-
+    @Override
     public String getImage() {
         return image;
     }
-
+    @Override
     public void setImage(String image) {
         this.image = image;
     }
-
+    @Override
     public boolean isActive() {
         return isActive;
     }
 
+    @Override
     public void setActive(boolean active) {
         isActive = active;
     }

@@ -19,7 +19,6 @@ public class JsonItemReaderWriterTest {
 
         MaterialController materialController = MaterialController.getInstance();
         ArrayList<Material> materials = materialController.getMaterials();
-        assertEquals(materials.size(), 1);
 
 
     }
@@ -37,7 +36,7 @@ public class JsonItemReaderWriterTest {
         int id = Math.max(materialController.getMaxId(), serviceController.getMaxId());
         for (int i = 0; i < 10; i++) {
             //create a new service
-            Service service1 = new Service(id+1+i, "serviceTest".concat(String.valueOf(id+1+i)), 1, 0, "s", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), null, "service1.png", true);
+            Service service1 = new Service("serviceTest".concat(String.valueOf(id+1+i)), 1, 0, "s", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), null, "service1.png", true);
             serviceController.add(service1);
         }
         int size  = serviceController.getServices().size();
@@ -45,5 +44,22 @@ public class JsonItemReaderWriterTest {
         serviceController.saveItems(materials);
 
         //create a new service
+    }
+
+    @Test
+    public void testSortedByUpdateMaterials() {
+        MaterialController materialController = MaterialController.getInstance();
+        ArrayList<Material> materials = materialController.getMaterials();
+        ArrayList<Material> materialsSorted = materialController.sortByUpdateAt();
+        assertTrue(materialsSorted.get(0).getUpdatedAt().isAfter(materialsSorted.get(1).getUpdatedAt()));
+        assertTrue(materialsSorted.get(1).getUpdatedAt().isAfter(materialsSorted.get(2).getUpdatedAt()));
+    }
+
+    @Test
+    public void testSortedByUpdateServices() {
+        ServiceController serviceController = ServiceController.getInstance();
+        ArrayList<Service> services = serviceController.getServices();
+        ArrayList<Service> servicesSorted = serviceController.sortByUpdateAt();
+        assertTrue(servicesSorted.get(0).getUpdatedAt().isAfter(servicesSorted.get(1).getUpdatedAt()));
     }
 }

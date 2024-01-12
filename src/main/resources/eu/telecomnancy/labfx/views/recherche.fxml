@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER" fx:controller="eu.telecomnancy.labfx.RechercheController">
+<VBox xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER" fx:controller="eu.telecomnancy.labfx.controller.RechercheController">
     <Label text="Bienvenue dans l'application de recherche !" />
     <TextField fx:id="barreRecherche" promptText="Entrez votre recherche..." />
     <Button text="Rechercher" onAction="#handleRechercherButtonClick" />

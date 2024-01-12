@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class JsonItemWritter implements JsonWritter{
@@ -20,7 +22,20 @@ public class JsonItemWritter implements JsonWritter{
         ArrayList<MaterialService> items = new ArrayList<MaterialService>();
         items.addAll(services);
         items.addAll(materials);
-        System.out.println(items.size());
+
+        ArrayList<MaterialService> itemsSorted = new ArrayList<MaterialService>(items);
+        //must use itemsSorted.forEach(p->) method to sort the items
+        itemsSorted.sort((p1, p2) -> {
+            if (p1.getId() > p2.getId()) {
+                return 1;
+            } else if (p1.getId() < p2.getId()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (MaterialService item1 : items) {
 
@@ -37,15 +52,10 @@ public class JsonItemWritter implements JsonWritter{
         jsonBuilder.append("]");
         String jsonString = jsonBuilder.toString();
         System.out.println("Writing items in json: " + resourcePath);
-        System.out.println(resourcePath);
-        String filePath = JsonItemWritter.class.getResource(resourcePath).getFile();
-        System.out.println(filePath);
-        System.out.println("\n\n\n\n\n");
-        File file = new File(filePath);
+        try {
+            Files.write(Paths.get(resourcePath), jsonString.getBytes());
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(jsonString);
-            System.out.println("JSON data written successfully to file: " + filePath);
+            System.out.println("Content written to file successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }

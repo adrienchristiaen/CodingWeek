@@ -10,16 +10,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.NavBarController">
+<GridPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.NavBarController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="90.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="110.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="318.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="0.0" prefWidth="62.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="0.0" prefWidth="48.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="114.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="80.0" />
    </columnConstraints>
    <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
@@ -35,20 +36,23 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </ImageView>
-            <TextField fx:id="searchBar" maxWidth="1.7976931348623157E308" onAction="#searchFor" prefHeight="30.0" prefWidth="291.0">
+            <TextField fx:id="searchBar" maxWidth="1.7976931348623157E308" onAction="#searchFor" prefHeight="30.0" prefWidth="291.0" promptText="Rechercher sur DirectDealing">
                <HBox.margin>
                   <Insets />
                </HBox.margin></TextField>
          </children>
       </HBox>
-      <Button fx:id="balance" maxHeight="30.0" mnemonicParsing="false" onAction="#goBalance" prefHeight="30.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <Button fx:id="balance" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goBalance" prefHeight="30.0" prefWidth="121.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <graphic>
-            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="82.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="5.0">
                <children>
-                  <ImageView fitHeight="20.0" fitWidth="97.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/florain_mini.png" />
                      </image>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
                   </ImageView>
                </children>
             </HBox>

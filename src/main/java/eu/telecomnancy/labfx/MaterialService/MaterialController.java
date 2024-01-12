@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.MaterialService;
 
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonItemReader;
 import eu.telecomnancy.labfx.utils.JsonHandler.JsonItemWritter;
 
@@ -10,7 +11,7 @@ public class MaterialController implements MaterialServiceController{
     private  static MaterialController instance = null;
 
     private MaterialController() {
-        this.materials = read("/eu/telecomnancy/labfx/data/item.json");
+        this.materials = read(DirectoryHandler.getPathResources("/data/item.json"));
     }
 
     public static MaterialController getInstance() {
@@ -64,12 +65,10 @@ public class MaterialController implements MaterialServiceController{
         }
         return maxId;
     }
-    public Material getMaterialById(int id) {
-        for (Material material : this.materials) {
-            if (material.getId() == id) {
-                return material;
-            }
-        }
-        return null;
+
+    public ArrayList<Material> sortByUpdateAt(){
+        ArrayList<Material> sortedMaterials = new ArrayList<Material>(this.materials);
+        sortedMaterials.sort((o1, o2) -> o2.getUpdatedAt().compareTo(o1.getUpdatedAt()));
+        return sortedMaterials;
     }
 }
