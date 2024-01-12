@@ -44,13 +44,22 @@ public class PreviewItemController {
     void addFavori(ActionEvent event) {
 
     }
+    public void initialize() {
+        like.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                like.getStyleClass().add("liked");
+            } else {
+                like.getStyleClass().remove("liked");
+            }
+        });
+       }
 
     public void setItem(MaterialService item, User user) {
         User owner = UserController.getInstance().getUserById(item.getOwner());
         this.user = user;
         this.item = item;
         this.title.setText(item.getName());
-        this.description.setText(item.getDescription());
+        this.description.setText(item.getDescription().replace("\\n", "\n"));
         this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
         this.cost.setText(String.valueOf(item.getCost()));
         this.note.setText(String.valueOf(owner.getAverageNote()));

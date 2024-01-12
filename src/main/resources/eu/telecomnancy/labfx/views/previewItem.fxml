@@ -13,7 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="111.0" prefWidth="517.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.PreviewItemController" stylesheets="@../styles/previewItem.css">
+<?import javafx.scene.shape.Rectangle?>
+<HBox fx:id = "root" prefHeight="111.0" prefWidth="517.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.PreviewItemController" stylesheets="@../styles/previewItem.css">
    <children>
       <VBox prefHeight="163.0" prefWidth="134.0">
          <children>
@@ -21,6 +22,9 @@
                <image>
                   <Image url="@../images/jaimeBien.png" />
                </image>
+               <clip>
+                  <Rectangle arcWidth="17" arcHeight="17" width="115.0" height="114.0" />
+               </clip>
             </ImageView>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
