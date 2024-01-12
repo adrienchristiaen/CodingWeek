@@ -12,3 +12,8 @@
 #like.liked {
     -fx-background-color: #ff0000c4;
 }
+
+#imgItem{
+    -fx-border-color: black;
+    -fx-border-radius: 2% ;
+}

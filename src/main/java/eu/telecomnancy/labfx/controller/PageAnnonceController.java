@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.time.format.DateTimeFormatter;
 
 public class PageAnnonceController {
@@ -56,11 +57,24 @@ public class PageAnnonceController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.date.setText(item.getStartTime().format(formatter)+" à "+item.getEndTime().format(formatter));
         try {
-            String filePath = DirectoryHandler.getPathResources("/images/" + item.getImage());
-            Image image = new Image(filePath);
+            String filePath = DirectoryHandler.getPathResources("/images/item/" + item.getImage());
+            System.out.println("\t\t\t\t"+filePath);
+            File file = new File(filePath);
+            Image image = new Image(file.toURI().toString());
+
             this.imageAnnonce.setImage(image);
-        }catch (Exception e){
-            System.out.println("Image not found");
+
+        }catch (Exception e) {
+            try {
+                System.out.println("image not found, loading base image");
+                String filePath = PreviewItemController.class.getClass().getResource("/eu/telecomnancy/labfx/images/jaimeBien.png").getPath();
+                System.out.println("\t\t\t\t\t\t\t" + filePath);
+                File file = new File(filePath);
+                Image image = new Image(file.toURI().toString());
+                this.imageAnnonce.setImage(image);
+            } catch (Exception e2) {
+                System.out.println("Error while loading image");
+            }
         }
     }
 

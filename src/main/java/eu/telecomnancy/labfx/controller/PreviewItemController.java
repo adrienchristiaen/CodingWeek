@@ -59,7 +59,7 @@ public class PreviewItemController {
         this.user = user;
         this.item = item;
         this.title.setText(item.getName());
-        this.description.setText(item.getDescription());
+        this.description.setText(item.getDescription().replace("\\n", "\n"));
         this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
         this.cost.setText(String.valueOf(item.getCost()));
         this.note.setText(String.valueOf(owner.getAverageNote()));
