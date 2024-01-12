@@ -88,12 +88,13 @@ public class UserController {
         saveUsers();
     }
 
+
     public ArrayList<History> getRecentHistory(User user) {
         ArrayList<ItemTuple> itemsSell = user.getItemsSell();
         ArrayList<ItemTuple> itemsBuy = user.getItemsBuy();
         HashSet<Integer> addedItems = new HashSet<>(); // Utiliser un ensemble pour éviter les doublons
         ArrayList<History> history = new ArrayList<>();
-    
+
         for (ItemTuple itemTuple : itemsSell) {
             System.out.println(2);
             MaterialService materialService = itemTuple.getMaterialService();
@@ -119,4 +120,16 @@ public class UserController {
         return sortedHistory;
     }
 
+    public void updateUser(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId() == updatedUser.getId()) {
+                users.set(i, updatedUser);
+                saveUsers(); // Appeler saveUsers après la mise à jour
+                break;
+            }
+        }
+    }
+    
+
 }
+
