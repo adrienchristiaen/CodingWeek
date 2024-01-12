@@ -21,10 +21,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -80,7 +83,8 @@ public class Redirection {
             ArrayList<Service> services = new ArrayList(ServiceController.getInstance().sortByUpdateAt().subList(0, 2));
             System.out.println(services.size() + " " + materials.size());
             //On ajoute les previewsItem dans la gridpane
-
+            previews.setHgap(10); //horizontal gap in pixels
+            previews.setVgap(10); //vertical gap in pixels
             for (int i = 0; i < materials.size(); i++) {
                FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
                Parent previewItem = preview.load();
