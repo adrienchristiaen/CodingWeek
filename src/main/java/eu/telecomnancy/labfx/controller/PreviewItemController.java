@@ -44,6 +44,15 @@ public class PreviewItemController {
     void addFavori(ActionEvent event) {
 
     }
+    public void initialize() {
+        like.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                like.getStyleClass().add("liked");
+            } else {
+                like.getStyleClass().remove("liked");
+            }
+        });
+       }
 
     public void setItem(MaterialService item, User user) {
         User owner = UserController.getInstance().getUserById(item.getOwner());

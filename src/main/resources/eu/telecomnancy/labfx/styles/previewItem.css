@@ -1,88 +1,14 @@
-/*
-.heart-shape {position: relative; largeur: 200px; hauteur: 200px; -webkit-transform: rotation (45deg); -moz-transform: faire pivoter (45deg); -ms-transform: rotation (45deg); -o-transform: rotation (45deg); transformer: tourner (45deg); couleur de fond: rgba (250, 184, 66, 1); } .heart-shape: avant, .heart-shape: après {position: absolute; largeur: 200px; hauteur: 200px; contenu: ''; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; border-radius: 50%; couleur de fond: rgba (250, 184, 66, 1); } .heart-shape: avant {bas: 0px; gauche: -100px; } .heart-shape: après {top: -100px; droite: 0px; }
-*/
-
-
-/*.#like {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background: #e54a27;
-    transform: rotate(45deg) translate(10px,10px);
-    animation: animationHeart 1s ease-in-out infinite;
-    left:20%;
-    z-index: 3;
-}
-
-.#like:before{
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: #e54a27;
-    position: absolute;
-    top: -50%;
-    left: 0;
-    border-radius: 50%;
-    z-index: -1;
-}
-.#like:after{
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: #e54a27;
-    position: absolute;
-    bottom: 0%;
-    right: 50%;
-    border-radius: 50%;
-    z-index: -1;
-}*/
-
 #root{
     -fx-border-color: black;
     -fx-border-radius: 2% ;
 
-    -fx-background-color: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);
-
-    /* background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(171,171,220,1) 53%, rgba(115,114,255,1) 100%, rgba(255,255,255,1) 100%); */
-    overflow: hidden;
 }
 
 #like {
-    -fx-background-color: #e54a27; /* Couleur de fond */
-    -fx-border-radius: 50%; /* Bord arrondi */
-    -fx-pref-width: 100px; /* Largeur préférée */
-    -fx-pref-height: 100px; /* Hauteur préférée */
-    -fx-translate-x: 10px; /* Translation horizontale */
-    -fx-translate-y: 10px; /* Translation verticale */
-    -fx-rotate: 45; /* Rotation de 45 degrés */
-    -fx-animation: animationHeart 1s ease-in-out infinite; /* Animation */
-    -fx-left: 20%; /* Position à gauche */
-    -fx-z-index: 3; /* Z-index */
+    -fx-background-color: #dedfdcfb;
+    -border-radius: 5%;
 }
 
-/* Heart shape */
-#like:before,
-#like:after {
-    -fx-background-color: #e54a27; /* Couleur de fond */
-    -fx-border-radius: 50%; /* Bord arrondi */
-    -fx-content: ''; /* Contenu vide */
-    -fx-position: absolute; /* Position absolue */
+#like.liked {
+    -fx-background-color: #ff0000c4;
 }
-
-/* Positionnement du pseudo-élément ::before */
-#like:before {
-    -fx-width: 100%; /* Largeur à 100% */
-    -fx-height: 100%; /* Hauteur à 100% */
-    -fx-top: -50%; /* Position en haut */
-    -fx-left: 0; /* Position à gauche */
-}
-
-/* Positionnement du pseudo-élément ::after */
-#like:after {
-    -fx-width: 100%; /* Largeur à 100% */
-    -fx-height: 100%; /* Hauteur à 100% */
-    -fx-bottom: 0%; /* Position en bas */
-    -fx-right: 50%; /* Position à droite */
-}
-
