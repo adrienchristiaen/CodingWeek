@@ -6,7 +6,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Button?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.InfoPersoController">
+<VBox spacing="20" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.InfoPersoController">
    <!-- Contenu pour Info perso -->
    <Label text="Identifiant:" />
    <TextField fx:id="identifiantField" />
@@ -22,3 +22,4 @@
    <TextField fx:id="cityField" />
    <Button text="Sauvegarder" onAction="#sauvegarderInfoPerso" />
 </VBox>
+

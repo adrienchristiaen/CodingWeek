@@ -1,8 +1,6 @@
 package eu.telecomnancy.labfx.utils;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialService;
-import eu.telecomnancy.labfx.MaterialService.Service;
-import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 
@@ -96,10 +94,6 @@ public class DirectoryHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
         pathData = null;
         json = null;
         try {
@@ -128,36 +122,51 @@ public class DirectoryHandler {
 
 
     public static void saveNewUserImage(User user,String source){
-        String extention = "." + source.substring(source.lastIndexOf("."));
+        String extension = source.substring(source.lastIndexOf("."));
         //save image to path
-        String destination = pathHead + "/images/users/" + user.getId() + extention;
+        String destination = pathHead + "/images/users/" + user.getId() + extension;
         try {
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-            user.setImage(user.getId() + extention);
+            user.setImage(user.getId() + extension);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void saveNewMaterialImage(Material material,String source){
+    public static void saveNewMaterialImage(MaterialService material,String source){
         //save image to path
-        String extention = "." + source.substring(source.lastIndexOf("."));
-        String destination = pathHead + "/images/item/" + material.getId() + extention;
+        String extension = source.substring(source.lastIndexOf("."));
+        String destination = pathHead + "/images/item/" + material.getId() + extension;
         try {
+            System.out.println("Source"+source);
+            System.out.println("destination : "+destination);
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-            material.setImage(material.getId() + extention);
+            material.setImage(material.getId() + extension);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void saveNewServiceImage(Service service, String source){
+    public static void saveNewServiceImage(MaterialService service,String source){
         //save image to path
-        String extention = "." + source.substring(source.lastIndexOf("."));
-        String destination = pathHead + "/images/items/" + service.getId() + extention;
+        if (source == null){
+            return;
+        }
+        String extension = source.substring(source.lastIndexOf("."));
+        String tail = source.substring(source.lastIndexOf("/"));
+        String destination = pathHead + "/images/item/" + service.getId() + extension;
         try {
+            File file = new File(destination);
+            System.out.println("file : "+file);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            System.out.println("Source"+source);
+            System.out.println("destination : "+destination);
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-            service.setImage(service.getId() + extention);
+            service.setImage(service.getId() + extension);
+            System.out.println("service.getImage() : "+service.getImage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

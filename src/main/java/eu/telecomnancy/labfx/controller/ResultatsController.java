@@ -2,11 +2,14 @@ package eu.telecomnancy.labfx.controller;
 
 import eu.telecomnancy.labfx.MaterialService.MaterialController;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.MaterialService.Service;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -22,7 +25,9 @@ import javafx.scene.control.TextField;
 
 
 
+
 public class ResultatsController {
+
       @FXML
     private void handleAjouterAuxFavoris(ActionEvent event) {
         // Logique pour ajouter aux favoris
@@ -39,62 +44,51 @@ public class ResultatsController {
 
     @FXML
     private TilePane resultsTilePane;
-
+    @FXML
+    private TextField rechercheAcceuil;
     @FXML
     private ListView<VBox> resultsListView;
     @FXML
     private Label searchLabel;
     @FXML
     private Button switchResultsButton;
-
     private MaterialController materialController = MaterialController.getInstance();
     private ServiceController serviceController = ServiceController.getInstance();
     private Material material ;
     private Service service ;
     private int[][] ListeIdScoreService;
     private int[][] ListeIdScoreMateriel;
-    @FXML
-    protected void handleRechercheButtonClick() {
-        String searchTerm = searchBar.getText();
-        initializeResults(searchTerm);
+
+    public ResultatsController(){
+        
     }
-    
-    public void initializeResults(String searchTerm) {
-        searchLabel.setText("Voici les résultats de la recherche pour : " + searchTerm);
+    @FXML
+    protected void  handleRechercheButtonClick() {
+        String searchTerm = searchBar.getText();
+        initializeResultsService(searchTerm);
+        initializeResultsMateriel(searchTerm);
+    }
+
+    public int[][] initializeResultsMateriel(String searchTerm) {
+
       
-        int maxServiceId = serviceController.getMaxId();
+       
         int maxMaterialId = materialController.getMaxId();
         // on calcule le nombre de services et de materiels
-        int nbrServices = 0;
+     
         int nbrMateriels = 0;
-        for (int i=1; i<1+maxServiceId; i++){
-            if (serviceController.get(i) != null) {
-                nbrServices++;
-            }
-        }
+       
         for (int i=1; i<1+maxMaterialId; i++){
             if (materialController.get(i) != null) {
                 nbrMateriels++;
             }
         }
  
-        ListeIdScoreService = new int[nbrServices][2];
+       
         ListeIdScoreMateriel = new int[nbrMateriels][2];
         
         
-           
-        int a=0;
-        for (int i = 0; i <= maxServiceId; i++) {
-            if (serviceController.get(i+1) != null) {
-                service = (Service)serviceController.get(i+1);
-                if(service!=null || service.isActive() || service.getId()!=0){
-               
-                ListeIdScoreService[a][0] = service.getId();
-                ListeIdScoreService[a][1] = 0;
-                a++;
-                }
-            }
-        }
+    
         
        
         int b=0;
@@ -110,13 +104,50 @@ public class ResultatsController {
         }
 
         motEstDansClasseMateriel(searchTerm, ListeIdScoreMateriel);
-        motEstDansClasseService(searchTerm, ListeIdScoreService);
-        int[][] sortedIdScoreService=trierScore(ListeIdScoreService);
        
-        int[][] sortedIdScoreMateriel=trierScore(ListeIdScoreMateriel);
+       
+        return trierScore(ListeIdScoreMateriel);
         
-        afficherResultats(sortedIdScoreService, sortedIdScoreMateriel, resultsListView);
+        
 }
+public int[][] initializeResultsService(String searchTerm) {
+
+  
+    int maxServiceId = serviceController.getMaxId();
+    
+    int nbrServices = 0;
+  
+    for (int i=1; i<1+maxServiceId; i++){
+        if (serviceController.get(i) != null) {
+            nbrServices++;
+        }
+    }
+    
+
+    ListeIdScoreService = new int[nbrServices][2];
+
+    
+    
+       
+    int a=0;
+    for (int i = 0; i <= maxServiceId; i++) {
+        if (serviceController.get(i+1) != null) {
+            service = (Service)serviceController.get(i+1);
+            if(service!=null || service.isActive() || service.getId()!=0){
+           
+            ListeIdScoreService[a][0] = service.getId();
+            ListeIdScoreService[a][1] = 0;
+            a++;
+            }
+        }
+    }
+    
+  
+    motEstDansClasseService(searchTerm, ListeIdScoreService);
+    return trierScore(ListeIdScoreService);
+   
+}
+
         
         
         
@@ -147,6 +178,7 @@ public class ResultatsController {
 
         return sortedIdScore;
     }
+   
 
     public void afficherResultatsServiceFirst(int[][] idScoreService, int[][] idScoreMateriel, ListView<VBox> listView) {
         for (int i = 0; i < idScoreService.length; i++) {
