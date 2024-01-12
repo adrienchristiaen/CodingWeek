@@ -20,7 +20,7 @@ public class Service implements MaterialService{
     private String image;
     private boolean isActive;
 
-    public Service(int id, String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
+    public Service(int id,String name, int owner, int cost, String description, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Reservation> reservations, String image, boolean isActive) {
         this.id = id;
         this.name = name;
         this.type = "service";

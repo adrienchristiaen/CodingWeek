@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.controller;
 
+import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class AccueilController {
     }
     @FXML
     void goAddItem(ActionEvent event) {
-
+        Redirection.goAddItem(user, addItem);
     }
 
     @FXML

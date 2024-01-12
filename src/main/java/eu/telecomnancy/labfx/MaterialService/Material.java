@@ -1,5 +1,6 @@
 package eu.telecomnancy.labfx.MaterialService;
 
+import eu.telecomnancy.labfx.Counter;
 import eu.telecomnancy.labfx.utils.Reservation;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,8 @@ public class Material implements MaterialService{
         this.image = image;
         this.isActive = isActive;
     }
+
+
     @Override
     public int getId() {
         return id;

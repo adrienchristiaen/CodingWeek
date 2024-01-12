@@ -1,6 +1,8 @@
 package eu.telecomnancy.labfx;
 
 
+import eu.telecomnancy.labfx.MaterialService.MaterialController;
+import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.DirectoryHandler;
@@ -30,9 +32,11 @@ public class Main extends Application {
             System.out.println("Resources copied successfully to: " + DirectoryHandler.getPathHead());
         }
         UserController.getInstance();
+        ServiceController.getInstance();
+        System.out.println("test ses grands morts" + MaterialController.getInstance().getMaterials().size());
+
         primaryStage.setTitle("TelecomNancy DirectDealing");
         UserController userController = UserController.getInstance();
-        ArrayList<User> users = userController.getUsers();
         BorderPane root = new BorderPane();
         FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/connexion.fxml"));
         root.setCenter(loader.load());
