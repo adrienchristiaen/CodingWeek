@@ -39,9 +39,13 @@ public class PageAnnonceController {
     @FXML
     private Label titre;
 
-    public void setItem(User user, MaterialService item){
+    public PageAnnonceController(User user, MaterialService item){
         this.user = user;
         this.item = item;
+    }
+
+    @FXML
+    void initialize() {
         User owner = UserController.getInstance().getUserById(item.getOwner());
         titre.setText(item.getName());
         this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
@@ -61,12 +65,8 @@ public class PageAnnonceController {
     }
 
     @FXML
-    void initialize() {
-
-    }
-
-    @FXML
     void reserve(ActionEvent event) {
+        System.out.println("Dans l'appel apres le bouton " + this.user.getIdentifiant());
         Redirection.popUpAnnonce(this.user, this.item, this.reserve);
     }
 

@@ -47,6 +47,7 @@ public class PreviewItemController {
 
     public void setItem(MaterialService item, User user) {
         User owner = UserController.getInstance().getUserById(item.getOwner());
+        this.user = user;
         this.item = item;
         this.title.setText(item.getName());
         this.description.setText(item.getDescription());
