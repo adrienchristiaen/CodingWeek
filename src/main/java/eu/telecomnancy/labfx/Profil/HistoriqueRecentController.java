@@ -26,7 +26,7 @@ public class HistoriqueRecentController {
     @FXML
     public void initialize() {
         // Récupérez l'historique récent de l'utilisateur
-        ArrayList<History> recentHistory = userController.getInstance().getRecentHistory(user);
+        ArrayList<History> recentHistory = UserController.getInstance().getRecentHistory(user);
 
         // Créez une liste observable pour stocker les éléments de l'historique récent
         ObservableList<String> historyItems = FXCollections.observableArrayList();
