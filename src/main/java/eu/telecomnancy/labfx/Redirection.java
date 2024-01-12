@@ -356,8 +356,6 @@ public class Redirection {
         }
     }
 
-
-
     private static void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
