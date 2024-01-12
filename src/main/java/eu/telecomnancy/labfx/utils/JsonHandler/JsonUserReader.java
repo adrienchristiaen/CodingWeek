@@ -105,7 +105,7 @@ public class JsonUserReader implements JsonReader{
             int rating = jsonEvaluation.getInt("rating");
             String comment = jsonEvaluation.getString("comment");
             LocalDateTime createdAt = LocalDateTime.parse(jsonEvaluation.getString("createdAt"), formatter);
-            Evaluation evaluation = new Evaluation(idUser, rating, comment, createdAt);
+            Evaluation evaluation = new Evaluation(id,idUser, rating, comment, createdAt);
             evaluationArray.add(evaluation);
         }
         return evaluationArray;
