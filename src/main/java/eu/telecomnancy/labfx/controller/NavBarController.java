@@ -22,6 +22,8 @@ public class NavBarController {
     private TextField searchBar;
     @FXML
     private ImageView searchImg;
+    @FXML
+    private Button deconnexion;
 
     private User user;
 
@@ -51,6 +53,11 @@ public class NavBarController {
     @FXML
     void goProfil(ActionEvent event) {
         Redirection.goProfil(user, profil);
+    }
+
+    @FXML
+    void deconnect(ActionEvent event) {
+        Redirection.connexion(event);
     }
 
     @FXML

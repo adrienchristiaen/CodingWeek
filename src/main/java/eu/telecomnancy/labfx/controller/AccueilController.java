@@ -1,13 +1,24 @@
 package eu.telecomnancy.labfx.controller;
 
+import java.io.IOException;
+
 import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+
+
 
 public class AccueilController {
+    @FXML 
+    private Button rechercheBouton;
 
     @FXML
     private Button addItem;
@@ -36,7 +47,8 @@ public class AccueilController {
 
     @FXML
     void searchFor(ActionEvent event) {
+        Redirection.recherche(user, rechercheAcceuil.getText(),rechercheBouton);
+   
 
     }
-
 }
