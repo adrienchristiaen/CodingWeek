@@ -278,9 +278,8 @@ public class AdminUser implements User{
 
     @Override
     public void addEvaluation(int note, String comment, int idUserOfComment) {
-        Evaluation eval = new Evaluation(idUserOfComment, note, comment, LocalDateTime.now());
+        Evaluation eval = new Evaluation(this.getEvaluations().size()+1, idUserOfComment, note, comment, LocalDateTime.now());
         evaluations.add(eval);
-        EvaluationController.getInstance().addEvaluation(eval);
     }
 
     @Override

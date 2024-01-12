@@ -283,7 +283,7 @@ public class ClassicUser implements User{
 
     @Override
     public void addEvaluation(int note, String comment, int idUserOfComment) {
-        evaluations.add(new Evaluation(idUserOfComment, note, comment, LocalDateTime.now()));
+        evaluations.add(new Evaluation(this.getEvaluations().size()+1, idUserOfComment, note, comment, LocalDateTime.now()));
     }
 
     @Override

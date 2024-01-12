@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.Profil;
 
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.EvaluationController;
 
@@ -28,7 +29,7 @@ public class EvaluationsController {
 
     public void initialize() {
         // Récupérez les évaluations récentes de l'utilisateur
-        ArrayList<Evaluation> recentEvaluations = EvaluationController.getInstance().getEvaluations();
+        ArrayList<Evaluation> recentEvaluations = UserController.getInstance().getEvaluationsSorted(user);
 
         // Affichez chaque évaluation récente dans la ListView
         evaluationsListView.getItems().setAll(recentEvaluations);
