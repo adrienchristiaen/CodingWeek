@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.Profil;
 
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.utils.DirectoryHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -40,7 +41,7 @@ public class ModeEditionController {
             // Mettez à jour l'image de profil avec la nouvelle image sélectionnée
             user.setImage(selectedFile.getAbsolutePath());
             afficherPhotoProfil();
-
+            DirectoryHandler.saveNewUserImage(user, selectedFile.getAbsolutePath());
             // Affichez le message à l'utilisateur
             afficherMessage("Nouvelle photo de profil ajoutée");
         }
