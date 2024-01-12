@@ -55,7 +55,7 @@ public class InscriptionController {
 
             // Utilisez le UserController pour créer un nouvel utilisateur
             UserController userController = UserController.getInstance();
-            userController.createClassicUser(identifiant, motDePasse, prenom, nom, email, ville, 0, "", "");
+            userController.createClassicUser(identifiant, motDePasse, prenom, nom, email, ville, 100, "", "");
 
             // Redirigez vers l'onglet de connexion après une inscription réussie
             redirectToConnexion(event);

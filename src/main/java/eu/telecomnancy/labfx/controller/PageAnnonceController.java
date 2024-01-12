@@ -51,7 +51,7 @@ public class PageAnnonceController {
         titre.setText(item.getName());
         this.name.setText(owner.getFirstName().concat(" ").concat(owner.getLastName()));
         city.setText(owner.getCity());
-        description.setText(item.getDescription());
+        description.setText(item.getDescription().replace("\\n", "\n"));
         note.setText(String.valueOf(owner.getAverageNote()));
         price.setText(String.valueOf(item.getCost()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

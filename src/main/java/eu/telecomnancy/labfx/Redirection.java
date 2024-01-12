@@ -7,6 +7,7 @@ import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
 import eu.telecomnancy.labfx.controller.PreviewItemController;
+import eu.telecomnancy.labfx.controller.ResultatsController;
 import eu.telecomnancy.labfx.controller.PageAnnonceController;
 import eu.telecomnancy.labfx.user.User;
 import eu.telecomnancy.labfx.user.UserController;
@@ -113,6 +114,83 @@ public class Redirection {
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'accueil.");
         }
     }
+
+    public static void recherche(User user, String resultMots, Button actionButton){
+        try {
+            //On crée un contenair root qui sera une vbox
+            VBox root = new VBox();
+            root.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+            //On load la navbar et on la met en haut
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+
+            root.getChildren().add(top.load());
+
+            VBox center = new VBox();
+            center.setAlignment(Pos.TOP_CENTER);
+            ResultatsController resultatsController = new ResultatsController();
+
+            int [][]ListeService = resultatsController.initializeResultsService(resultMots);
+            int [][]ListeMaterial = resultatsController.initializeResultsMateriel(resultMots);
+            ArrayList<Material> materials = new ArrayList();
+            ArrayList<Service> services = new ArrayList();
+            for(int i=0; i<ListeMaterial.length; i++){
+                materials.add((Material)MaterialController.getInstance().get(ListeMaterial[i][0]));
+            }
+            for (int i=0; i<ListeService.length; i++){
+                services.add((Service)ServiceController.getInstance().get(ListeService[i][0]));
+            }
+            //Creation d'une gridpane pour contenir les previewItems
+            VBox previews= new VBox();
+            ScrollPane scrollpane = new ScrollPane(previews);
+
+
+       
+            previews.setAlignment(Pos.TOP_CENTER);
+
+            //On recupere les 3 derniers services et les 3 derniers materials
+            //On ajoute les previewsItem dans la gridpane
+           
+            for (int i = 0; i < materials.size(); i++) {
+               FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
+               Parent previewItem = preview.load();
+               PreviewItemController previewItemController = preview.getController();
+               previewItemController.setItem(materials.get(i), user);
+               previews.getChildren().add(previewItem);
+            }
+            for (int i = 0; i < services.size(); i++) {
+                FXMLLoader preview = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/previewItem.fxml"));
+                Parent previewItem = preview.load();
+                PreviewItemController previewItemController = preview.getController();
+                previewItemController.setItem(services.get(i), user);
+                previews.getChildren().add(previewItem);
+            }
+            root.getChildren().add(previews);
+
+
+
+            Scene scene = new Scene(root, 1920, 1080);
+            Stage primaryStage = (Stage) actionButton.getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'accueil.");
+        }
+    }
+
 
     public static void goProfil(User user, Button actionButton) {
         try {
@@ -328,7 +406,45 @@ public class Redirection {
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'annonce.");
         }
     }
-
+    // création de la page Résultats de recherche
+    public static void searchFor(User user, MaterialService item, Button actionButton){
+        try{
+            VBox root = new VBox();
+            root.setAlignment(Pos.TOP_CENTER);
+            //On load la navbar et on la met en haut
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            root.getChildren().add(top.load());
+            FXMLLoader resultats = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/resultats.fxml"));
+            resultats.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class, MaterialService.class);
+                    if (cons != null) {
+                        return cons.newInstance(user,item);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet resultats.");
+        }
+    }
 
     public static void popUpAnnonce(User user, MaterialService item, Button actionButton) {
         try {

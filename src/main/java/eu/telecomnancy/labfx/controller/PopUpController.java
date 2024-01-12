@@ -5,6 +5,7 @@ import eu.telecomnancy.labfx.MaterialService.MaterialService;
 import eu.telecomnancy.labfx.MaterialService.MaterialServiceController;
 import eu.telecomnancy.labfx.Redirection;
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.Reservation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,6 +51,8 @@ public class PopUpController {
         Reservation reservation = new Reservation(startDate, endDate, this.user.getId());
         item.addReservation(reservation);
         MaterialController.getInstance().saveItems();
+        user.removeFlorains(item.getCost());
+        UserController.getInstance().getUserById(item.getOwner()).addFlorains(item.getCost());
         Redirection.accueil(this.user, reserve);
     }
 
