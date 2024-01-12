@@ -7,6 +7,7 @@ import java.util.Arrays;
 import eu.telecomnancy.labfx.MaterialService.Material;
 import eu.telecomnancy.labfx.MaterialService.ServiceController;
 import eu.telecomnancy.labfx.MaterialService.Service;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -22,6 +23,14 @@ import javafx.scene.control.TextField;
 
 
 public class ResultatsController {
+      @FXML
+    private void handleAjouterAuxFavoris(ActionEvent event) {
+        // Logique pour ajouter aux favoris
+    }
+    @FXML
+    private void handleVoirLeProduit(ActionEvent event) {
+        // Logique pour voir le service
+    }
     @FXML
     private TextField searchBar;
 
@@ -200,30 +209,56 @@ public class ResultatsController {
     
 
     private VBox createCustomComponentMateriel(int itemId, String itemType) {
-        material = (Material)materialController.get(itemId);
+        material = (Material) materialController.get(itemId);
     
-        ImageView imageView = new ImageView(/* phtoto */);
+        ImageView imageView = new ImageView(/*... */);
         Label nameLabel = new Label(itemType + " : " + material.getName());
-        Label descriptionLabel = new Label("Description :" +material.getDescription());
+        Label descriptionLabel = new Label("Description :" + material.getDescription());
         Label costLabel = new Label("Coût : " + material.getCost() + "€");
-
-
-        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel, costLabel);
-        customComponent.setSpacing(5); 
-
+    
+        // Bouton "Ajouter aux favoris"
+        Button addToFavoritesButton = new Button("Ajouter aux favoris");
+        addToFavoritesButton.setOnAction(event -> {
+            // Logique pour ajouter aux favoris
+            handleAjouterAuxFavoris(event);
+        });
+    
+        // Bouton "Voir le Matériel"
+        Button viewMaterialButton = new Button("Voir le Matériel");
+        viewMaterialButton.setOnAction(event -> {
+            handleVoirLeProduit(event);
+            // Logique pour voir le matériel
+        });
+    
+        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel, costLabel, addToFavoritesButton, viewMaterialButton);
+        customComponent.setSpacing(8);
+    
         return customComponent;
     }
-     private VBox createCustomComponentService(int itemId, String itemType) {
+    
+    private VBox createCustomComponentService(int itemId, String itemType) {
         service = (Service) serviceController.get(itemId);
-
-        ImageView imageView = new ImageView(/* phtoto */);
+    
+        ImageView imageView = new ImageView(/*... */);
         Label nameLabel = new Label(itemType + " : " + service.getName());
         Label descriptionLabel = new Label(service.getDescription());
         Label costLabel = new Label("Coût : " + service.getCost() + "€");
-
-        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel, costLabel);
-        customComponent.setSpacing(5); 
-
+    
+        Button addToFavoritesButton = new Button("Ajouter aux favoris");
+        addToFavoritesButton.setOnAction(event -> {
+            // Ajouter la logique pour ajouter aux favoris
+            handleAjouterAuxFavoris(event);
+        });
+    
+        Button viewServiceButton = new Button("Voir le service");
+        viewServiceButton.setOnAction(event -> {
+            handleVoirLeProduit(event);
+            // Ajouter la logique pour voir le service
+        });
+    
+        VBox customComponent = new VBox(imageView, nameLabel, descriptionLabel, costLabel, addToFavoritesButton, viewServiceButton);
+        customComponent.setSpacing(8); 
+    
         return customComponent;
     }
 
