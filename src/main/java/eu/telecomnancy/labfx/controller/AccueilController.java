@@ -38,5 +38,4 @@ public class AccueilController {
     void searchFor(ActionEvent event) {
 
     }
-
 }
