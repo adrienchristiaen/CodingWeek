@@ -50,4 +50,5 @@ public class AccueilController {
         Redirection.recherche(user, rechercheAcceuil.getText(),rechercheBouton);
    
 
-}}
+    }
+}
