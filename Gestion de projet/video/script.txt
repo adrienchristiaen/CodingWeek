@@ -29,11 +29,11 @@
         On voit les annonces les plus récentes.
         On peut les mettres en favoris (non implémenté)
 
-        Ajouter une annonce -> on crée une annonce.
+        Ajouter une annonce -> on crée une annonce ou on prete une tondeuse a gazon.
 
         On montre que l'annonce apparait dans la liste des annonces et dans myRessources.
 
-        On va maintenant la reserver et on montrer qu'elle est bien reservé dans le back.
+        On va maintenant la reserver et on montrer qu'elle est bien reservé dans le backet qu'on a perdu l'argent.
 
         On en profite pour rechercher l'annonce par mot clé et on montre qu'elle apparait bien.
 
