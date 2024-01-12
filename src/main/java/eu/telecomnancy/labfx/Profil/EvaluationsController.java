@@ -1,6 +1,7 @@
 package eu.telecomnancy.labfx.Profil;
 
 import eu.telecomnancy.labfx.user.User;
+import eu.telecomnancy.labfx.user.UserController;
 import eu.telecomnancy.labfx.utils.Evaluation;
 import eu.telecomnancy.labfx.utils.EvaluationController;
 import eu.telecomnancy.labfx.utils.History;
@@ -29,8 +30,8 @@ public class EvaluationsController {
     }
 
     public void initialize() {
-        // Récupérez l'historique récent de l'utilisateur
-        ArrayList<Evaluation> recentEvaluations = EvaluationController.getInstance().getEvaluations();
+        // Récupérez les évaluations récentes de l'utilisateur
+        ArrayList<Evaluation> recentEvaluations = UserController.getInstance().getEvaluationsSorted(user);
 
         // Créez une liste observable pour stocker les éléments de l'historique récent
         ObservableList<String> evaluationItems = FXCollections.observableArrayList();

@@ -9,8 +9,8 @@ public class Evaluation {
     private String comment;
     private LocalDateTime createdAt;
 
-    public Evaluation(int idUser, int rating, String comment, LocalDateTime createdAt) {
-        this.id = EvaluationController.getInstance().getMaxId()+1;
+    public Evaluation(int id,int idUser, int rating, String comment, LocalDateTime createdAt) {
+        this.id = id;
         this.idUser = idUser;
         this.rating = rating;
         this.comment = comment;
