@@ -7,8 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.AccueilController">
+<VBox alignment="CENTER" prefHeight="251.0" prefWidth="620.0" stylesheets="@../styles/accueil.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.controller.AccueilController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="403.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -34,10 +35,13 @@
             </Button>
          </children>
       </HBox>
-      <Button fx:id="addItem" mnemonicParsing="false" onAction="#goAddItem" text="+">
+      <Button fx:id="addItem" mnemonicParsing="false" onAction="#goAddItem" prefHeight="36.0" prefWidth="181.0" text="Ajouter une annonce" textAlignment="CENTER" textFill="#252121">
          <VBox.margin>
-            <Insets />
+            <Insets bottom="10.0" />
          </VBox.margin>
+         <font>
+            <Font name="DejaVu Sans Bold" size="13.0" />
+         </font>
       </Button>
    </children>
 </VBox>

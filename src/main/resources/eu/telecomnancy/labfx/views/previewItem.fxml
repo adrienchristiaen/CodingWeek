@@ -127,4 +127,7 @@
          </children>
       </VBox>
    </children>
+   <clip>
+      <Rectangle arcWidth="10" arcHeight="10" height="150.0" width="517.0" />
+   </clip>
 </HBox>
