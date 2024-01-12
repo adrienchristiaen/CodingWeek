@@ -35,6 +35,7 @@ public class JsonUserReader implements JsonReader{
         //reads json file and creates users
         System.out.println("Reading users from json: " + resourcePath);
         if (jsonString == null) {
+            System.out.println("jsonString is null");
             return users;
         }
         JSONArray array = new JSONArray(jsonString);
@@ -42,9 +43,11 @@ public class JsonUserReader implements JsonReader{
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonUser = array.getJSONObject(i);
                 User user = createUserFromJson(jsonUser);
+                System.out.println(user.getFirstName());
                 users.add(user);
             }
         }
+        System.out.println("users size: " + users.size());
         return users;
     }
 

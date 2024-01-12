@@ -1,6 +1,10 @@
 package eu.telecomnancy.labfx;
 
-import eu.telecomnancy.labfx.MaterialService.*;
+import eu.telecomnancy.labfx.MaterialService.Material;
+import eu.telecomnancy.labfx.MaterialService.MaterialController;
+import eu.telecomnancy.labfx.MaterialService.Service;
+import eu.telecomnancy.labfx.MaterialService.ServiceController;
+import eu.telecomnancy.labfx.Profil.HistoriqueRecentController;
 import eu.telecomnancy.labfx.Profil.InfoPersoController;
 import eu.telecomnancy.labfx.controller.AccueilController;
 import eu.telecomnancy.labfx.controller.NavBarController;
@@ -20,6 +24,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -50,6 +55,7 @@ public class Redirection {
                     throw new RuntimeException(exc);
                 }
             });
+
             root.getChildren().add(top.load());
 
             //On load le centre et on le met dans une anchorpane
@@ -72,9 +78,10 @@ public class Redirection {
             GridPane previews = new GridPane();
             previews.setAlignment(javafx.geometry.Pos.TOP_CENTER);
             //On recupere les 3 derniers services et les 3 derniers materials
+            System.out.println("Size of materials: " + MaterialController.getInstance().getMaterials().size());
             ArrayList<Material> materials = new ArrayList(MaterialController.getInstance().sortByUpdateAt().subList(0, 2));
             ArrayList<Service> services = new ArrayList(ServiceController.getInstance().sortByUpdateAt().subList(0, 2));
-
+            System.out.println(services.size() + " " + materials.size());
             //On ajoute les previewsItem dans la gridpane
 
             for (int i = 0; i < materials.size(); i++) {
@@ -107,6 +114,23 @@ public class Redirection {
 
     public static void goProfil(User user, Button actionButton) {
         try {
+            // On charge la navbar
+            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
+            top.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent navbar = top.load();
+
+            // On charge la vue du profil
             FXMLLoader loader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/profil.fxml"));
             loader.setControllerFactory(cl -> {
                 try {
@@ -121,16 +145,45 @@ public class Redirection {
                 }
             });
             Parent profilRoot = loader.load();
-            Scene profilScene = new Scene(profilRoot,1920,1080);
+
+            // On charge la vue de l'historique récent
+            FXMLLoader historyLoader = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/Profil/HistoriqueRecent.fxml"));
+            historyLoader.setControllerFactory(cl -> {
+                try {
+                    Constructor<?> cons = cl.getConstructor(User.class);
+                    if (cons != null) {
+                        return cons.newInstance(user);
+                    } else {
+                        return cl.newInstance();
+                    }
+                } catch (Exception exc) {
+                    throw new RuntimeException(exc);
+                }
+            });
+            Parent historyRoot = historyLoader.load();
+
+            // On crée une VBox pour organiser les éléments verticalement
+            VBox root = new VBox();
+            root.getChildren().addAll(navbar, profilRoot, historyRoot);
+
+            // Récupérer le contrôleur de l'historique récent et appeler initialize
+            HistoriqueRecentController historyController = historyLoader.getController();
+            historyController.initialize();
+
+            Scene profilScene = new Scene(root, 1920, 1080);
             Stage currentStage = (Stage) actionButton.getScene().getWindow();
             currentStage.setScene(profilScene);
             currentStage.setTitle("Profil");
-
+            currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet Profil.");
         }
     }
+
+    
+
+
 
 
     public static void inscription(ActionEvent event) {
@@ -163,13 +216,10 @@ public class Redirection {
         }
     }
 
-    public static void pageAnnonce(User user, MaterialService item, Button actionButton) {
+    public static void goAddItem (User user, Button actionButton) {
         try {
-            MaterialService itemtest = MaterialController.getInstance().get(1);
-
-            //On crée un contenair root qui sera une vbox
-            VBox root = new VBox();
-            root.setAlignment(Pos.TOP_CENTER);
+            VBox addItemRoot = new VBox();
+            addItemRoot.setAlignment(javafx.geometry.Pos.TOP_CENTER);
 
             //On load la navbar et on la met en haut
             FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
@@ -185,33 +235,11 @@ public class Redirection {
                     throw new RuntimeException(exc);
                 }
             });
-            root.getChildren().add(top.load());
+            addItemRoot.getChildren().add(top.load());
 
-            FXMLLoader page = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/pageAnnonce.fxml"));
-            Parent annonce = page.load();
-            PageAnnonceController annonceController = page.getController();
-            annonceController.setItem(user, itemtest);
-
-            root.getChildren().add(annonce);
-
-            Scene scene = new Scene(root, 1920, 1080);
-            Stage primaryStage = (Stage) actionButton.getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'annonce.");
-        }
-    }
-    public static void popUpAnnonce(User user, MaterialService item, Button actionButton) {
-        try {
-            VBox root = new VBox();
-            root.setAlignment(Pos.TOP_CENTER);
-
-            //On load la navbar et on la met en haut
-            FXMLLoader top = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/navbar.fxml"));
-            top.setControllerFactory(cl -> {
+            //On load le formulaire
+            FXMLLoader form = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/AddItem.fxml"));
+            form.setControllerFactory(cl -> {
                 try {
                     Constructor<?> cons = cl.getConstructor(User.class);
                     if (cons != null) {
@@ -223,34 +251,18 @@ public class Redirection {
                     throw new RuntimeException(exc);
                 }
             });
-            root.getChildren().add(top.load());
-            //On load la page de validation qui prend en parametre l'utilisateur et l'item dans son constructor
-            FXMLLoader popUp = new FXMLLoader(Redirection.class.getResource("/eu/telecomnancy/labfx/views/popUpReservation.fxml"));
-            popUp.setControllerFactory(cl -> {
-                try {
-                    Constructor<?> cons = cl.getConstructor(User.class, MaterialService.class);
-                    if (cons != null) {
-                        return cons.newInstance(user,item);
-                    } else {
-                        return cl.newInstance();
-                    }
-                } catch (Exception exc) {
-                    throw new RuntimeException(exc);
-                }
-            });
-            root.getChildren().add(popUp.load());
+            addItemRoot.getChildren().add(form.load());
 
-            Scene scene = new Scene(root, 1920, 1080);
+            Scene scene = new Scene(addItemRoot, 1920, 1080);
             Stage primaryStage = (Stage) actionButton.getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'annonce.");
+            showErrorDialog("Erreur de redirection", "Une erreur s'est produite lors de la redirection vers l'onglet d'ajout d'item.");
         }
     }
-
 
 
     private static void showErrorDialog(String title, String message) {

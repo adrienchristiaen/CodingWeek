@@ -7,6 +7,8 @@ import eu.telecomnancy.labfx.utils.JsonHandler.JsonUserWritter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Collections;
 
 public class UserController {
     //use singleton pattern to create only one instance of the controller whitch contains the user list ArrayList<User>
@@ -16,6 +18,7 @@ public class UserController {
     private UserController() {
         System.out.println("Reading users from json: " + DirectoryHandler.getPathResources("/data/user.json"));
         this.users = JsonUserReader.read(DirectoryHandler.getPathResources("/data/user.json"));
+
     }
 
 /*    public void initialread(){
@@ -24,6 +27,7 @@ public class UserController {
     public static UserController getInstance() {
         if (instance == null) {
             instance = new UserController();
+            System.out.println("Creating user controller");
         }
         return instance;
     }
@@ -36,7 +40,6 @@ public class UserController {
     }
 
     public void saveUsers() {
-
         JsonUserWritter.write(DirectoryHandler.getPathResources("/data/user.json"), this.users);
     }
 
@@ -58,15 +61,15 @@ public class UserController {
     }
     public User testConnexion(String identifiant, String password) {
         User user = getUserByIdentifiant(identifiant);
-        if (user==null){
+        if (user == null) {
             return null;
-        }
-        else if (user.getPassword().equals(password)){
+        } else if (user.getPassword().equals(password)) {
             return user;
-        }
-        else{
+        } else {
             return null;
         }
+
+
     }
 
     public int getMaxId() {
@@ -86,34 +89,48 @@ public class UserController {
         saveUsers();
     }
 
-    public ArrayList<History> getRecentHistory(User user){
+
+    public ArrayList<History> getRecentHistory(User user) {
         ArrayList<ItemTuple> itemsSell = user.getItemsSell();
         ArrayList<ItemTuple> itemsBuy = user.getItemsBuy();
+        HashSet<Integer> addedItems = new HashSet<>(); // Utiliser un ensemble pour éviter les doublons
         ArrayList<History> history = new ArrayList<>();
 
         for (ItemTuple itemTuple : itemsSell) {
+            System.out.println(2);
             MaterialService materialService = itemTuple.getMaterialService();
-            if (materialService != null) {
+            if (materialService != null && addedItems.add(materialService.getId())) {
                 history.add(new History(materialService, materialService.getCost(), itemTuple.getTansactionTime()));
-            }
         }
+        }
+    
         for (ItemTuple itemTuple : itemsBuy) {
+            System.out.println(3);
             MaterialService materialService = itemTuple.getMaterialService();
-            if (materialService != null) {
+            if (materialService != null && addedItems.add(materialService.getId())) {
                 history.add(new History(materialService, -materialService.getCost(), itemTuple.getTansactionTime()));
             }
         }
-
         return sortHistory(history);
-
-
-
+    
     }
 
     public ArrayList<History> sortHistory(ArrayList<History> historyToSort){
         ArrayList<History> sortedHistory = new ArrayList<>(historyToSort);
-        sortedHistory.sort((o1, o2) -> o2.getTansactionTime().compareTo(o1.getTansactionTime()));
+        sortedHistory.sort((h1, h2) -> h2.getTansactionTime().compareTo(h1.getTansactionTime()));
         return sortedHistory;
     }
 
+    public void updateUser(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId() == updatedUser.getId()) {
+                users.set(i, updatedUser);
+                saveUsers(); // Appeler saveUsers après la mise à jour
+                break;
+            }
+        }
+    }
+    
+
 }
+

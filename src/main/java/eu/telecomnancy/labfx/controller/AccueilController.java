@@ -26,7 +26,7 @@ public class AccueilController {
     }
     @FXML
     void goAddItem(ActionEvent event) {
-
+        Redirection.goAddItem(user, addItem);
     }
 
     @FXML

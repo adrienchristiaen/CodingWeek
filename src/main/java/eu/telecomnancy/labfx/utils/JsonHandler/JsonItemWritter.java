@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class JsonItemWritter implements JsonWritter{
     public static void write(String resourcePath, ArrayList<Service> services, ArrayList<Material> materials) {
@@ -22,22 +23,12 @@ public class JsonItemWritter implements JsonWritter{
         ArrayList<MaterialService> items = new ArrayList<MaterialService>();
         items.addAll(services);
         items.addAll(materials);
-
-        ArrayList<MaterialService> itemsSorted = new ArrayList<MaterialService>(items);
-        //must use itemsSorted.forEach(p->) method to sort the items
-        itemsSorted.sort((p1, p2) -> {
-            if (p1.getId() > p2.getId()) {
-                return 1;
-            } else if (p1.getId() < p2.getId()) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
+        items.sort(Comparator.comparing(MaterialService::getId));
 
 
         StringBuilder jsonBuilder = new StringBuilder("[\n");
         for (MaterialService item1 : items) {
+            System.out.println(item1.getId());
 
             if (item1 instanceof Material){
                 jsonBuilder.append(createOneItemJson((Material) item1));
@@ -140,8 +131,10 @@ public class JsonItemWritter implements JsonWritter{
                     .append("\", \"user\": ").append(reservation.getUserId())
                     .append("},\n");
         }
-        reserveBuilder.deleteCharAt(reserveBuilder.lastIndexOf(","));
-        reserveBuilder.deleteCharAt(reserveBuilder.lastIndexOf("\n"));
+        if (reserveBuilder.length() > 1) {
+            reserveBuilder.deleteCharAt(reserveBuilder.lastIndexOf(","));
+            reserveBuilder.deleteCharAt(reserveBuilder.lastIndexOf("\n"));
+        }
         reserveBuilder.append("]");
         return reserveBuilder.toString();
     }

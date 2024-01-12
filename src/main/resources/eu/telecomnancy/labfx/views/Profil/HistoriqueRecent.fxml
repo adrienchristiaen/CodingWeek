@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.HistoriqueRecentController">
-   <!-- Contenu pour Historique Récent -->
-   <!-- Ajoutez ici les éléments de l'onglet Historique Récent -->
+<VBox spacing="40" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.labfx.Profil.HistoriqueRecentController">
+    <VBox fx:id="recentHistoryContainer" spacing="10">
+        <!-- Les éléments de l'historique récent seront ajoutés ici dynamiquement -->
+    </VBox>
 </VBox>
