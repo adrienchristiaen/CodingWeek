@@ -15,10 +15,17 @@ clean build gradle puis créé le jar, le lance (pour tester) puis le déplace e
 
 ```
 
-### lancer le dernier `.jar` créé
+### lancer le dernier `.jar` créé (lancer le projet quoi)
 ```sh
 java --module-path ${JAVAFX_HOME}/lib --add-modules=javafx.base,javafx.controls,javafx.fxml -jar dist/App.jar
 ```
+
+### vous pouvez vous connecter avec les identifiants suivants
+identifiant : mdp
+Jdoe : null
+
+
+
 
 ## Planning
 
@@ -41,3 +48,10 @@ Livrable prévu : accueil + profil + css + chat
 ### Pour Jeudi 11/01
 
 Livrable prévu : page addItem + recherche + calendrier + css
+
+### Pour Vendredi 12/01
+
+fin du css and minor fixes
+
+## Modèle de donnée
+
