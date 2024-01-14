@@ -2,6 +2,11 @@
 
 Groupe composé de MOY Kélian, THUILLIER Killian, CHRISTIEN Adrien, HOYAU Christophe
 
+## Vidéo Présentation
+
+lien de la vidéo de présentation 
+https://youtu.be/8K31yQM0EzM
+
 ## Créer un .jar
 ### Créer le jar
 exporter la variable d'environnement de javafx
